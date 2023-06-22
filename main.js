@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import Stats from 'stats.js'
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -8,6 +9,9 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+var stats = new Stats();
+stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild( stats.dom );
 
 camera.position.z = 5;
 
@@ -16,8 +20,11 @@ var controls = new OrbitControls(camera, renderer.domElement);
 LoadModels();
 
 function animate() {
-    requestAnimationFrame(animate);
+    stats.begin();
     renderer.render(scene, camera);
+    stats.end();
+    requestAnimationFrame(animate);
+    
 }
 animate();
 
