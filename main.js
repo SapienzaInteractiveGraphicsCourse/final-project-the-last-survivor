@@ -202,20 +202,39 @@ function animate() {
 
         controls.moveRight( - velocity.x * delta );
         controls.moveForward( - velocity.z * delta );
-        // Get the camera's position and rotation
-    const cameraPosition = controls.getObject().position;
-  // Get the camera's current rotation
-  const cameraRotation = controls.getObject().rotation;
 
-    
+        // Get the camera's current position and rotation
+        // Get the camera's current position and rotation
+        const cameraPosition = controls.getObject().position;
+        const cameraRotation = controls.getObject().rotation;
 
+        // Set the AK47 model's position to the camera's position
+        ak47Model.position.copy(cameraPosition);
 
+        // Calculate the translation offset based on the camera's rotation
+        const translationOffset = new THREE.Vector3(-0.5, -2, 0.5);
+        const translation = translationOffset.clone().applyEuler(cameraRotation);
+        ak47Model.position.add(translation);
 
-    
+        // Calculate the rotation center
+        const rotationCenter = cameraPosition.clone();
 
+        // Rotate the AK47 model around the rotation center
+        ak47Model.position.sub(rotationCenter);
+        ak47Model.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), cameraRotation.y);
+        ak47Model.position.applyAxisAngle(new THREE.Vector3(0, 0, 1), cameraRotation.z);
+        ak47Model.position.add(rotationCenter);
 
+        // Rotate the AK47 model to align with the camera's rotation
+        ak47Model.rotation.y = cameraRotation.y + Math.PI;
 
-        // controls.getObject().position.y += ( velocity.y * delta ); // new behavior
+        // Calculate the distance between the camera and the AK47 model
+        const distance = cameraPosition.distanceTo(ak47Model.position);
+
+        console.log('Distance between camera and AK47 model:', distance);
+
+        // Update the AK47 model's rotation and position in the scene
+        ak47Model.updateMatrixWorld();   // controls.getObject().position.y += ( velocity.y * delta ); // new behavior
     }
     prevTime = time;
 

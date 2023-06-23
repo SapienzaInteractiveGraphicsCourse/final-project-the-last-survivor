@@ -18,11 +18,26 @@
             color: #fff;
             font-size: 24px;
         }
+		#aim {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 20px;
+			height: 20px;
+			border: 2px solid white;
+			border-radius: 50%;
+			pointer-events: none;
+			visibility: hidden;
+			}
     </style>
 </head>
 <body id="body">
     <div id="loading-overlay">Loading...</div>
+	<div id="aim"></div>
 
-    <script type="module" src="main.js"></script>
+
+    <script type="module" src="avatar.js"></script>
+	<script type="module" src="script.js"></script>
 </body>
 </html>
