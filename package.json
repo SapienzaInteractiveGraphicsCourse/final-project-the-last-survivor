@@ -17,5 +17,9 @@
     "webpack": "^5.88.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "ammojs": "^0.0.2",
+    "babylon-navigation-mesh": "^1.2.6"
   }
 }

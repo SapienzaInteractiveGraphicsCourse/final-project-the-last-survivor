@@ -1,11 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" style="width: 100%;height: 100%">
 <head>
+    <style>
+        #fps {
+            position: absolute;
+            background-color: black;
+            border: 2px solid red;
+            text-align: center;
+            font-size: 16px;
+            color: white;
+            top: 15px;
+            right: 10px;
+            width: 60px;
+            height: 20px;
+        }
+
+        #ammo {
+            position: absolute;
+            background-color: black;
+            border: 2px solid red;
+            text-align: center;
+            font-size: 16px;
+            color: white;
+            bottom: 15px;
+            padding: .1%;
+            right: 10px;
+            width: fit-content;
+            height: 20px;
+        }
+
+
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">   
     <title>Last survivor</title>
 </head>
 <body style="width: 100%;height: 100%">
+    <div id="fps">0</div>
+    <div id="ammo">ammo</div>
     <canvas id="renderCanvas" style="width: 100%;height: 100%"></canvas>
     <script src="main.js" type="module"></script>
 </body>

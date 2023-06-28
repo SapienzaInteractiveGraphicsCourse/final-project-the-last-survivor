@@ -4,15 +4,18 @@ import {canvas} from './domItems';
 
 
 export const engine = new BABYLON.Engine(canvas,true);
-
+export var camera;
+export var mapMesh;
 export async function createScene() {
 
     var scene = new BABYLON.Scene(engine)
-    scene.gravity.y = -9.8;
 
-    const camera = new BABYLON.UniversalCamera("FirstViewCamera", new BABYLON.Vector3(-40, -50, 0), scene)
-    camera.ellipsoid = new BABYLON.Vector3(10, 30, 5)
-    camera.speed = 10;
+    
+    scene.gravity.y = -9.8/144;
+    
+    camera = new BABYLON.FreeCamera("FirstViewCamera", new BABYLON.Vector3(10, 4, 15), scene)
+    camera.ellipsoid = new BABYLON.Vector3(.15,.8, .15)
+    camera.speed =.5;
 
     scene.collisionsEnabled = true
 
@@ -27,22 +30,48 @@ export async function createScene() {
     camera.keysUpward.push(32);
     camera.minZ = 0.1;
     camera.minY = 5;
+    camera.inertia = 0.6;
+    camera.fov = 1.5;
 
+    camera.angularSensibility = 2000;
+    
     const canvas = scene.getEngine().getRenderingCanvas()
+    
     camera.attachControl(canvas, true)
+    const light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, -1, 0), scene);
 
-    let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 10, 0), scene)
-    light.intensity = 0.7
-
-    let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/cs_office_csgo_real_light_version.glb");
+    let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "de_dust_2_with_real_light.glb", scene)
 
     const root = res.meshes[0]
-    const childMeshes = root.getChildMeshes()
+    mapMesh = root;
+    
+    root.checkCollisions = true;
+    root.freezeWorldMatrix();
+    root.isPickable = false;
 
+    const childMeshes = root.getChildMeshes()
+    root.renderingGroupId = 0;
     for (let mesh of childMeshes) {
-        mesh.checkCollisions = true
+        mesh.checkCollisions = true;
+        mesh.freezeWorldMatrix();
+        mesh.isPickable = false;
+        mesh.renderingGroupId = 0;
     }
 
+
+    //sky boix
+
+    // Skybox
+    var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:500.0}, scene);
+    var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+    skyboxMaterial.backFaceCulling = false;
+    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/MegaSun", scene);
+    skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+    skyboxMaterial.disableLighting = true;
+    skybox.material = skyboxMaterial;			
+        
     return scene
 
 }
+
+
