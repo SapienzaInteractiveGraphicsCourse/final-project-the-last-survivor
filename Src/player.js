@@ -132,7 +132,6 @@ export class Player {
         return true;
     }
     shoot() {
-        
         console.log("shot");
         this.ammoLevel--;
         this._fire.onAnimationEndObservable.addOnce(()  => this.toggleState());

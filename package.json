@@ -20,6 +20,9 @@
   },
   "dependencies": {
     "ammojs": "^0.0.2",
-    "babylon-navigation-mesh": "^1.2.6"
+    "babylon-navigation-mesh": "^1.2.6",
+    "cannon": "^0.6.2",
+    "recast": "^0.23.2",
+    "recast-detour": "^1.6.2"
   }
 }
