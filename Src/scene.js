@@ -119,12 +119,12 @@ export async function GenerateScene() {
     
     camera.attachControl(canvas, true)
 
-    const light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);
-    light.intensity = 0.1
-    const spot = new BABYLON.SpotLight("", new BABYLON.Vector3(0, .5, 0), new BABYLON.Vector3(0, 0,1 ),Math.PI/6, 2,scene)
-    spot.intensity = 1
-    spot.falloffType =5;
-    spot.parent = camera;
+    const light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 5, 0), scene);
+    light.intensity = 1;
+    //const spot = new BABYLON.SpotLight("", new BABYLON.Vector3(0, .5, 0), new BABYLON.Vector3(0, 0,1 ),Math.PI/6, 2,scene)
+    //spot.intensity = 1
+   // spot.falloffType =5;
+    //spot.parent = camera;
     
     //Adding meshes
     await AddMeshes(scene);
@@ -150,7 +150,7 @@ function CreateSkybox(scene) {
 }
 
 
-const meshes = ["barrel.glb", "barrels_and_pallet.glb", "concrete_barrier_hq.glb", "dirty_old_tires.glb", "shipping_containers (1).glb", "containers.glb", "real_bush.glb", "long_wall_-_fougeres_-_urbanistes.glb", "forklift_low_poly.glb"];
+const meshes = ["barrel.glb", "barrels_and_pallet.glb", "concrete_barrier_hq.glb", "dirty_old_tires.glb", "shipping_containers (1).glb", "containers.glb", "real_bush.glb", "long_wall_-_fougeres_-_urbanistes.glb", "forklift_low_poly.glb","b1.glb"];
 
 //GEN ALL THE MESHES AND RETURN THE MERGE OF THEM
 async function AddMeshes(scene) {
@@ -165,6 +165,7 @@ async function AddMeshes(scene) {
     var m6 = await bushes(scene);
     var m7 = await Tires(scene);
     var m8 = await ForkLift(scene, new BABYLON.Vector3(-16.5,  0, -17))
+    var m9 = await Building(scene,new BABYLON.Vector3(30,30,30))
     Walls(new BABYLON.Vector3(0,0,40));
     
     //return BABYLON.Mesh.MergeMeshes([m1, m2, m3 , m4, m5, m6 , m7 , m8, m9]);
@@ -187,17 +188,21 @@ async function ForkLift(scene, position) {
 }
 function Ground(scene) {
 //Ground generation
-    var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 50, height: 50}, scene);
+    var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 200, height: 200}, scene);
     ground.position = new BABYLON.Vector3(0, 0,  0)
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.2 }, scene);
     ground.checkCollisions = true;
 
     const mat = new BABYLON.StandardMaterial("", scene);
-    var tex = new BABYLON.Texture("Assets/Scene/brown_mud_leaves_01_diff_2k.jpg", scene);
-    tex.uScale = 20
-    tex.vScale =20
+    var tex = new BABYLON.Texture("Assets/Scene/asphalt.jpg", scene);
+    
     mat.diffuseTexture = tex;
-    //mat.bumpTexture = new BABYLON.Texture("Assets/Scene/brown_mud_leaves_01_rough_2k.jpg", scene);
+    mat.diffuseTexture.uScale =10;
+    mat.diffuseTexture.vScale = 10;
+    mat.bumpTexture = new BABYLON.Texture("Assets/Scene/asphalt_bump.png", scene);
+    
+    mat.bumpTexture.uScale= 10;
+    mat.bumpTexture.vScale = 10;
     ground.material = mat;
 
     return ground;
@@ -273,11 +278,11 @@ async function Barrels(position,scene, rotation) {
     return box;
 }
 async function Container(position, scene, rotation) {
-    let mesh = await ImportMeshes(meshes[4] );
+    let mesh = await ImportMeshes(meshes[4]);
 
     const box = BABYLON.MeshBuilder.CreateBox("box", {width: 7.5, depth: 9, height: 10}, scene);
     box.position = position;
-    box.visibility = 0;
+    box.visibility = .1;
     box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.2 }, scene);
     mesh.parent = box;
     mesh.position.x = 2;
@@ -290,49 +295,53 @@ async function Container(position, scene, rotation) {
 
 
 function Walls() {
-    const wall1 = BABYLON.MeshBuilder.CreateBox("box", {width: 50, depth: 2, height: 10}, scene);
-    wall1.position = new BABYLON.Vector3(0,0,25);
-    const wall2 = BABYLON.MeshBuilder.CreateBox("box", {width: 50, depth: 2, height: 10}, scene);
-    wall2.position = new BABYLON.Vector3(0,0,-25);
-    const wall3 = BABYLON.MeshBuilder.CreateBox("box", {width: 2, depth: 50, height: 10}, scene);
-    wall3.position = new BABYLON.Vector3(25,0,0);
-    const wall4 = BABYLON.MeshBuilder.CreateBox("box", {width: 2, depth: 50, height: 10}, scene);
-    wall4.position = new BABYLON.Vector3(-25,0,0);
+//     // const wall1 = BABYLON.MeshBuilder.CreateBox("box", {width: 50, depth: 2, height: 10}, scene);
+//     // wall1.position = new BABYLON.Vector3(0,0,25);
+//     // const wall2 = BABYLON.MeshBuilder.CreateBox("box", {width: 50, depth: 2, height: 10}, scene);
+//     // wall2.position = new BABYLON.Vector3(0,0,-25);
+//     // const wall3 = BABYLON.MeshBuilder.CreateBox("box", {width: 50, depth: 2, height: 10}, scene);
+//     // wall3.position = new BABYLON.Vector3(25,0,0);
+//     // wall3.rotation = new BABYLON.Vector3(0,Math.PI/2, 0 );
+//     // const wall4 = BABYLON.MeshBuilder.CreateBox("box", {width: 50, depth: 2, height: 10}, scene);
+//     // wall4.position = new BABYLON.Vector3(-25,0,0);
+//     // wall4.rotation = new BABYLON.Vector3(0,Math.PI/2, 0 );
 
 
-
-    const mat = new BABYLON.StandardMaterial("", scene);
-    var tex = new BABYLON.Texture("Assets/Scene/broken_wall_diff_2k.jpg", scene);
-    tex.uScale = 50
-    tex.vScale = 10
+//     // const mat = new BABYLON.StandardMaterial("", scene);
+//     // var tex = new BABYLON.Texture("Assets/Scene/w.jpg", scene);
+//     // tex.uScale = 50;
+//     // tex.vScale = 10
     
-    mat.diffuseTexture = tex;
-    //mat.bumpTexture = new BABYLON.Texture("Assets/Scene/broken_wall_rough_2k.jpg", scene);
+//     // mat.diffuseTexture = tex;
+//     // mat.diffuseTexture.uScale= 5;
+//     // mat.diffuseTexture.vScale= 5;
+//     // mat.bumpTexture = new BABYLON.Texture("Assets/Scene/w_bump.png", scene);
+//     // mat.bumpTexture.uScale = 2;
+//     // mat.bumpTexture.vScale = 2;
+//     // wall1.material = mat;
+//     // wall2.material = mat;
 
-    wall1.material = mat;
-    wall2.material = mat;
 
-
-    const mat2 = new BABYLON.StandardMaterial("", scene);
-    var tex2 = new BABYLON.Texture("Assets/Scene/broken_wall_diff_2k.jpg", scene);
-    tex2.uScale = 10
-    tex2.vScale = 50
+//     //const mat2 = new BABYLON.StandardMaterial("", scene);
+//     //var tex2 = new BABYLON.Texture("Assets/Scene/broken_wall_diff_2k.jpg", scene);
+//     //tex2.uScale = 10
+//     //tex2.vScale = 50
     
-    mat2.diffuseTexture = tex2;
-    //mat2.bumpTexture = new BABYLON.Texture("Assets/Scene/broken_wall_rough_2k.jpg", scene);
+//     //mat2.diffuseTexture = tex2;
+//     //mat2.bumpTexture = new BABYLON.Texture("Assets/Scene/broken_wall_rough_2k.jpg", scene);
 
 
-    wall3.material = mat2;
-    wall4.material = mat2;
+//     //wall3.material = mat2;
+//     //wall4.material = mat2;
 
-    wall1.checkCollisions = true;
-    wall2.checkCollisions = true;
-    wall3.checkCollisions = true;
-    wall4.checkCollisions = true;
+//     wall1.checkCollisions = true;
+//     wall2.checkCollisions = true;
+//     wall3.checkCollisions = true;
+//     wall4.checkCollisions = true;
 
 
-    return BABYLON.Mesh.MergeMeshes([wall1, wall2, wall3, wall4]);
-}
+//     return BABYLON.Mesh.MergeMeshes([wall1, wall2, wall3, wall4]);
+ }
 
 async function Tires(scene) {
     var t1 = await Tyre(scene, new BABYLON.Vector3(20, 0, 15.000041311163038));
@@ -348,7 +357,7 @@ async function Tyre(scene, position) {
     const box = BABYLON.MeshBuilder.CreateBox("box", {width: 1.2, depth: 1.2, height: 3}, scene);
     box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.2 }, scene);
     box.position = position;
-    box.visibility = 0.5 ;
+    box.visibility = 0.0;
     box.checkCollisions = true;
     mesh.scaling = new BABYLON.Vector3(0.01, 0.01,0.01)
     mesh.parent = box;
@@ -373,6 +382,22 @@ async function ImportMeshes(name) {
 
     return(root);
 }
+async function Building(scene1,position) {
+    const scene =scene1;
+    const model = await ImportMeshes(meshes[9]);
+    const box = BABYLON.MeshBuilder.CreateBox("box", {width: 19, depth: 29.5, height: 60}, scene);
+    box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.2 }, scene);
+    box.position = position;
+    box.visibility =0;
+    box.checkCollisions = true;
+    model.scaling = new BABYLON.Vector3(100, 100, 100)
+    //model.position = new BABYLON.Vector3(0, 0, 0) 
+    model.parent = box;
+    model.position = new BABYLON.Vector3(0.3,0,107)
+    box.computeWorldMatrix();
+    box.freezeWorldMatrix();
 
-
+    return box;
+}
+ 
 
