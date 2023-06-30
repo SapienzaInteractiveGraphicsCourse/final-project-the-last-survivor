@@ -5,23 +5,19 @@ import { scene } from "../main";
 
 import * as CANNON from "cannon";
 import Navigation from "babylon-navigation-mesh";
-
-//import  'recast-detour';
-
-
 export const engine = new BABYLON.Engine(canvas,true);
 export var camera;
-export var mapMesh;
+export var navigation;
+
 
 export async function createScene() {
-
+   
     var scene = new BABYLON.Scene(engine)
     window.CANNON = CANNON;
-    scene.enablePhysics();
     
     
-    camera = new BABYLON.FreeCamera("FirstViewCamera", new BABYLON.Vector3(0, 1, 0), scene)
-    camera.ellipsoid = new BABYLON.Vector3(.1,.1, .1)
+    camera = new BABYLON.FreeCamera("FirstViewCamera", new BABYLON.Vector3(-65, 44, 30), scene)
+    camera.ellipsoid = new BABYLON.Vector3(0.4, 1, 0.4);
     
     camera.speed =.8;
     scene.gravity.y = -9.8/144;
@@ -48,29 +44,31 @@ export async function createScene() {
     camera.attachControl(canvas, true)
     const light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, -1, 0), scene);
 
-    let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "apocalypse_scene._shipping_container_port.glb", scene)
+    let newMeshesmap = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/xz_map1/", "xz_map1.babylon", scene)
 
-    const root = res.meshes[0]
-    mapMesh = root;
     
-    root.checkCollisions = true;
-    root.freezeWorldMatrix();
-    // var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 12, height: 12}, scene);
-
-    // ground. position = new BABYLON.Vector3(16.419297864353084, 4.011507074492043,  12.667830243980685)
-    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.2 }, scene);
+    navigation = new Navigation();
+    var navmesh = scene.getMeshByName("Navmesh");
     
-    const childMeshes = root.getChildMeshes()
-    root.renderingGroupId = 0;
-    for (let mesh of childMeshes) {
+    var zoneNodes = navigation.buildNodes(navmesh);
+    navigation.setZoneData('level', zoneNodes);
+   
+    newMeshesmap.meshes.forEach((mesh) => {
+        mesh.isPickable = false;
         mesh.checkCollisions = true;
-        mesh.freezeWorldMatrix();
-        
-        mesh.renderingGroupId = 0;
-    }
+        mesh.visibility = 1;
+         mesh.receiveShadows = true;
+
+         if(mesh.name!="Navmesh"){
+
+         }else{
+             mesh.visibility=0;
+             mesh.checkCollisions = false;
+             mesh.isPickable = true;
+         }
+     })
 
 
-    //sky boix
 
     // Skybox
     var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:500.0}, scene);
@@ -131,7 +129,7 @@ export async function GenerateScene() {
 
     // Skybox
     CreateSkybox(scene);
-        
+    
 
 
     return scene;
@@ -155,7 +153,8 @@ const meshes = ["barrel.glb", "barrels_and_pallet.glb", "concrete_barrier_hq.glb
 //GEN ALL THE MESHES AND RETURN THE MERGE OF THEM
 async function AddMeshes(scene) {
     //SPAWN CONTAINERS
-    Ground(scene);
+    var g = Ground(scene);
+    
     var m1 = await Container(new BABYLON.Vector3(4.5,0,5), scene, 0);
     var m2 = await Container(new BABYLON.Vector3(-4.5,0,5), scene, Math.pi);
     var m3 = await Container(new BABYLON.Vector3(4.5,0,-5), scene, 0);
@@ -168,8 +167,30 @@ async function AddMeshes(scene) {
     var m9 = await Building(scene,new BABYLON.Vector3(30,30,30))
     Walls(new BABYLON.Vector3(0,0,40));
     
-    //return BABYLON.Mesh.MergeMeshes([m1, m2, m3 , m4, m5, m6 , m7 , m8, m9]);
+    
+    var x = [m1, m2, m3 , m4, m5, m7 , m8];
+    buildNav(m1)
 }
+
+
+// async function buildNav(...args) {
+    
+//     // await Recast;
+//     // console.log('recast loaded')
+//     // const navPlugin = new RecastJSPlugin();
+//     // console.log('nav plugin loaded');
+    
+//     //navPlugin.createNavMesh(args, parameters);
+// }
+
+function buildNav(args) {
+    navigation = new Navigation();
+    
+    
+    var zoneNodes = navigation.buildNodes(args);
+    navigation.setZoneData('scene', zoneNodes);
+}
+
 async function ForkLift(scene, position) {
     let mesh = await ImportMeshes(meshes[8]);
 

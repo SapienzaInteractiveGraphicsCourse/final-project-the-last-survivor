@@ -26,6 +26,7 @@ export class Player {
     //
     ammoLevel;
     scene;
+    
     constructor(scene) {
         this.scene = scene;
         this.ammoLevel = weaponStats.ammo;
@@ -33,6 +34,7 @@ export class Player {
         this.LoadMesh(scene);
         this.addCrosshair(scene);
         this.InputManager(scene);
+        
     }
 
     InputManager(scene) {
@@ -42,7 +44,7 @@ export class Player {
             engine.enterPointerlock();   
             if(evt.button === 0)  {
                 this.inputShoot = true;
-                console.log("siunm");
+                
             }
                 
             
@@ -51,21 +53,24 @@ export class Player {
         scene.onPointerUp = (evt) => { 
             if(evt.button === 0)  {
                 this.inputShoot = false;
-                console.log("siunm");
             }
                 
             
         }  
 
-
         scene.onKeyboardObservable.add((kbInfo) => {
             
             switch (kbInfo.type) {
-              case BABYLON.KeyboardEventTypes.KEYDOWN:
+                case BABYLON.KeyboardEventTypes.KEYDOWN:
                 if(kbInfo.event.key == 'r')
-                   this.ChangeStatus(status.RELOADING);
+                   this.reload();
+                case BABYLON.KeyboardEventTypes.KEYDOWN:
+                if(kbInfo.event.key == 'l')
+                    console.log(this.getUserposition());
             }
+
           });
+
     }
 
 
@@ -83,32 +88,29 @@ export class Player {
     ///=====================================================================================///
     ChangeStatus(newState) {
         if(!this.legal(newState)){
-            console.log("illegal status");
-            return;
+           return;
         } 
         if(this.locked) {
-            console.log("locked");
+           
             return;
         } 
-        console.log("state changed");
-
+        
         this.locked = true;
         switch (newState) {
             case status.RELOADING:
-                console.log("state reloading");
+                
                 this.reload()
                 break;
 
             case status.IDLE:
-                console.log("state idle");
+                
                 break;
 
             case status.SHOOTING:
-                console.log("state shooting");
                 this.shoot();
                 break;
             default:
-                console.log("sdadsa")
+                
                 break;
         }
 
@@ -123,7 +125,7 @@ export class Player {
                 break;
 
             case status.SHOOTING:
-                if(this.ammoLevel == 0 )
+                if(this.ammoLevel <= 0 )
                     return false;
                 if(this.status == status.RELOADING)
                     return false;
@@ -135,7 +137,28 @@ export class Player {
         console.log("shot");
         this.ammoLevel--;
         this._fire.onAnimationEndObservable.addOnce(()  => this.toggleState());
-        this._fire.play(this._fire.loopAnimation)
+        this._fire.play(this._fire.loopAnimation);
+        this.pew();
+    }
+
+    pew() {
+        var ray = camera.getForwardRay(999);
+        var hit = this.scene.pickWithRay(ray);
+
+        let rayHelper = new BABYLON.RayHelper(ray);
+        rayHelper.show(this.scene);
+
+        // if (hit.pickedMesh == target){
+        //    health -= 0.1;
+	    // } else if (hit.pickedMesh == ground0) {
+        //     camera.position = hit.pickedPoint;
+        //     camera.position.y += 5;
+        // } else {
+        //     //camera.position = ray.origin.clone().add(ray.direction.scale(100));
+        // }
+
+        if(hit.pickedMesh && hit.pickedMesh.name == "enemy")
+            console.log("hit an enemy!!!");
     }
 
     reload() {
@@ -151,7 +174,6 @@ export class Player {
     }
 
     toggleState()  {
-        console.log("animation finished");
         this.locked = false;    
         this.status = status.IDLE;
     }
@@ -177,13 +199,15 @@ export class Player {
         
         scene.stopAllAnimations();
         
+        weapon.isPickable = false;
+        
         weapon.renderingGroupId = 1;
 
         res.meshes.forEach((m) => m.renderingGroupId = 1);
         
         this._idle = res.animationGroups[1];
 
-
+        
         this._draw = res.animationGroups[0];    
 
         this._fire = res.animationGroups[4];
@@ -195,6 +219,23 @@ export class Player {
         console.log(this._fire);
     }
 
+    getUserposition(){
+        var origin = camera.position;
+
+        var _direction = new BABYLON.Vector3(0, -1, 0);
+        
+
+        var length = 100;
+
+        var ray = new BABYLON.Ray(origin, _direction, length);
+        let rayHelper = new BABYLON.RayHelper(ray);
+        rayHelper.show(this.scene);
+
+        var hit = this.scene.pickWithRay(ray);
+        hit.fastCheck = true;
+
+        return hit.pickedPoint;
+    }
 
     addCrosshair(scene){
         var crosshairMat = new BABYLON.StandardMaterial("crosshairMat", scene);
