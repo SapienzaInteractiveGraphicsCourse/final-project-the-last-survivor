@@ -52,8 +52,8 @@ async function main()  {
         engine.enterPointerlock();
 
         
-        var e = new Enemy(scene, p);
-        ZombieList.push(e);
+        // var e = new Enemy(scene, p);
+        // ZombieList.push(e);
 }
 
 

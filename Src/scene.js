@@ -11,20 +11,20 @@ export var navigation;
 
 
 export async function createScene() {
-   
+
     var scene = new BABYLON.Scene(engine)
     window.CANNON = CANNON;
-    
-    
-    camera = new BABYLON.FreeCamera("FirstViewCamera", new BABYLON.Vector3(-65, 44, 30), scene)
+
+
+    camera = new BABYLON.FreeCamera("FirstViewCamera", new BABYLON.Vector3(  -68.37504610546603,  -4.440892098500626e-16,  -28.837581115462513), scene)
     camera.ellipsoid = new BABYLON.Vector3(0.4, 1, 0.4);
-    
+
     camera.speed =.8;
     scene.gravity.y = -9.8/144;
     scene.collisionsEnabled = true
 
     camera.checkCollisions = true
-    camera.applyGravity = true
+    //camera.applyGravity = true
     //Controls  WASD
 
     camera.keysUp.push(87);
@@ -38,37 +38,101 @@ export async function createScene() {
     camera.fov = 1.5;
 
     camera.angularSensibility = 2000;
-    
+
     const canvas = scene.getEngine().getRenderingCanvas()
-    
+
     camera.attachControl(canvas, true)
-    const light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, -1, 0), scene);
-
-    let newMeshesmap = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/xz_map1/", "xz_map1.babylon", scene)
-
-    
-    navigation = new Navigation();
-    var navmesh = scene.getMeshByName("Navmesh");
-    
-    var zoneNodes = navigation.buildNodes(navmesh);
-    navigation.setZoneData('level', zoneNodes);
-   
-    newMeshesmap.meshes.forEach((mesh) => {
-        mesh.isPickable = false;
-        mesh.checkCollisions = true;
-        mesh.visibility = 1;
-         mesh.receiveShadows = true;
-
-         if(mesh.name!="Navmesh"){
-
-         }else{
-             mesh.visibility=0;
-             mesh.checkCollisions = false;
-             mesh.isPickable = true;
-         }
-     })
+    scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+    scene.fogColor = new BABYLON.Color3(0, 0, 0);
+    scene.fogDensity = 0.005;
 
 
+    var light = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(10, -10, -10), scene);
+    light.intensity = 2;
+    light.autoUpdateExtends=false;
+    light.shadowFrustumSize=400
+
+    var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
+    light1.intensity = 0.3;
+
+
+
+    var light0 = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(0, 0, 0), scene);
+    light0.diffuse = new BABYLON.Color3(1, 0.5, 0);
+    light0.specular = new BABYLON.Color3(1, 0.5, 0);
+    light0.intensity = 0;
+    light0.range=10
+    light0.angle = 0;
+    light0.exponent =0;
+    light0.parent=camera;
+    light0.position.z=1.5
+
+
+    var light2 = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(-0.1, 0, 1), Math.PI / 3, 2, scene);
+
+    light2.parent=camera;
+
+    light2.diffuse = new BABYLON.Color3(1, 1, 1);
+    light2.specular = new BABYLON.Color3(1, 1, 1);
+
+    light2.position.x=0.3
+    light2.position.y=0
+    light2.exponent=45
+    light2.intensity = 2;
+    light2.range=20
+
+    // let newMeshesmap = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/xz_map1/", "xz_map1.babylon", scene)
+
+
+    // navigation = new Navigation();
+    // var navmesh = scene.getMeshByName("Navmesh");
+
+    // var zoneNodes = navigation.buildNodes(navmesh);
+    // navigation.setZoneData('level', zoneNodes);
+
+    // newMeshesmap.meshes.forEach((mesh) => {
+    //     mesh.isPickable = true;
+    //     mesh.checkCollisions = true;
+    //     mesh.visibility = 1;
+    //     mesh.receiveShadows = true;
+
+    //     var shadowGenerator3 = new BABYLON.ShadowGenerator(512, light2);
+    //     shadowGenerator3.bias = 0.00005;
+
+    //     var shadowGenerator2 = new BABYLON.ShadowGenerator(512, light0);
+    //     shadowGenerator2.bias = 0.005;
+
+    //     var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
+    //     shadowGenerator.bias = 0.0000001;
+
+    //     shadowGenerator.useBlurCloseExponentialShadowMap = true;
+    //     shadowGenerator.depthScale=208
+    //     shadowGenerator.blurScale=0.6
+
+    //     shadowGenerator.getShadowMap().renderList.push(mesh);
+    //     shadowGenerator2.getShadowMap().renderList.push(mesh);
+    //     shadowGenerator3.getShadowMap().renderList.push(mesh);
+    //     mesh.receiveShadows = true;
+    //     //  shadowGenerator.frustumEdgeFalloff = 10.0;
+
+    //      if(mesh.name!="Navmesh"){
+
+    //      }else{
+    //          mesh.visibility=0;
+    //          mesh.checkCollisions = true;
+    //          mesh.isPickable = true;
+    //      }
+
+
+    //      scene.getMeshByName("BSP_Object_model_101").material.subMaterials.forEach(function(mate){
+    //         mate.opacityTexture =mate.diffuseTexture
+    //         mate.opacityTexture.hasAlpha=true
+    //         mate.diffuseTexture.hasAlpha=true
+    //     })
+    //  })
+
+
+    Ground(scene)
 
     // Skybox
     var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:500.0}, scene);
@@ -77,22 +141,27 @@ export async function createScene() {
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/MegaSun", scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.disableLighting = true;
-    skybox.material = skyboxMaterial;			
-        
+    skybox.material = skyboxMaterial;
+
     return scene
-    
+
 }
 
 
 export async function GenerateScene() {
     var scene = new BABYLON.Scene(engine)
     window.CANNON = CANNON;
+
+    window.addEventListener('resize', function(){
+        engine.resize();
+    });
+
     scene.enablePhysics();
-    
-    
+
+
     camera = new BABYLON.FreeCamera("FirstViewCamera", new BABYLON.Vector3(20, 1, 0), scene)
     camera.ellipsoid = new BABYLON.Vector3(.3,.8, .3)
-    
+
     camera.speed =.8;
     scene.gravity.y = -9.8/144;
     //dscene.collisionsEnabled = true
@@ -112,9 +181,9 @@ export async function GenerateScene() {
     camera.fov = 1.5;
 
     camera.angularSensibility = 2000;
-    
+
     const canvas = scene.getEngine().getRenderingCanvas()
-    
+
     camera.attachControl(canvas, true)
 
     const light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 5, 0), scene);
@@ -123,13 +192,13 @@ export async function GenerateScene() {
     //spot.intensity = 1
    // spot.falloffType =5;
     //spot.parent = camera;
-    
+
     //Adding meshes
     await AddMeshes(scene);
 
     // Skybox
     CreateSkybox(scene);
-    
+
 
 
     return scene;
@@ -144,7 +213,7 @@ function CreateSkybox(scene) {
         skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/MegaSun", scene);
         skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
         skyboxMaterial.disableLighting = true;
-        skybox.material = skyboxMaterial;			
+        skybox.material = skyboxMaterial;
 }
 
 
@@ -154,7 +223,7 @@ const meshes = ["barrel.glb", "barrels_and_pallet.glb", "concrete_barrier_hq.glb
 async function AddMeshes(scene) {
     //SPAWN CONTAINERS
     var g = Ground(scene);
-    
+
     var m1 = await Container(new BABYLON.Vector3(4.5,0,5), scene, 0);
     var m2 = await Container(new BABYLON.Vector3(-4.5,0,5), scene, Math.pi);
     var m3 = await Container(new BABYLON.Vector3(4.5,0,-5), scene, 0);
@@ -166,27 +235,27 @@ async function AddMeshes(scene) {
     var m8 = await ForkLift(scene, new BABYLON.Vector3(-16.5,  0, -17))
     var m9 = await Building(scene,new BABYLON.Vector3(30,30,30))
     Walls(new BABYLON.Vector3(0,0,40));
-    
-    
+
+
     var x = [m1, m2, m3 , m4, m5, m7 , m8];
     buildNav(m1)
 }
 
 
 // async function buildNav(...args) {
-    
+
 //     // await Recast;
 //     // console.log('recast loaded')
 //     // const navPlugin = new RecastJSPlugin();
 //     // console.log('nav plugin loaded');
-    
+
 //     //navPlugin.createNavMesh(args, parameters);
 // }
 
 function buildNav(args) {
     navigation = new Navigation();
-    
-    
+
+
     var zoneNodes = navigation.buildNodes(args);
     navigation.setZoneData('scene', zoneNodes);
 }
@@ -211,17 +280,17 @@ function Ground(scene) {
 //Ground generation
     var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 200, height: 200}, scene);
     ground.position = new BABYLON.Vector3(0, 0,  0)
-    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.2 }, scene);
+    //ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.2 }, scene);
     ground.checkCollisions = true;
 
     const mat = new BABYLON.StandardMaterial("", scene);
     var tex = new BABYLON.Texture("Assets/Scene/asphalt.jpg", scene);
-    
+
     mat.diffuseTexture = tex;
     mat.diffuseTexture.uScale =10;
     mat.diffuseTexture.vScale = 10;
     mat.bumpTexture = new BABYLON.Texture("Assets/Scene/asphalt_bump.png", scene);
-    
+
     mat.bumpTexture.uScale= 10;
     mat.bumpTexture.vScale = 10;
     ground.material = mat;
@@ -271,8 +340,8 @@ async function bushes(scene) {
             mesh.renderingGroupId = 0;
         }
     }
-    
-   
+
+
 
 }
 
@@ -332,7 +401,7 @@ function Walls() {
 //     // var tex = new BABYLON.Texture("Assets/Scene/w.jpg", scene);
 //     // tex.uScale = 50;
 //     // tex.vScale = 10
-    
+
 //     // mat.diffuseTexture = tex;
 //     // mat.diffuseTexture.uScale= 5;
 //     // mat.diffuseTexture.vScale= 5;
@@ -347,7 +416,7 @@ function Walls() {
 //     //var tex2 = new BABYLON.Texture("Assets/Scene/broken_wall_diff_2k.jpg", scene);
 //     //tex2.uScale = 10
 //     //tex2.vScale = 50
-    
+
 //     //mat2.diffuseTexture = tex2;
 //     //mat2.bumpTexture = new BABYLON.Texture("Assets/Scene/broken_wall_rough_2k.jpg", scene);
 
@@ -412,7 +481,7 @@ async function Building(scene1,position) {
     box.visibility =0;
     box.checkCollisions = true;
     model.scaling = new BABYLON.Vector3(100, 100, 100)
-    //model.position = new BABYLON.Vector3(0, 0, 0) 
+    //model.position = new BABYLON.Vector3(0, 0, 0)
     model.parent = box;
     model.position = new BABYLON.Vector3(0.3,0,107)
     box.computeWorldMatrix();
@@ -420,5 +489,5 @@ async function Building(scene1,position) {
 
     return box;
 }
- 
+
 

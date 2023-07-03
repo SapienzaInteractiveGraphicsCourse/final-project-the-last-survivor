@@ -30,8 +30,6 @@ export class Enemy {
                    this.pathTowardPlayer();
             }
           });
-
-        //this.createNavigationMesh()
         
     }
     update() {
@@ -39,63 +37,58 @@ export class Enemy {
     }
 
     pathTowardPlayer() {
-        var zone = navigation.getGroup('level', this.getPosition(this.mesh.position));
+        var zone = navigation.getGroup('level',this.getPosition(this.mesh.position) );
         console.log("zone " + zone)
-        var path = navigation.findPath(this.getPosition(this.mesh.position), this.playerRef.getUserposition(), 'level', zone) ||  [];
-        console.log( path)
+        var path = navigation.findPath(this.getPosition(this.mesh.position),this.playerRef.getUserposition() , 'level', zone)|| [];
+        console.log(path)
 
         if (path && path.length > 0) {
             var length = 0;
             var direction = [{
                 frame: 0,
                 value: this.getPosition(this.mesh.position)
-            }];
-            for (var i = 0; i < path.length; i++) {
-                var vector = new BABYLON.Vector3(path[i].x, path[i].y, path[i].z);
-                length += BABYLON.Vector3.Distance(direction[i].value, vector);
-                direction.push({
-                    frame: length*100,
-                    value: vector
-                });
-            }
+        }];
+        for (var i = 0; i < path.length; i++) {
+
+            var vector = new BABYLON.Vector3(path[i].x, path[i].y, path[i].z);
+
+            length += BABYLON.Vector3.Distance(direction[i].value, vector);
+            direction.push({
+                frame: length*100,
+                value: vector
+            });
+        }
     
-            for (var i = 0; i < direction.length; i++) {
-                direction[i].frame /= length;
-            }
+        for (var i = 0; i < direction.length; i++) {
+            direction[i].frame /= length;
+        }
     
-            var moveCamera = new BABYLON.Animation("CameraMove", "position", 180/length+10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
-            moveCamera.setKeys(direction);
-            this.mesh.animations.push(moveCamera);
+        var moveCamera = new BABYLON.Animation("CameraMove", "position", 180/length+10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        moveCamera.setKeys(direction);
+        this.mesh.animations.push(moveCamera);
 
-
-
-
-            scene.beginAnimation(this.mesh, 0, 100);
-
-
-
+        scene.beginAnimation(this.mesh, 0, 100);
         }
     }
 
-    getPosition(origin){
+    getPosition(position){
         
-        var _direction = new BABYLON.Vector3(0, -2, 0);
-
-        var length = 5;
+        var _direction = new BABYLON.Vector3(0, -1, 0);
+        var origin = position;
+        var length = 30;
 
         if(this.done)
             this.mesh.isPickable = false;
        
         var ray = new BABYLON.Ray(origin, _direction, length);
         var hit = scene.pickWithRay(ray);
-
-     
+        
+        hit.fastCheck = true;
 
         if(this.done)
             this.mesh.isPickable = true;
         
-        hit.fastCheck = true;
-
+      
         return hit.pickedPoint;
     }
 
@@ -108,26 +101,28 @@ export class Enemy {
         enemy.scaling = new BABYLON.Vector3(.02, .02, .02);
         enemy.rotation = new BABYLON.Vector3(0,0,0);
         enemy.checkCollisions = true;
+        
         res.meshes.forEach((m) => {
             m.checkCollisions = true;
+            m.name = 'enemy'
         });
-        var pos = this.getPosition(new BABYLON.Vector3( -53, 47, 26));
+        var pos = this.getPosition(new BABYLON.Vector3( -51.484893851152435,  43.033069906667876,  25.649692405985743));
 
-        const box = BABYLON.MeshBuilder.CreateBox("box", {width: .5, depth: .5, height: 1.5}, scene);  
+        const box = BABYLON.MeshBuilder.CreateBox("box", {width: .3, depth: .3, height: .3}, scene);  
         
         
-        box.visibility= .1;
-        box.setPivotPoint(new BABYLON.Vector3( 0, -1, 0))
+        box.visibility= 1;
+        //box.setPivotPoint(new BABYLON.Vector3( 0, -1, 0))
         box.position = pos;
         box.checkCollisions = true;
         box.name = "enemy";
         box.isPickable = true;
+        enemy.isPickable = false;
+        enemy.name = 'enemy'
+        //  enemy.parent = box;
         
-        enemy.parent = box;
-        enemy.position.y = -1.5/2
-
         enemy.computeWorldMatrix();
-        box.computeWorldMatrix();
+        //box.computeWorldMatrix();
         scene.stopAllAnimations();
     
         this.mesh = box;
