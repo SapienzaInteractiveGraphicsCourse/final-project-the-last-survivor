@@ -328,30 +328,30 @@ export class Player {
         //LEFT HAND-rotation
         var IK_Hand_Cntrl_L_rotation = [{
             frame: 0,
-            value: new BABYLON.Quaternion(-0.04625927656888962, 0.03213781118392944, 0.9850730299949646,  -0.16266027092933655),
+            value: new BABYLON.Vector3(-0.0485372, -0.1017682, -2.8167683 ),
         }]
         IK_Hand_Cntrl_L_rotation .push({
             frame: 3,
-            value: new BABYLON.Quaternion(-0.014148877933621407,  0.23062171041965485,  0.9575549960136414, -0.1723421961069107),
+            value: new BABYLON.Vector3(-0.45481, -0.1067912, -2.8101772),
         })
         IK_Hand_Cntrl_L_rotation .push({
             frame: 6,
-            value: new BABYLON.Quaternion(-0.0418987050652504, 0.023788409307599068, 0.9851288795471191, -0.16492338478565216),
+            value: new BABYLON.Vector3(-0.0331911, -0.0905213, -2.8113466),
         })
         IK_Hand_Cntrl_L_rotation .push({
             frame: 9,
-            value: new BABYLON.Quaternion(-0.04262944310903549, 0.05211726948618889, 0.9836558699607849, -0.16699601709842682),
+            value: new BABYLON.Vector3(-0.0888662, -0.1014461, -2.8097723),
         })
         IK_Hand_Cntrl_L_rotation .push({
             frame: 12,
-            value: new BABYLON.Quaternion(-0.044984132051467896,  0.03917071968317032,  0.9846229553222656,  -0.1641942262649536),
+            value: new BABYLON.Vector3(-0.0627291, -0.1016229, -2.8143078),
         })
         IK_Hand_Cntrl_L_rotation .push({
             frame: 14,
-            value: new BABYLON.Quaternion(-0.04625927656888962, 0.03213781118392944, 0.9850730299949646,  -0.16266027092933655),
+            value: new BABYLON.Vector3(-0.0485372, -0.1017682, -2.8167683),
         })
 
-        //right hand-position
+        // //right hand-position
         var IK_Hand_Cntrl_R_position = [{
             frame: 0,
             value: new BABYLON.Vector3( -0.0829569399356842,  0.029083557426929474,  0.2184237837791443),
@@ -380,35 +380,35 @@ export class Player {
         //right hand-rotation
         var IK_Hand_Cntrl_R_rotation = [{
             frame: 0,
-            value: new BABYLON.Quaternion(-0.057135988026857376,  0.01055992767214775,  0.5295121073722839,  0.8463101387023926),
+            value: new BABYLON.Vector3(-0.108202, -0.0426474, 1.1158542),
         }]
         IK_Hand_Cntrl_R_rotation .push({
             frame: 3,
-            value: new BABYLON.Quaternion(-0.22769106924533844, 0.11611448973417282,  0.5182999968528748,  0.8161123394966125),
+            value: new BABYLON.Vector3(-0.515006, -0.0465164, 1.1193839),
         })
         IK_Hand_Cntrl_R_rotation .push({
             frame: 6,
-            value: new BABYLON.Quaternion(-0.047852471470832825,  0.011341879144310951,  0.5319801568984985,  0.8453274965286255),
+            value: new BABYLON.Vector3(-0.0931508, -0.0317433, 1.1219177),
         })
         IK_Hand_Cntrl_R_rotation .push({
             frame: 9,
-            value: new BABYLON.Quaternion(-0.07430554181337357,  0.02158804051578045,  0.5318422913551331, 0.8433008790016174),
+            value: new BABYLON.Vector3(-0.148972, -0.0426402, 1.1221461),
         })
         IK_Hand_Cntrl_R_rotation .push({
             frame: 12,
-            value: new BABYLON.Quaternion(-0.06318460404872894,  0.014429227448999882,  0.530504584312439,0.845200777053833),
+            value: new BABYLON.Vector3(-0.1225345, -0.0426612, 1.1184122),
         })
         IK_Hand_Cntrl_R_rotation .push({
             frame: 14,
-            value: new BABYLON.Quaternion( -0.057135988026857376,  0.01055992767214775,  0.5295121073722839,  0.8463101387023926),
+            value: new BABYLON.Vector3(-0.0112311, 0.0179145, 1.1199493),
         })
 
 
         this.scene.stopAllAnimations();
 
         var group = new BABYLON.AnimationGroup("fire");
-
-        var _anim = new BABYLON.Animation("Pmag_Pos", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        var _anim;
+        _anim = new BABYLON.Animation("Pmag_Pos", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(Pmag_Frames_position);
         group.addTargetedAnimation(_anim,Pmag);
 
@@ -416,15 +416,15 @@ export class Player {
         _anim.setKeys(PBody_Frames_position);
         group.addTargetedAnimation(_anim,PBody);
 
-        _anim = new BABYLON.Animation("LeftHand_Pos", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim = new BABYLON.Animation("IK_Hand_Cntrl_L", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(IK_Hand_Cntrl_L_position);
         group.addTargetedAnimation(_anim,IK_Hand_Cntrl_L);
 
-        _anim = new BABYLON.Animation("LeftHand_Pos", "rotationQuaternion", 60, BABYLON.Animation.ANIMATIONTYPE_QUATERNION, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim = new BABYLON.Animation("LeftHand_Pos", "rotation", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(IK_Hand_Cntrl_L_rotation);
         group.addTargetedAnimation(_anim,IK_Hand_Cntrl_L);
 
-        _anim = new BABYLON.Animation("LeftHand_Pos", "rotationQuaternion", 60, BABYLON.Animation.ANIMATIONTYPE_QUATERNION, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim = new BABYLON.Animation("RightHand_Pos", "rotation", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(IK_Hand_Cntrl_R_rotation);
         group.addTargetedAnimation(_anim,IK_Hand_Cntrl_R);
 
@@ -521,6 +521,7 @@ export class Player {
             value: this.getPosition(this.mesh.position)
         }]
         scene.beginAnimation(this.mesh, 0, 100);
+        
     }
 
 }

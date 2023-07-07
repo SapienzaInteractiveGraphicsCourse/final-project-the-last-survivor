@@ -17,14 +17,14 @@ export async function createScene() {
 
 
     camera = new BABYLON.FreeCamera("FirstViewCamera", new BABYLON.Vector3(  -68.37504610546603,  -4.440892098500626e-16,  -28.837581115462513), scene)
-    camera.ellipsoid = new BABYLON.Vector3(0.4, 1, 0.4);
+    camera.ellipsoid = new BABYLON.Vector3(0.4, 3, 0.4);
 
     camera.speed =.8;
     scene.gravity.y = -9.8/144;
     scene.collisionsEnabled = true
 
     camera.checkCollisions = true
-    //camera.applyGravity = true
+    camera.applyGravity = true
     //Controls  WASD
 
     camera.keysUp.push(87);
@@ -279,7 +279,7 @@ async function ForkLift(scene, position) {
 function Ground(scene) {
 //Ground generation
     var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 200, height: 200}, scene);
-    ground.position = new BABYLON.Vector3(0, 0,  0)
+    ground.position = new BABYLON.Vector3(0, -8,  0)
     //ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.2 }, scene);
     ground.checkCollisions = true;
 
