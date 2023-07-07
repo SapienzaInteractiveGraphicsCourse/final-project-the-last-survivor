@@ -9,7 +9,6 @@ export const engine = new BABYLON.Engine(canvas,true);
 export var camera;
 export var navigation;
 
-
 export async function createScene() {
 
     var scene = new BABYLON.Scene(engine)
@@ -25,13 +24,16 @@ export async function createScene() {
 
     camera.checkCollisions = true
     camera.applyGravity = true
+
     //Controls  WASD
+
 
     camera.keysUp.push(87);
     camera.keysDown.push(83);
     camera.keysRight.push(68);
     camera.keysLeft.push(65);
     camera.keysUpward.push(32);
+
     camera.minZ = 0.1;
     camera.minY = 5;
     camera.inertia = 0.6;
@@ -181,7 +183,7 @@ export async function GenerateScene() {
     camera.fov = 1.5;
 
     camera.angularSensibility = 2000;
-
+    
     const canvas = scene.getEngine().getRenderingCanvas()
 
     camera.attachControl(canvas, true)
@@ -489,5 +491,3 @@ async function Building(scene1,position) {
 
     return box;
 }
-
-
