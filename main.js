@@ -20,19 +20,20 @@ export var scene;
 
 var ZombieList = [];
 async function main()  {
-        await Engine;        
-        
-        // create the canvas html element and attach it to the webpage
+        var loadingScreen = document.getElementById("loadingScreen");
+
+        // Show the loading screen
+        loadingScreen.style.display = "block";
+    
+        // Initialize the Babylon.js engine and scene
+        await Engine;
         var canvas = document.getElementById("renderCanvas");
-        // replace the default loading screen
-        //engine.loadingScreen = loadingScreen;
-        // show the loading screen
         engine.displayLoadingUI();
-        
         scene = await createScene();
-        
-        // hide the loading screen when you want to
         engine.hideLoadingUI();
+    
+        // Hide the loading screen
+        loadingScreen.style.display = "none";
        
         // initialize babylon scene and engine
 
