@@ -24,12 +24,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Copy assets to dist folder
-        run: cp -R Assets dist/
-
-      - name: Copy textures to dist folder
-        run: cp -R textures dist/
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
