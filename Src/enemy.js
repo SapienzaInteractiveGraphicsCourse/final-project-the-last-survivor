@@ -1,25 +1,40 @@
 "use strict";
 import * as BABYLON from "@babylonjs/core";
-import {camera,engine, navigation} from './scene';
+import {camera,engine} from './scene';
 import { SceneLoader } from "@babylonjs/core";
 import * as CANNON from "cannon";
 import { scene } from "../main";
+import * as YUKA from '../Modules/yuka.module.js'
 
+import { navigation } from "./scene";
+import { Vehicle } from "../Modules/yuka.module";
 
-var line = null
+export class Enemy extends Vehicle {
 
-export class Enemy {
-
-    
+    pathHelper;
     playerRef
-    navigation;
-    position;
+    //position;
+    scene;
     mesh;
     c;
     done = false;
     constructor(scene, player) {
-        
+        super()
+        const followPathBehavior = new YUKA.FollowPathBehavior()
+        followPathBehavior.nextWaypointDistance = 0.5
+        followPathBehavior.active = false
+        this.steering.add(followPathBehavior)
+
+        this.maxSpeed = 1.5
+        this.maxForce = 10
+        this.navMesh = navigation
+
+        this.scene = scene;
+        this.currentRegion = null
+        this.fromRegion = null
+        this.toRegion = null
         this.playerRef = player;
+
         this.LoadMesh(scene) 
 
         scene.onKeyboardObservable.add((kbInfo) => {
@@ -27,30 +42,58 @@ export class Enemy {
             switch (kbInfo.type) {
               case BABYLON.KeyboardEventTypes.KEYDOWN:
                 if(kbInfo.event.key == 'p')
-                   this.pathTowardPlayer();
+                   this.findPathTo();
             }
           });
         
     }
-    update() {
-      
-    }
 
-    pathTowardPlayer() {
-        var zone = navigation.getGroup('level',this.getPosition(this.mesh.position) );
-        console.log("zone " + zone)
-        var path = navigation.findPath(this.getPosition(this.mesh.position),this.playerRef.getUserposition() , 'level', zone)|| [];
+    update(delta) {
+        super.update(delta)
+ 
+    }
+    
+    
+    findPathTo() {
+        var from = this.mesh.position
+        var _from =  new YUKA.Vector3(this.mesh.position.x , this.mesh.position.y, this.mesh.position.z) 
+        var playerPos = this.playerRef.getUserposition();
+        var to = new YUKA.Vector3(playerPos.x , playerPos.y, playerPos.z) 
+        
+        const path = navigation.findPath(_from, to)
         console.log(path)
 
-        if (path && path.length > 0) {
+        if (this.pathHelper) {
+            this.pathHelper.dispose()
+        }
+        this.pathHelper = BABYLON.MeshBuilder.CreateLines(
+            'path-helper',
+            {
+              points: path,
+              updatable: false,
+            },
+            this.scene
+          )
+          this.pathHelper.color = BABYLON.Color3.Red()
+
+        var newPath = [];
+
+        path.forEach(vec => {
+            var pos = new BABYLON.Vector3(vec.x,vec.y,vec.z)
+            newPath.push(pos);
+        })
+        console.log(newPath);
+
+        if (newPath && newPath.length > 0) {
             var length = 0;
             var direction = [{
                 frame: 0,
-                value: this.getPosition(this.mesh.position)
+                value: from
         }];
-        for (var i = 0; i < path.length; i++) {
+        
+        for (var i = 0; i < newPath.length; i++) {
 
-            var vector = new BABYLON.Vector3(path[i].x, path[i].y, path[i].z);
+            var vector = new BABYLON.Vector3(newPath[i].x, newPath[i].y, newPath[i].z);
 
             length += BABYLON.Vector3.Distance(direction[i].value, vector);
             direction.push({
@@ -58,7 +101,7 @@ export class Enemy {
                 value: vector
             });
         }
-    
+
         for (var i = 0; i < direction.length; i++) {
             direction[i].frame /= length;
         }
@@ -70,25 +113,28 @@ export class Enemy {
         scene.beginAnimation(this.mesh, 0, 100);
         }
     }
+      
 
     getPosition(position){
         
         var _direction = new BABYLON.Vector3(0, -1, 0);
-        var origin = position;
-        var length = 30;
+        var length = 100;
 
-        if(this.done)
-            this.mesh.isPickable = false;
-       
-        var ray = new BABYLON.Ray(origin, _direction, length);
+        if(this.done) {
+            //this.mesh.subMeshes.forEach((m) => m.isPickable = false)
+            this.mesh.isPickable  = false;
+        }
+            
+
+        var ray = new BABYLON.Ray(position, _direction, length);
         var hit = scene.pickWithRay(ray);
-        
         hit.fastCheck = true;
 
-        if(this.done)
-            this.mesh.isPickable = true;
+        if(this.done) {
+            //this.mesh.subMeshes.forEach((m) => m.isPickable = true)
+            this.mesh.isPickable  = true;
+        }
         
-      
         return hit.pickedPoint;
     }
 
@@ -106,25 +152,26 @@ export class Enemy {
             m.checkCollisions = true;
             m.name = 'enemy'
         });
-        var pos = this.getPosition(new BABYLON.Vector3( -51.484893851152435,  43.033069906667876,  25.649692405985743));
+        var pos = this.getPosition(new BABYLON.Vector3(1.1082477934775106,  1.31716100519502155,  11.913428243630761));
 
         const box = BABYLON.MeshBuilder.CreateBox("box", {width: .3, depth: .3, height: .3}, scene);  
-        
-        
         box.visibility= 1;
+
         //box.setPivotPoint(new BABYLON.Vector3( 0, -1, 0))
         box.position = pos;
+        box.visibility = 0;
         box.checkCollisions = true;
         box.name = "enemy";
         box.isPickable = true;
         enemy.isPickable = false;
         enemy.name = 'enemy'
-        //  enemy.parent = box;
+        enemy.parent = box;
         
         enemy.computeWorldMatrix();
         //box.computeWorldMatrix();
         scene.stopAllAnimations();
-    
+        
+        
         this.mesh = box;
         this.done= true;
     }
