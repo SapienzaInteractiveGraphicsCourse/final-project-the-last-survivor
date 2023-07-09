@@ -1,10 +1,7 @@
 {
-  "homepage": "https://github.com/SapienzaInteractiveGraphicsCourse/final-project-the-last-survivor.git",
+  "homepage": "https://sapienzainteractivegraphicscourse.github.io/final-project-the-last-survivor",
   "name": "final-project-babylon",
   "version": "1.0.0",
-  "repository": {
-    "url": "git+https://github.com/SapienzaInteractiveGraphicsCourse/final-project-the-last-survivor.git"
-  },
   "description": "",
   "main": "main.js",
   "scripts": {
