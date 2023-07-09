@@ -172,11 +172,11 @@ export async function GenerateScene() {
     camera.applyGravity = true
     //Controls  WASD
 
-    camera.keysUp.push(87);
-    camera.keysDown.push(83);
-    camera.keysRight.push(68);
-    camera.keysLeft.push(65);
-    camera.keysUpward.push(32);
+    // camera.keysUp.push(87);
+    // camera.keysDown.push(83);
+    // camera.keysRight.push(68);
+    // camera.keysLeft.push(65);
+    // camera.keysUpward.push(32);
     camera.minZ = 0.1;
     camera.minY = 5;
     camera.inertia = 0.6;

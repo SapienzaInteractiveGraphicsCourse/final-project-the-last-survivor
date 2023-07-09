@@ -3,7 +3,7 @@ import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 
 import { Enemy } from "./Src/enemy.js";
-import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, CreateScreenshot, RecastJSPlugin } from "@babylonjs/core";
+import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, CreateScreenshot, RecastJSPlugin, CombineAction } from "@babylonjs/core";
 import {camera, createScene,engine, GenerateScene} from './Src/scene.js';
 import {Player} from './Src/player.js';
 import { ammo, divFps } from "./Src/domItems.js";
@@ -16,6 +16,9 @@ import {Recast} from "recast-detour/recast.js"
 //render variables
 export var scene;
 
+
+let walking = false;
+let startTime;
 
 var ZombieList = [];
 async function main()  {
@@ -39,6 +42,11 @@ async function main()  {
         //Event listener for resume
         document.addEventListener("click", handleClickToResume);
 
+        
+        // Event listeners for keydown and keyup events
+        document.addEventListener("keydown", handleKeyDown);
+        document.addEventListener("keyup", handleKeyUp);
+
         // Function to start the game
         async function startGame() {
             // Hide the menu
@@ -60,9 +68,14 @@ async function main()  {
         
             // run the main render loopss
             engine.runRenderLoop(() => {
-                //console.log(camera.position)
+                // console.log(camera.keysUpward)
                 scene.render();
                 p.update();
+                var t = Date.now();
+                var timeElapsed = startTime - t;
+                // if (walking){
+                //     updateHead(timeElapsed);
+                // }
                 ZombieList.forEach((e) => e.update())
                 divFps.innerHTML = engine.getFps().toFixed() + " fps";
             });
@@ -95,11 +108,23 @@ async function main()  {
         
             // Check if the pointer lock is active
             if (document.pointerLockElement === canvas) {
+                if(camera.keysUp.indexOf(87)===-1){
+                    camera.keysUp.push(87);
+                    camera.keysDown.push(83);
+                    camera.keysRight.push(68);
+                    camera.keysLeft.push(65);
+                    camera.keysUpward.push(32);
+                }
               // Pointer lock is active, hide the pause menu
-              menu.style.display = "none";
+                menu.style.display = "none";
             } else {
               // Pointer lock is not active, show the pause menu
-              menu.style.display = "flex";
+                removeKeyCodeFromArray(87, camera.keysUp);
+                removeKeyCodeFromArray(83, camera.keysDown);
+                removeKeyCodeFromArray(68, camera.keysRight);
+                removeKeyCodeFromArray(65, camera.keysLeft);
+                removeKeyCodeFromArray(32, camera.keysUpward);
+                menu.style.display = "flex";
             }
         }
         // Function to handle click to resume game
@@ -115,6 +140,31 @@ async function main()  {
         }
 }
 
+// Event handler for keydown event
+function handleKeyDown(event) {
+    if (event.key === "w" || event.key === "s" || event.key === "a" || event.key === "d") {
+        // Move camera forward
+        walking = true;
+        startTime = Date.now();
+        //console.log(startTime);
+    } 
+}
+
+function handleKeyUp(event) {
+    
+        // Stop vertical movement
+        walking = false;
+        var elapsedTime = Date.now() - startTime;
+        //console.log(elapsedTime);
+    
+}
+
+function removeKeyCodeFromArray(keyCode, array) {
+    const index = array.indexOf(keyCode);
+    if (index !== -1) {
+        array.splice(index, 1);
+    }
+}
 
 
 
