@@ -55,72 +55,72 @@ async function main()  {
         // Function to start the game
         async function startGame() {
             // Hide the menu
-        var menu = document.getElementById("menu");
-        menu.style.display = "none";
+            var menu = document.getElementById("menu");
+            menu.style.display = "none";
 
-        // Show the loading screen
-        loadingScreen.style.display = "block";
+            // Show the loading screen
+            loadingScreen.style.display = "block";
+            
+            scene = await createScene();
+            
+            // hide the loading screen when you want to
+            
         
-        scene = await createScene();
+            // initialize babylon scene and engine
+
+            // hide/show the Inspector
+            var p = new Player(scene);
+            // YUKA specific
         
-        // hide the loading screen when you want to
-        
-       
-        // initialize babylon scene and engine
+            //run the main render loopss
+            var unitManager = null
+            
+            engine.hideLoadingUI();
 
-        // hide/show the Inspector
-        var p = new Player(scene);
-          // YUKA specific
-       
-        //run the main render loopss
-        var unitManager = null
-        
-        engine.hideLoadingUI();
+            engine.runRenderLoop(() => {
+                scene.render();
+                p.update();
+                var t = Date.now();
+                var timeElapsed = startTime - t;
+            
+                scene.render();
+                p.update();
+                unitManager?.update()
+                divFps.innerHTML = engine.getFps().toFixed() + " fps";
+            });
 
-        engine.runRenderLoop(() => {
-            scene.render();
-            p.update();
-            var t = Date.now();
-            var timeElapsed = startTime - t;
-          
-            scene.render();
-            p.update();
-            unitManager?.update()
-            divFps.innerHTML = engine.getFps().toFixed() + " fps";
-        });
+            let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "ct_gign.glb", scene)     
 
-        let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "ct_gign.glb", scene)     
-
-        const enemy = res.meshes[0];
-        enemy.scaling = new BABYLON.Vector3(.02, .02, .02);
-        enemy.rotation = new BABYLON.Vector3(0,0,0);
-        enemy.checkCollisions = true;
-
-        
-
-        res.meshes.forEach((m) => {
-            m.checkCollisions = true;
-            m.name = 'enemy'
-            enemy.visibility = 1;
-        });
-        
-        enemy.isPickable = true;
-        enemy.name = 'enemy'
-        enemy.visibility = 1;
-        enemy.computeWorldMatrix();
-        //box.computeWorldMatrix();
-        scene.stopAllAnimations();
-
-        unitManager = new UnitManager(p, res)
-       
-        // run the main render loopss
-
-        // Hide the loading screen
-        loadingScreen.style.display = "none";
-
-        engine.enterPointerlock();
+            const enemy = res.meshes[0];
+            enemy.scaling = new BABYLON.Vector3(.02, .02, .02);
+            enemy.rotation = new BABYLON.Vector3(0,0,0);
+            enemy.checkCollisions = true;
 
             
+
+            res.meshes.forEach((m) => {
+                m.checkCollisions = true;
+                m.name = 'enemy'
+                enemy.visibility = 1;
+            });
+            
+            enemy.isPickable = true;
+            enemy.name = 'enemy'
+            enemy.visibility = 1;
+            enemy.computeWorldMatrix();
+            //box.computeWorldMatrix();
+            scene.stopAllAnimations();
+
+            unitManager = new UnitManager(p, res)
+        
+            // run the main render loopss
+
+            // Hide the loading screen
+            loadingScreen.style.display = "none";
+            var elDiv = document.getElementById("el");
+            elDiv.style.display = "block";
+
+            engine.enterPointerlock();            
         }
 
         // Function to enable fly mode

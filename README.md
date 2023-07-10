@@ -2,3 +2,14 @@
 
 
 https://sapienzainteractivegraphicscourse.github.io/final-project-the-last-survivor/
+
+
+
+
+ISTRUZIONI:
+
+1. npm ci
+
+2. npm run start
+
+3. if you want that the site is available with the last changes, do npm run build, then push

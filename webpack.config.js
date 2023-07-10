@@ -59,8 +59,10 @@ module.exports = {
             patterns: [
                 { from: path.resolve(appDirectory, "textures"), to: "textures" },
                 { from: path.resolve(appDirectory, "Assets"), to: "Assets" },
+                { from: path.resolve(appDirectory, "Modules"), to: "Modules" },
             ],
         }),
     ],
     mode: "development",
+    devtool: "source-map"
 };
