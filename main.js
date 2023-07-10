@@ -18,8 +18,6 @@ export var TimeScale;
 //render variables
 export var scene;
 
-
-
 let walking = false;
 let startTime;
 
