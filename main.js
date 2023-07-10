@@ -11,6 +11,7 @@ import {Player} from './Src/player.js';
 import { ammo, divFps } from "./Src/domItems.js";
 import * as YUKA from '/Modules/yuka.module.js'
 import { UnitManager } from "./Src/unitManager.js";
+import { Pistol } from "./Src/pistol.js";
 
 
 export var TimeScale;
@@ -68,6 +69,10 @@ async function main()  {
 
             // hide/show the Inspector
             var p = new Player(scene);
+            
+            var pistol = new Pistol();
+            await pistol.init()
+            p.LoadWeapon(pistol)
             // YUKA specific
         
             //run the main render loopss
