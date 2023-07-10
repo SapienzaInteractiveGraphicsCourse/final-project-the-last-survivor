@@ -105,7 +105,7 @@ export class Player {
                 break;
 
             case status.IDLE:
-                
+                // this.idle()
                 break;
 
             case status.SHOOTING:
@@ -143,6 +143,8 @@ export class Player {
         this._fire.onAnimationEndObservable.addOnce(()  => this.toggleState());
         this.pew();
     }
+
+    
 
     pew() {
         var ray = camera.getForwardRay(999);
@@ -298,6 +300,21 @@ export class Player {
         //Per cui, per ogni elemento di '_targetedAnimations' consultate la prima riga per la proprietà animata e
         //la seconda per l'id (per questa siete costretti ad aprire target).
         //una volta trovato l'elemento corretto, sotto animation cercate keys e trovate tutti i keyframes.
+
+        
+        //IDLE
+        // var weapon_pos =  [{
+        //     frame: 0,
+        //     value: weapon.position.clone(),
+        // }];
+        // weapon_pos.push({
+        //     frame: 3,
+        //     value: weapon.position.clone().add(new BABYLON.Vector3(0, 0.2, 0)),
+        // })
+        // weapon_pos.push({
+        //     frame: 6,
+        //     value: weapon.position.clone(),
+        // })
         
         //PISTOL MAH
         var Pmag_Frames_position =  [{
@@ -486,7 +503,11 @@ export class Player {
         group.addTargetedAnimation(_anim,IK_Hand_Cntrl_R);
 
         group.play(group.loopAnimation);
+        // group2.play(group2.loopAnimation);
+
         this._fire = group;
+        // this._idle = group2;
+
     
     }
     getDamage() {
@@ -572,6 +593,8 @@ export class Player {
             frame: 0,
             value: this.getPosition(this.mesh.position)
         }]
+
+
         scene.beginAnimation(this.mesh, 0, 100);
     }
 
