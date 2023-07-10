@@ -17,3 +17,6 @@ export const runData = document.querySelector(
 export const luckyBox = document.getElementById(
     "luckyBox"
 );
+export const AMMO = document.getElementById(
+    "ammobox"
+);

@@ -14,6 +14,7 @@ import * as YUKA from '/Modules/yuka.module.js'
 import { UnitManager } from "./Src/unitManager.js";
 import { Pistol } from "./Src/pistol.js";
 import { LuckyBox } from "./Src/luckyBox.js";
+import { AmmoBox } from "./Src/ammo_box.js"
 
 
 export var TimeScale;
@@ -80,8 +81,12 @@ async function main()  {
             var menu = document.getElementById("menu");
             menu.style.display = "none";
 
+            document.getElementById("fps").style.display = "block";
+            document.getElementById("ammo").style.display = "block";
+            document.getElementById("runData").style.display = "block";
+
             // Show the loading screen
-            loadingScreen.style.display = "block";
+            loadingScreen.style.display = "flex";
             
             scene = await createScene();
             
@@ -95,11 +100,14 @@ async function main()  {
             
             var pistol = new Pistol();
             var box = new LuckyBox(p);
+            var ammoBox = new AmmoBox(p);
 
             await pistol.init()
 
             p.LoadWeapon(pistol)
             await box.LoadMesh(p.collider);
+            await ammoBox.LoadMesh(p.collider, new BABYLON.Vector3(-12.120131858364807, 2.096194466462976, 11.366266535238479), new BABYLON.Vector3(0, Math.PI, 0));
+
             
         // YUKA specific
         
@@ -165,10 +173,107 @@ async function main()  {
             console.log("Fly mode enabled");
         }
 
+                
         // Function to open settings
         function openSettings() {
-            // Add code here to open the settings menu
             console.log("Settings menu opened");
+            // Show the settings page
+            var settings = document.getElementById("settings");
+            settings.style.display = "flex";
+
+            // Hide the menu
+            var menu = document.getElementById("menu");
+            menu.style.display = "none";
+
+            // Set up event listeners for the settings elements
+
+            // Difficulty buttons
+            var easyBtn = document.getElementById("easyBtn");
+            var normalBtn = document.getElementById("normalBtn");
+            var hardBtn = document.getElementById("hardBtn");
+
+            easyBtn.addEventListener("mouseover", function() {
+                showDescription("Easy difficulty description");
+            });            
+            easyBtn.addEventListener("mouseout", function() {
+                hideDescription();
+            });            
+            normalBtn.addEventListener("mouseover", function() {
+                showDescription("Normal difficulty description");
+            });            
+            normalBtn.addEventListener("mouseout", function() {
+                hideDescription();
+            });            
+            hardBtn.addEventListener("mouseover", function() {
+                showDescription("Hard difficulty description");
+            });            
+            hardBtn.addEventListener("mouseover", function() {
+                hideDescription();
+            });            
+            
+
+            // Time of Day buttons
+            var dayBtn = document.getElementById("dayBtn");
+            var nightBtn = document.getElementById("nightBtn");
+
+            dayBtn.addEventListener("mouseover", function () {
+                showDescription("Day time description");
+            });
+            nightBtn.addEventListener("mouseover", function () {
+                showDescription("Night time description");
+            });
+
+            // Field of View (FOV) range slider
+            var fovRange = document.getElementById("fovRange");
+            var fovValue = document.getElementById("fovValue");
+
+            fovRange.addEventListener("input", function () {
+                fovValue.textContent = fovRange.value;
+            });
+
+            // Volume range slider
+            var volumeRange = document.getElementById("volumeRange");
+            var volumeValue = document.getElementById("volumeValue");
+
+            volumeRange.addEventListener("input", function () {
+                volumeValue.textContent = volumeRange.value;
+            });
+
+            // Save Changes button
+            var saveBtn = document.getElementById("saveBtn");
+
+            saveBtn.addEventListener("click", function () {
+                // Code to save the settings changes
+            });
+
+            // Reset Changes button
+            var resetBtn = document.getElementById("resetBtn");
+
+            resetBtn.addEventListener("click", function () {
+                // Code to reset the settings changes
+            });
+
+            // Exit button
+            var exitBtn = document.getElementById("exitBtn");
+
+            exitBtn.addEventListener("click", function () {
+                // Hide the settings page
+                settings.style.display = "none";
+
+                // Show the menu
+                menu.style.display = "flex";
+            });
+        }
+
+        // Function to show description for settings elements
+        function showDescription(description) {
+            var descriptionElement = document.getElementById("difficultyDescription");
+            descriptionElement.textContent = description;
+        }
+
+        function hideDescription() {
+            var descriptionElement = document.getElementById("difficultyDescription");
+            descriptionElement.style.display = "none";
         }
 
         function handlePointerLockChange() {
