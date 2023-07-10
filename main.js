@@ -2,6 +2,7 @@
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
+import * as BABYLON from "@babylonjs/core";
 
 import { Enemy } from "./Src/enemy.js";
 import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, CreateScreenshot, RecastJSPlugin } from "@babylonjs/core";
@@ -9,14 +10,15 @@ import {camera, createScene,engine, GenerateScene} from './Src/scene.js';
 import {Player} from './Src/player.js';
 import { ammo, divFps } from "./Src/domItems.js";
 import * as YUKA from '/Modules/yuka.module.js'
+import { UnitManager } from "./Src/unitManager.js";
 
 
+export var TimeScale;
 
 //render variables
 export var scene;
 
 
-var ZombieList = [];
 
 async function main()  {
         await Engine;        
@@ -31,35 +33,52 @@ async function main()  {
         scene = await createScene();
         
         // hide the loading screen when you want to
-        engine.hideLoadingUI();
+        
        
         // initialize babylon scene and engine
 
         // hide/show the Inspector
         var p = new Player(scene);
           // YUKA specific
-        var target = new YUKA.Vector3()
-
-        var entityManager = new YUKA.EntityManager()
-        var time = new YUKA.Time()
-
        
-        // run the main render loopss
+        //run the main render loopss
+        var unitManager = null
+        
+        engine.hideLoadingUI();
+
         engine.runRenderLoop(() => {
-
-            const delta = time.update().getDelta()
-            entityManager.update(delta)
-
+           
             scene.render();
             p.update();
+            unitManager?.update()
             divFps.innerHTML = engine.getFps().toFixed() + " fps";
         });
 
-        engine.enterPointerlock();
+        let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "ct_gign.glb", scene)     
+        
+        const enemy = res.meshes[0];
+        enemy.scaling = new BABYLON.Vector3(.02, .02, .02);
+        enemy.rotation = new BABYLON.Vector3(0,0,0);
+        enemy.checkCollisions = true;
 
-        var e = new Enemy(scene, p);
-        ZombieList.push(e);
-        entityManager.add(e)
+        
+
+        res.meshes.forEach((m) => {
+            m.checkCollisions = true;
+            m.name = 'enemy'
+            enemy.visibility = 1;
+        });
+        
+        enemy.isPickable = true;
+        enemy.name = 'enemy'
+        enemy.visibility = 1;
+        enemy.computeWorldMatrix();
+        //box.computeWorldMatrix();
+        scene.stopAllAnimations();
+
+        unitManager = new UnitManager(p, res)
+        engine.enterPointerlock()    
+       
 }
 
 

@@ -1,6 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
 import {camera,engine} from './scene';
 import { SceneLoader } from "@babylonjs/core";
+import { UnitManager } from "./unitManager";
 
 
 //Class that contains all the player info
@@ -22,6 +23,7 @@ export class Player {
     lockedFor = 0;
     lockTime;
 
+    damage = 20;
     //
     mesh;
     ammoLevel;
@@ -149,17 +151,19 @@ export class Player {
         let rayHelper = new BABYLON.RayHelper(ray);
         rayHelper.show(this.scene);
 
-        // if (hit.pickedMesh == target){
-        //    health -= 0.1;
-	    // } else if (hit.pickedMesh == ground0) {
-        //     camera.position = hit.pickedPoint;
-        //     camera.position.y += 5;
-        // } else {
-        //     //camera.position = ray.origin.clone().add(ray.direction.scale(100));
-        // }
 
-        if(hit.pickedMesh && hit.pickedMesh.name == "enemy")
-            console.log("hit an enemy!!!");
+        if(hit.pickedMesh){
+            var name = hit.pickedMesh.id.split(".")
+            console.log(name)
+            if(name[0] === "enemy") {
+                console.log("hit an enemy");
+               console.log(name[name.length - 1]);
+               UnitManager.instance.onEnemyHit(name[name.length - 1]);
+            }
+               
+        }
+
+            
     }
 
     reload() {
@@ -485,6 +489,9 @@ export class Player {
         this._fire = group;
     
     }
+    getDamage() {
+        return this.damage;
+    }
     getUserposition(){
         var origin = new BABYLON.Vector3(camera.position.x, camera.position.y,camera.position.z);
         origin.y -= 2;
@@ -496,8 +503,9 @@ export class Player {
         var ray = new BABYLON.Ray(origin, _direction, length);
     
         var hit = this.scene.pickWithRay(ray);
-        hit.fastCheck = true;
 
+        hit.fastCheck = true;
+        
         return hit.pickedPoint
     }
 

@@ -1,12 +1,9 @@
 "use strict";
 import * as BABYLON from "@babylonjs/core";
-import {camera,engine} from './scene';
-import { SceneLoader } from "@babylonjs/core";
-import * as CANNON from "cannon";
 import { scene } from "../main";
 import * as YUKA from '../Modules/yuka.module.js'
 
-import { navigation } from "./scene";
+import { engine, navigation } from "./scene";
 import { Vehicle } from "../Modules/yuka.module";
 
 export class Enemy extends Vehicle {
@@ -14,54 +11,70 @@ export class Enemy extends Vehicle {
     pathHelper;
     playerRef
     //position;
+    id;
     scene;
     mesh;
+    speed = 1;
+    died= 0;
     c;
     done = false;
-    constructor(scene, player) {
+    moveTimeout = 5;
+    moveTime = 5;
+    timeFromLastMove= 0;
+    _init = false;
+    hp = 100;
+
+    constructor(scene, player, id) {
         super()
-        const followPathBehavior = new YUKA.FollowPathBehavior()
-        followPathBehavior.nextWaypointDistance = 0.5
-        followPathBehavior.active = false
-        this.steering.add(followPathBehavior)
-
-        this.maxSpeed = 1.5
-        this.maxForce = 10
-        this.navMesh = navigation
-
-        this.scene = scene;
-        this.currentRegion = null
-        this.fromRegion = null
-        this.toRegion = null
-        this.playerRef = player;
-
-        this.LoadMesh(scene) 
-
-        scene.onKeyboardObservable.add((kbInfo) => {
-            
-            switch (kbInfo.type) {
-              case BABYLON.KeyboardEventTypes.KEYDOWN:
-                if(kbInfo.event.key == 'p')
-                   this.findPathTo();
-            }
-          });
         
+        this.id = id;
+        this.scene = scene;
+        this.playerRef = player; 
+    }
+    async init(clone, position){
+        this.LoadMesh(scene, position)   
+        await this.mesh
+        this.setMesh(clone)
+        this._init = true
     }
 
-    update(delta) {
-        super.update(delta)
- 
+    update() {
+       
+        if(this.died == 1 || !this._init) return;
+            this.moveTime+= engine.getDeltaTime()/1000
+        if(this.moveTime > this.moveTimeout) {
+            this.moveTime=0
+            this.findPathTo()
+        }
     }
     
-    
+    takeDamage() {
+        var dmg = this.playerRef.getDamage()
+        
+        this.hp -= dmg
+        console.log("Hp : " + this.hp)
+
+        if(this.hp <= 0) {
+            console.log("dead")
+            this.mesh.dispose()
+            return true
+        }
+        else 
+            return false
+    }
+
+    getId() {
+        return this.id;
+    }
+
     findPathTo() {
+        if(this.died) return;
         var from = this.mesh.position
         var _from =  new YUKA.Vector3(this.mesh.position.x , this.mesh.position.y, this.mesh.position.z) 
         var playerPos = this.playerRef.getUserposition();
         var to = new YUKA.Vector3(playerPos.x , playerPos.y, playerPos.z) 
         
         const path = navigation.findPath(_from, to)
-        console.log(path)
 
         if (this.pathHelper) {
             this.pathHelper.dispose()
@@ -82,7 +95,6 @@ export class Enemy extends Vehicle {
             var pos = new BABYLON.Vector3(vec.x,vec.y,vec.z)
             newPath.push(pos);
         })
-        console.log(newPath);
 
         if (newPath && newPath.length > 0) {
             var length = 0;
@@ -97,7 +109,7 @@ export class Enemy extends Vehicle {
 
             length += BABYLON.Vector3.Distance(direction[i].value, vector);
             direction.push({
-                frame: length*100,
+                frame: length*100/this.speed,
                 value: vector
             });
         }
@@ -114,7 +126,7 @@ export class Enemy extends Vehicle {
         }
     }
       
-
+    
     getPosition(position){
         
         var _direction = new BABYLON.Vector3(0, -1, 0);
@@ -138,42 +150,21 @@ export class Enemy extends Vehicle {
         return hit.pickedPoint;
     }
 
-    async LoadMesh(scene) {
-       
-        let res = await BABYLON.SceneLoader.ImportMeshAsync(null, "Assets/", "ct_gign.glb", scene)     
-
-        const enemy = res.meshes[0];
-        
-        enemy.scaling = new BABYLON.Vector3(.02, .02, .02);
-        enemy.rotation = new BABYLON.Vector3(0,0,0);
-        enemy.checkCollisions = true;
-        
-        res.meshes.forEach((m) => {
-            m.checkCollisions = true;
-            m.name = 'enemy'
-        });
-        var pos = this.getPosition(new BABYLON.Vector3(1.1082477934775106,  1.31716100519502155,  11.913428243630761));
-
-        const box = BABYLON.MeshBuilder.CreateBox("box", {width: .3, depth: .3, height: .3}, scene);  
+    async LoadMesh(scene,position) {
+        const box = await BABYLON.MeshBuilder.CreateBox("box", {width: .3, depth: .3, height: .3}, scene);  
         box.visibility= 1;
 
-        //box.setPivotPoint(new BABYLON.Vector3( 0, -1, 0))
-        box.position = pos;
-        box.visibility = 0;
         box.checkCollisions = true;
         box.name = "enemy";
-        box.isPickable = true;
-        enemy.isPickable = false;
-        enemy.name = 'enemy'
-        enemy.parent = box;
-        
-        enemy.computeWorldMatrix();
-        //box.computeWorldMatrix();
-        scene.stopAllAnimations();
-        
-        
+        box.isPickable = true;  
         this.mesh = box;
-        this.done= true;
+
+        var pos = this.getPosition(position);
+        box.position = pos;
+    }
+
+    setMesh(clone) {
+        clone.parent = this.mesh;
     }
 }
 
