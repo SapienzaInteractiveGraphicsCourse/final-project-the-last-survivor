@@ -13,10 +13,11 @@ import * as YUKA from '/Modules/yuka.module.js'
 
 import { UnitManager } from "./Src/unitManager.js";
 import { Pistol } from "./Src/pistol.js";
+import { LuckyBox } from "./Src/luckyBox.js";
 
 
 export var TimeScale;
-
+export var p;
 //render variables
 export var scene;
 
@@ -72,10 +73,14 @@ async function main()  {
             var p = new Player(scene);
             
             var pistol = new Pistol();
+            var box = new LuckyBox(p);
+
             await pistol.init()
-            console.log(pistol)
+
             p.LoadWeapon(pistol)
-            // YUKA specific
+            await box.LoadMesh(p.collider);
+            
+        // YUKA specific
         
             //run the main render loopss
             var unitManager = null
@@ -104,8 +109,13 @@ async function main()  {
             
 
             res.meshes.forEach((m) => {
+                if(m.name = "Object_2")
+                    m.name = 'enemy.head'
+                else
+                    m.name = 'enemy'
+                console.log(m.name)
                 m.checkCollisions = true;
-                m.name = 'enemy'
+                
                 enemy.visibility = 1;
             });
             

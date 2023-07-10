@@ -13,3 +13,7 @@ export const divFps = document.querySelector(
 export const runData = document.querySelector(
     "#runData"
 );
+
+export const luckyBox = document.getElementById(
+    "luckyBox"
+);

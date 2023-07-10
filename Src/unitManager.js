@@ -69,6 +69,7 @@ export class UnitManager {
                     const index = this.spawnedEnemy.indexOf(e);
                     if (index !== -1) {
                         this.spawnedEnemy.splice(index, 1);
+                        this.player.addMoney(100)
                     } 
                 }
                     

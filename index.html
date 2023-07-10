@@ -27,7 +27,7 @@
             padding: .1%;
             right: 10px;
             width: fit-content;
-            height: 20px;
+            height: fit-content;
         }
         #loadingScreen {
             position: absolute;
@@ -160,6 +160,18 @@
         background: linear-gradient(90deg, rgb(217, 210, 5) 40%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgb(217, 210, 5) 60%);
         }
 
+        #luckyBox {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            top: 40%;
+            text-align: center;
+            color: white;
+            font-size: xx-large;
+        }
+
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">   
@@ -167,6 +179,7 @@
 </head>
 <body style="width: 100%;height: 100%">
     <div id="menu">
+        
         <div id="logo" class="spacer">
             The Last Survivor
         </div>
@@ -201,6 +214,7 @@
     <div id="ammo">ammo</div>
     <div id="runData">Round<br> Zombie Count</div>
     <div id="el" style="display: none;"></div>
+    <div id="luckyBox" style="display: none;">Press F to open the crate</div>
     <canvas id="renderCanvas" style="width: 100%;height: 100%"></canvas>
     <div id="loadingScreen">
         <h2>Loading...</h2>

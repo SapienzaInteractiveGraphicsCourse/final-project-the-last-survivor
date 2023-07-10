@@ -11,13 +11,14 @@ export class Pistol extends Weapon {
     UpArm_R 
     IK_Hand_Cntrl_L 
 
-    damage = 15;
+    damage = 150;
     ammoLevel = 10;
     currentAmmo = 10;
 
     async init() {
         await this.loadMesh("fps_pistol_animations.glb");
         ///LOAD PISTOL COMPONENTS///
+        
         this.PBody = this.mesh.getChildren(((m) => m.name == "PBody_058"), false);
         this.Pmag = this.mesh.getChildren(((m) => m.name == "Pmag_061"), false);
         this.IK_Hand_Cntrl_R = this.mesh.getChildren(((m) => m.name == "IK_Hand_Cntrl_R_037"), false);

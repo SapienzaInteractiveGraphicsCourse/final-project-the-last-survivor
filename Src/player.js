@@ -3,6 +3,7 @@ import {camera,engine} from './scene';
 import { SceneLoader } from "@babylonjs/core";
 import { UnitManager } from "./unitManager";
 import { Pistol } from "./pistol";
+import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 
 
 //Class that contains all the player info
@@ -12,6 +13,7 @@ export class Player {
     _animGroup = null;
     //
     weapon
+    collider
     //PLAYER STATUS
     locked = false;
     status = status.IDLE;
@@ -19,13 +21,18 @@ export class Player {
     //TIME LOCKS
     lockedFor = 0;
     lockTime;
-
+    money = 0;
     scene;
     
     constructor(scene) {
         this.scene = scene;
         this.InputManager(scene); 
-
+        this.collider = BABYLON.MeshBuilder.CreateBox("box", {width:.5, depth: .5, height: 1}, scene); 
+        this.collider.parent = camera;
+        this.collider.isPickable = false;
+        this.collider.checkCollisions = false
+        this.collider.visibility = 0.2
+        this.instance = this
     }
     async initWeapon() {
         
@@ -59,14 +66,22 @@ export class Player {
                         this.ChangeStatus(status.RELOADING);
                     if(kbInfo.event.key == 'l')
                         console.log(this.getUserposition());
-                    
+                    if(kbInfo.event.key == 'f' && LuckyBox.playerInside)
+                        this.buy();
+                        
             }
 
           });
 
     }
 
-
+    buy() {
+        
+        if(this.money <= 950)
+            return
+        LuckyBoxInstance.open();
+        this.money -= 950
+    }
     update() {
         ///CHECK IF CAN SHOOT
        if(this.inputShoot && !this.locked) {
@@ -74,7 +89,7 @@ export class Player {
            
        }
             
-        ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.ammoLevel;
+        ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.ammoLevel + "<br>" + "money: " + this.money + "$";
     }
     ///=====================================================================================///
     ///===================================ACTION METHODS====================================///
@@ -128,6 +143,7 @@ export class Player {
     }
 
     shoot() {
+        if(this.weapon.currentAmmo <= 0 ) return
         console.log("shot");
         this.weapon.currentAmmo--;
         this.weapon._fire.play( this.weapon._fire.loopAnimation)
@@ -140,9 +156,6 @@ export class Player {
     pew() {
         var ray = camera.getForwardRay(999);
         var hit = this.scene.pickWithRay(ray);
-
-        let rayHelper = new BABYLON.RayHelper(ray);
-        rayHelper.show(this.scene);
 
 
         if(hit.pickedMesh){
@@ -209,7 +222,9 @@ export class Player {
         
         return hit.pickedPoint
     }
-
+    addMoney(money) {
+        this.money += money
+    }
 }
 
 const weaponStats = {

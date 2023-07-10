@@ -75,20 +75,6 @@ export class Enemy extends Vehicle {
         var to = new YUKA.Vector3(playerPos.x , playerPos.y, playerPos.z) 
         
         const path = navigation.findPath(_from, to)
-
-        if (this.pathHelper) {
-            this.pathHelper.dispose()
-        }
-        this.pathHelper = BABYLON.MeshBuilder.CreateLines(
-            'path-helper',
-            {
-              points: path,
-              updatable: false,
-            },
-            this.scene
-          )
-          this.pathHelper.color = BABYLON.Color3.Red()
-
         var newPath = [];
 
         path.forEach(vec => {
@@ -157,6 +143,7 @@ export class Enemy extends Vehicle {
         box.checkCollisions = true;
         box.name = "enemy";
         box.isPickable = true;  
+        box.visibility = 0;
         this.mesh = box;
 
         var pos = this.getPosition(position);

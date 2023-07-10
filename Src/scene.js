@@ -52,10 +52,7 @@ export async function createScene() {
     scene.fogDensity = 0.005;
 
 
-    var light = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(10, -10, -10), scene);
-    light.intensity = 2;
-    light.autoUpdateExtends=false;
-    light.shadowFrustumSize=400
+
 
     var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
     light1.intensity =1;
