@@ -3,6 +3,12 @@
 <head>
     <script src="https://cdn.babylonjs.com/ammo.js" type="text/javascript"></script>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
         #fps {
             position: absolute;
             background-color: black;
@@ -29,6 +35,7 @@
             width: fit-content;
             height: fit-content;
         }
+
         #loadingScreen {
             position: absolute;
             top: 0;
@@ -42,6 +49,7 @@
             color: #fff;
             font-size: 24px;
         }
+
         #menu {
             position: absolute;
             top: 0;
@@ -56,45 +64,46 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            }
+            overflow: hidden;
+        }
 
-            #menu #logo {
+        #menu #logo {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
-            }
+        }
 
-            #menu .spacer {
+        #menu .spacer {
             margin-bottom: 10px;
-            }
+        }
 
-            #menu .MSButton {
+        #menu .MSButton {
             background-color: #ccc;
             border: none;
             color: #333;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            }
+        }
 
-            #menu .MSButton:hover {
+        #menu .MSButton:hover {
             background-color: #ddd;
-            }
+        }
 
-            #menu .titleCommand {
+        #menu .titleCommand {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 10px;
-            }
+        }
 
-            #menu .keys {
+        #menu .keys {
             display: inline-block;
             width: 70px;
-            }
+        }
 
-            #menu .Key {
+        #menu .Key {
             display: inline-block;
-}
+        }
 
         #pauseGame {
             display: none;
@@ -110,18 +119,18 @@
             color: white;
             font-family: Arial, sans-serif;
             font-size: 24px;
-            }
+        }
 
-            #pauseGame span {
+        #pauseGame span {
             margin-bottom: 20px;
-            }
+        }
 
-            #gameBackMenu {
+        #gameBackMenu {
             color: white;
             text-decoration: none;
             margin-top: 20px;
-            }
-            #runData {
+        }
+        #runData {
             position: absolute;
             background-color: black;
             border: 2px solid red;
@@ -142,15 +151,15 @@
         }
 
         #el::after, #el::before {
-        content: "";
-        position: absolute;
+            content: "";
+            position: absolute;
         }
 
         #el::before {
-        width: 1px;
-        height: 30px;
-        left: 14.5px;
-        background: linear-gradient(0deg, rgb(217, 210, 5) 40%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgb(217, 210, 5) 60%);
+            width: 1px;
+            height: 30px;
+            left: 14.5px;
+            background: linear-gradient(0deg, rgb(217, 210, 5) 40%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgb(217, 210, 5) 60%);
         }
 
         #el::after {

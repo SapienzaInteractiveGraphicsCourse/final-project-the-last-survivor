@@ -30,6 +30,27 @@ async function main()  {
         // create the canvas html element and attach it to the webpage
         var canvas = document.getElementById("renderCanvas");
 
+        // Get the size of the window
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+
+        // Update the size of the canvas
+        canvas.width = windowWidth;
+        canvas.height = windowHeight;
+
+        // Update the engine's render width and height
+        engine.setHardwareScalingLevel(1 / window.devicePixelRatio);
+        engine.setSize(windowWidth, windowHeight);
+
+        
+        // Event listener for window resize
+        window.addEventListener("resize", function () {
+            // Get the new size of the window
+            engine.resize()
+        });
+
+
+
         var loadingScreen = document.getElementById("loadingScreen");
         loadingScreen.style.display = "none";
 
@@ -188,6 +209,12 @@ async function main()  {
         }
 
 }
+
+
+
+
+
+
 
 // Event handler for keydown event
 function handleKeyDown(event) {
