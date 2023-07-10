@@ -1,5 +1,6 @@
 import { scene } from "../main";
 import { camera } from "./scene";
+import * as BABYLON from "@babylonjs/core";
 
 
 export class Weapon {
@@ -17,7 +18,7 @@ export class Weapon {
 
     mesh;
     constructor() {
-        instance = this;
+        this.instance = this;
     }
 
     reset() {

@@ -1,4 +1,4 @@
-import { WebpackOptionsDefaulter } from "webpack";
+
 import { Weapon } from "./weapon";
 import * as BABYLON from "@babylonjs/core";
 
@@ -34,28 +34,28 @@ export class Pistol extends Weapon {
 
         var _anim = new BABYLON.Animation("Pmag_Pos", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(Pmag_Frames_position);
-        group.addTargetedAnimation(_anim,Pmag);
+        group.addTargetedAnimation(_anim,this.Pmag);
 
         _anim = new BABYLON.Animation("PBody_Pos", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(PBody_Frames_position);
-        group.addTargetedAnimation(_anim,PBody);
+        group.addTargetedAnimation(_anim,this.PBody);
 
         _anim = new BABYLON.Animation("LeftHand_Pos", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(IK_Hand_Cntrl_L_position);
-        group.addTargetedAnimation(_anim,IK_Hand_Cntrl_L);
+        group.addTargetedAnimation(_anim,this.IK_Hand_Cntrl_L);
 
         _anim = new BABYLON.Animation("LeftHand_Pos", "rotationQuaternion", 60, BABYLON.Animation.ANIMATIONTYPE_QUATERNION,  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(IK_Hand_Cntrl_L_rotation);
-        group.addTargetedAnimation(_anim,IK_Hand_Cntrl_L);
+        group.addTargetedAnimation(_anim,this.IK_Hand_Cntrl_L);
 
         _anim = new BABYLON.Animation("LeftHand_Pos", "rotationQuaternion", 60, BABYLON.Animation.ANIMATIONTYPE_QUATERNION, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(IK_Hand_Cntrl_R_rotation);
-        group.addTargetedAnimation(_anim,IK_Hand_Cntrl_R);
+        group.addTargetedAnimation(_anim,this.IK_Hand_Cntrl_R);
 
 
         _anim = new BABYLON.Animation("IK_Hand_Cntrl_R", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(IK_Hand_Cntrl_R_position);
-        group.addTargetedAnimation(_anim,IK_Hand_Cntrl_R);
+        group.addTargetedAnimation(_anim,this.IK_Hand_Cntrl_R);
 
         group.play(group.loopAnimation);
         // group2.play(group2.loopAnimation);

@@ -74,7 +74,7 @@ export class Player {
            
        }
             
-        ammo.innerHTML = "ammo: " + this.ammoLevel + "/"+ weaponStats.ammo;
+        ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.ammoLevel;
     }
     ///=====================================================================================///
     ///===================================ACTION METHODS====================================///
@@ -130,8 +130,8 @@ export class Player {
     shoot() {
         console.log("shot");
         this.weapon.currentAmmo--;
-        this.weapon._fire.play(this._fire.loopAnimation)
-        this.weapon.onAnimationEndObservable.addOnce(()  => this.toggleState());
+        this.weapon._fire.play( this.weapon._fire.loopAnimation)
+        this.weapon._fire.onAnimationEndObservable.addOnce(()  => this.toggleState());
         this.pew();
     }
 
@@ -162,7 +162,7 @@ export class Player {
     reload() {
         console.log("reload");
         
-        this.weapon._reload.play(this._reload.loopAnimation)
+        this.weapon._reload.play(this.weapon._reload.loopAnimation)
         this.weapon._reload.onAnimationEndObservable.addOnce(()  => this.endReload());
     }
 
@@ -179,12 +179,13 @@ export class Player {
     ///===============================INITIALIZE METHODS====================================///
     ///=====================================================================================///
    LoadWeapon(weapon) {
-    this.weapon.parent = null;
-    this.weapon.position = new BABYLON.Vector3(0,0,0)
-    this.weapon.reset();
-    
+        if(this.weapon){
+            this.weapon.parent = null;
+            this.weapon.position = new BABYLON.Vector3(0,0,0)
+            this.weapon.reset();
+        }
     this.weapon = weapon
-    this.mesh.parent = camera;
+    this.weapon.mesh.parent = camera;
    }
 
     

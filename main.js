@@ -10,6 +10,7 @@ import {camera, createScene,engine, GenerateScene} from './Src/scene.js';
 import {Player} from './Src/player.js';
 import { ammo, divFps } from "./Src/domItems.js";
 import * as YUKA from '/Modules/yuka.module.js'
+
 import { UnitManager } from "./Src/unitManager.js";
 import { Pistol } from "./Src/pistol.js";
 
@@ -72,6 +73,7 @@ async function main()  {
             
             var pistol = new Pistol();
             await pistol.init()
+            console.log(pistol)
             p.LoadWeapon(pistol)
             // YUKA specific
         
