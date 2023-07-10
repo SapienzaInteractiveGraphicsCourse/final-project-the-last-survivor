@@ -9,3 +9,7 @@ export const ammo = document.querySelector(
 export const divFps = document.querySelector(
     "#fps"
 );
+
+export const runData = document.querySelector(
+    "#runData"
+);
