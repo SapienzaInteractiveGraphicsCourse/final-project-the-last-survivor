@@ -73,7 +73,34 @@ export class Enemy extends Vehicle {
         var _from =  new YUKA.Vector3(this.mesh.position.x , this.mesh.position.y, this.mesh.position.z) 
         var playerPos = this.playerRef.getUserposition();
         var to = new YUKA.Vector3(playerPos.x , playerPos.y, playerPos.z) 
-        
+
+        const directionToPlayer = new BABYLON.Vector3(to.x - from.x, to.y - from.y, to.z - from.z);
+        // Calculate the rotation angle towards the player
+        const rotationAngle = Math.atan2(directionToPlayer.x, directionToPlayer.z);
+
+        // Create rotation animation
+        const rotateAnimation = new BABYLON.Animation(
+            "RotateAnimation",
+            "rotation",
+            60,
+            BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+        );
+
+        const rotateKeys = [
+            {
+                frame: 0,
+                value: this.mesh.rotation,
+            },
+            {
+                frame: 50,
+                value: new BABYLON.Vector3(0, rotationAngle, 0),
+            },
+        ];
+
+        rotateAnimation.setKeys(rotateKeys);
+        this.mesh.animations.push(rotateAnimation);
+
         const path = navigation.findPath(_from, to)
         var newPath = [];
 

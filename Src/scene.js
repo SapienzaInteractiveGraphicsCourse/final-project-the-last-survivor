@@ -104,7 +104,7 @@ export async function createScene() {
     //var navmesh = scene.getMeshByName("Navmesh");
 
     const loader = new YUKA.NavMeshLoader()
-    loader.load('../Assets/dustYuka.glb', { epsilonCoplanarTest: 0.25 }).then((navMesh) => {
+    loader.load('Assets/dustYuka.glb', { epsilonCoplanarTest: 0.25 }).then((navMesh) => {
         navigation = navMesh;
 
         
