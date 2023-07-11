@@ -18448,8 +18448,15 @@ class NavMesh {
 		const graph = this.graph;
 		const path = new Array();
 
-		let fromRegion = this.getRegionForPoint( from, this.epsilonContainsTest );
-		let toRegion = this.getRegionForPoint( to, this.epsilonContainsTest );
+		let fromRegion
+		let toRegion
+		try{
+			fromRegion = this.getRegionForPoint( from, this.epsilonContainsTest );
+			toRegion = this.getRegionForPoint( to, this.epsilonContainsTest );
+		} catch (error) {
+			console.error('Error occurred during A* search:', error);
+			return 0; // Return empty path if error occurs
+		}
 
 		if ( fromRegion === null || toRegion === null ) {
 
@@ -18478,34 +18485,29 @@ class NavMesh {
 			const target = this.getNodeIndex( toRegion );
 
 			const astar = new AStar( graph, source, target );
-			astar.search();
-
-			if ( astar.found === true ) {
-
-				const polygonPath = astar.getPath();
-
-				const corridor = new Corridor();
-				corridor.push( from, from );
-
-				// push sequence of portal edges to corridor
-
-				const portalEdge = { left: null, right: null };
-
-				for ( let i = 0, l = ( polygonPath.length - 1 ); i < l; i ++ ) {
-
-					const region = this.regions[ polygonPath[ i ] ];
-					const nextRegion = this.regions[ polygonPath[ i + 1 ] ];
-
-					this._getPortalEdge( region, nextRegion, portalEdge );
-
-					corridor.push( portalEdge.left, portalEdge.right );
-
+			try {
+				astar.search();
+				if (astar.found === true) {
+					const polygonPath = astar.getPath();
+					const corridor = new Corridor();
+					corridor.push(from, from);
+		
+					// Push sequence of portal edges to corridor
+					const portalEdge = { left: null, right: null };
+		
+					for (let i = 0, l = polygonPath.length - 1; i < l; i++) {
+					const region = this.regions[polygonPath[i]];
+					const nextRegion = this.regions[polygonPath[i + 1]];
+					this._getPortalEdge(region, nextRegion, portalEdge);
+					corridor.push(portalEdge.left, portalEdge.right);
+					}
+		
+					corridor.push(to, to);
+					path.push(...corridor.generate());
 				}
-
-				corridor.push( to, to );
-
-				path.push( ...corridor.generate() );
-
+			} catch (error) {
+				console.error('Error occurred during A* search:', error);
+				return 0; // Return empty path if error occurs
 			}
 
 			return path;

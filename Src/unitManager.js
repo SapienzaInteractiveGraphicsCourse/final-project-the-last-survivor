@@ -89,7 +89,7 @@ export class UnitManager {
                 this.currentId=0
                 this.timeFromLastSpawn = 0
                 this.spawnedEnemy = []
-                this.currentSpawnNumber = this.startingSpawn * this.spawnGrowt * this.roundCounter;
+                this.currentSpawnNumber = 5;
                 this.spawnEnemy();
                 break;
             case status.PAUSE:

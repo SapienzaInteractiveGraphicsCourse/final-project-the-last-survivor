@@ -111,13 +111,13 @@ value:  new BABYLON.Vector3(0,Math.PI,0)
 reloadKeyFrames.push(
 {
 frame: 60,
-value:  new BABYLON.Vector3(Math.PI/8,Math.PI,)
+value:  new BABYLON.Vector3(Math.PI/10,Math.PI,)
 });
 
 reloadKeyFrames.push(
 {
 frame: 120,
-value:  new BABYLON.Vector3(Math.PI/8,Math.PI,)
+value:  new BABYLON.Vector3(Math.PI/10,Math.PI,)
 });
 
 reloadKeyFrames.push(

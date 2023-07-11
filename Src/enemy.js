@@ -91,6 +91,17 @@ export class Enemy extends Vehicle {
         // Calculate the rotation angle towards the player
         const rotationAngle = Math.atan2(directionToPlayer.x, directionToPlayer.z);
 
+        // Get the current rotation angle of the mesh around the y-axis
+        const currentRotation = this.mesh.rotation.y;
+
+        // Adjust the target rotation if it should be in the opposite direction
+        let targetRotation = rotationAngle;
+        if (currentRotation - rotationAngle > Math.PI) {
+            targetRotation += 2 * Math.PI;
+        } else if (rotationAngle - currentRotation > Math.PI) {
+            targetRotation -= 2 * Math.PI;
+        }
+
         // Create rotation animation
         const rotateAnimation = new BABYLON.Animation(
             "RotateAnimation",
@@ -107,16 +118,20 @@ export class Enemy extends Vehicle {
             },
             {
                 frame: 50,
-                value: new BABYLON.Vector3(0, rotationAngle, 0),
+                value: new BABYLON.Vector3(0, targetRotation, 0),
             },
         ];
 
         rotateAnimation.setKeys(rotateKeys);
         this.mesh.animations.push(rotateAnimation);
 
-        const path = navigation.findPath(_from, to)
+        const path = navigation.findPath(_from, to);
+        console.log(path)
         var newPath = [];
-
+        
+        if (path===0){
+            return
+        }
         path.forEach(vec => {
             var pos = new BABYLON.Vector3(vec.x,vec.y,vec.z)
             newPath.push(pos);

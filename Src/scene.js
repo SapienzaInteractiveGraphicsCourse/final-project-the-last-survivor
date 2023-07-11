@@ -98,7 +98,8 @@ export async function createScene() {
     let navmesh = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "dustYuka.glb", scene)
     navmesh.meshes.forEach((m) => {
         m.visibility = 0;
-        
+        m.checkCollisions = true;
+        m.isPickable = true;
     })
     
     //var navmesh = scene.getMeshByName("Navmesh");
