@@ -23,7 +23,7 @@ export var TimeScale;
 export var p;
 //render variables
 export var scene;
-
+export var enemy;
 let walking = false;
 let startTime;
 
@@ -130,10 +130,10 @@ async function main()  {
                 divFps.innerHTML = engine.getFps().toFixed() + " fps";
             });
 
-            let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "ct_gign.glb", scene)     
+            let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "zombie1.gltf", scene)    
 
-            const enemy = res.meshes[0];
-            enemy.scaling = new BABYLON.Vector3(.02, .02, .02);
+            enemy = res.meshes[0];
+            enemy.scaling = new BABYLON.Vector3(1, 1, 1);
             enemy.rotation = new BABYLON.Vector3(0,0,0);
             enemy.checkCollisions = true;
 
