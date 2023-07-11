@@ -13,6 +13,7 @@ import * as YUKA from '/Modules/yuka.module.js'
 
 import { UnitManager } from "./Src/unitManager.js";
 import { Pistol } from "./Src/pistol.js";
+import { Assault } from "./Src/assault_rifle.js";
 import { LuckyBox } from "./Src/luckyBox.js";
 import { AmmoBox } from "./Src/ammo_box.js"
 

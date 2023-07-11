@@ -22,7 +22,7 @@ export class Player {
     //TIME LOCKS
     lockedFor = 0;
     lockTime;
-    money = 0;
+    money = 5000;
     scene;
     
     constructor(scene) {
@@ -87,8 +87,8 @@ export class Player {
         if (this.weapon.ammoLevel===0 || this.weapon.currentAmmo ===10){
             this.status = status.IDLE
         }
-        console.log("THIS.STATUS: " +this.status)
-        console.log("this.inputShoot " + this.inputShoot + " this.locked " + this.locked)
+        // console.log("THIS.STATUS: " +this.status)
+        // console.log("this.inputShoot " + this.inputShoot + " this.locked " + this.locked)
         ///CHECK IF CAN SHOOT
        if(this.inputShoot && !this.locked) {
             this.ChangeStatus(status.SHOOTING);
@@ -224,13 +224,15 @@ export class Player {
     ///===============================INITIALIZE METHODS====================================///
     ///=====================================================================================///
    LoadWeapon(weapon) {
+        console.log("Player weapon= " + this.weapon)
         if(this.weapon){
             this.weapon.parent = null;
             this.weapon.position = new BABYLON.Vector3(0,0,0)
             this.weapon.reset();
         }
-    this.weapon = weapon
-    this.weapon.mesh.parent = camera;
+        console.log("I'm here, weapon = " + weapon)
+        this.weapon = weapon
+        this.weapon.mesh.parent = camera;
    }
 
     
@@ -256,6 +258,17 @@ export class Player {
     }
     addMoney(money) {
         this.money += money
+    }
+
+    changeWeapon(newWeapon) {
+        this.weapon.mesh.dispose();
+        this.weapon = undefined
+        this.weapon = newWeapon
+        this.weapon.parent = null;
+        this.weapon.mesh.parent = camera;
+        this.weapon.position = new BABYLON.Vector3(0,-10,0)
+        this.weapon.reset();
+        this.status = status.IDLE; // Reset the player's status to IDLE after changing the weapon
     }
 }
 

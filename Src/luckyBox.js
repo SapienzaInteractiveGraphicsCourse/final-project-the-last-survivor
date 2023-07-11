@@ -1,6 +1,8 @@
 import * as BABYLON from "@babylonjs/core";
 import { camera } from "./scene";
 import { Weapon } from "./weapon";
+import { Pistol } from "./pistol";
+import { Assault } from "./assault_rifle";
 import { p, scene } from "../main";
 import { luckyBox } from "./domItems";
 
@@ -112,23 +114,32 @@ export class LuckyBox {
         this.close();
     }
 
-    GetRandomWeapon() {
-        var id = Math.floor(Math.random()* 3);
+    async GetRandomWeapon() {
+        var id = Math.floor(Math.random() * 3);
         switch (id) {
-            case 0:
-                luckyBox.textContent = "You obtained a pistol"
-                break;
-            case 1:
-                luckyBox.textContent = "You obtained a sniper"
-                break;
-            case 2:
-                luckyBox.textContent = "You obtained a ak 74"
-                break;    
-
-            default:
-                break;
+          case 0:
+            luckyBox.textContent = "You obtained a pistol";
+            // this.player.weapon.mesh.dispose();
+            const pistol = await new Pistol()
+            await pistol.init()
+            this.player.changeWeapon(pistol);
+            break;
+          case 1:
+            luckyBox.textContent = "You obtained a sniper";
+            // Change the weapon to a sniper (provide the appropriate sniper class)
+            break;
+          case 2:
+            luckyBox.textContent = "You obtained an AK 74";
+            this.player.weapon.mesh.dispose();
+            const assault = await new Assault()
+            await assault.init()
+            this.player.changeWeapon(assault);
+            break;
+          default:
+            break;
         }
     }
+      
 }
 
 var openRot =  [{

@@ -16,7 +16,7 @@ export class Pistol extends Weapon {
     currentAmmo = 10;
 
     async init() {
-        await this.loadMesh("fps_pistol_animations.glb");
+        await this.loadMesh("fps_pistol_animations.glb", new BABYLON.Vector3(0.1, -0.2, 0));
         ///LOAD PISTOL COMPONENTS///
         
         this.PBody = this.mesh.getChildren(((m) => m.name == "PBody_058"), false);

@@ -25,14 +25,15 @@ export class Weapon {
         this.currentAmmo = this.ammoLevel
     }
     
-    async loadMesh(name) {
+    async loadMesh(name, pos) {
         let res = await BABYLON.SceneLoader.ImportMeshAsync(null, "./Assets/", name, scene)     
 
         const weapon = res.meshes[0];
 
         weapon.rotation = new BABYLON.Vector3(0,Math.PI,0);
-        weapon.position.z = 0;
-        weapon.position.y = -0.2;
+        weapon.position.z = pos.z;
+        weapon.position.y = pos.y;
+        weapon.position.x = pos.x;
         
         weapon.computeWorldMatrix();
        
