@@ -22,7 +22,7 @@ export class Player {
     //TIME LOCKS
     lockedFor = 0;
     lockTime;
-    money = 5000;
+    money = 500;
     scene;
     
     constructor(scene) {
@@ -77,11 +77,10 @@ export class Player {
     }
 
     buy() {
-        if(this.money <= 950 && !LuckyBoxInstance.interactable)
-            return
-
-        LuckyBoxInstance.open();
-        this.money -= 950
+        if(this.money >= 950 && LuckyBoxInstance.interactable){
+            LuckyBoxInstance.open();
+            this.money -= 950
+        }   
     }
     update() {
         if (this.weapon.ammoLevel===0 || this.weapon.currentAmmo ===10){

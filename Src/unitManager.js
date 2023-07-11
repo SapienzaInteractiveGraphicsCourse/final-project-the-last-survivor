@@ -43,7 +43,6 @@ export class UnitManager {
             m.checkCollisions = true;
             m.name = 'enemy'
             m.id = this.currentId
-            
         });
         var clone = await  this.enemyMesh.meshes[0].clone("enemy", false);
 
@@ -63,13 +62,15 @@ export class UnitManager {
     }
 
     onEnemyHit(id) {
+        this.player.addMoney(20)
         this.spawnedEnemy.forEach(e => {
             if(e.getId() == id)
                 if(e.takeDamage()) {
                     const index = this.spawnedEnemy.indexOf(e);
+                    
                     if (index !== -1) {
                         this.spawnedEnemy.splice(index, 1);
-                        this.player.addMoney(100)
+                        this.player.addMoney(150)
                     } 
                 }
                     

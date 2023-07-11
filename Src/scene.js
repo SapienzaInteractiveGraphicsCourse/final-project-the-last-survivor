@@ -21,9 +21,9 @@ export async function createScene() {
 
 
     camera = new BABYLON.FreeCamera("FirstViewCamera", new BABYLON.Vector3(-13.615037427611178,  4.03014008407502, 13.469161515024702), scene)
-    camera.ellipsoid = new BABYLON.Vector3(0.4, 1, 0.4);
+    camera.ellipsoid = new BABYLON.Vector3(0.4, .9, 0.4);
     camera.ellipsoid.isPickable = false;
-    camera.speed =.8;
+    camera.speed =.5;
     scene.gravity.y = -9.8/144;
     scene.collisionsEnabled = true
 

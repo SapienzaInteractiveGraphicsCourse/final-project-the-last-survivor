@@ -12,9 +12,9 @@ export class Pistol extends Weapon {
     IK_Hand_Cntrl_L 
 
     damage = 25;
-    ammoLevel = 15;
+    ammoLevel = 10;
     currentAmmo = 10;
-    stockedAmmo = 20;
+    stockedAmmo = 30;
     async init() {
         await this.loadMesh("fps_pistol_animations.glb", new BABYLON.Vector3(0.1, -0.2, 0));
         ///LOAD PISTOL COMPONENTS///

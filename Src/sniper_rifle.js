@@ -10,7 +10,7 @@ export class Sniper extends Weapon {
 
   damage = 400;
   ammoLevel = 5;
-  stockedAmmo = 10;
+  stockedAmmo = 15;
   currentAmmo = 5;
 
   async init() {
@@ -71,17 +71,17 @@ value:new BABYLON.Vector3(-0.155,0.15,-0.07)
 });
 IK_Hand_Cntrl_R_036_frames_position.push(
 {
-frame: 3,
+frame: 6,
 value:new BABYLON.Vector3(-0.155,0.146,-0.099)
 });
 IK_Hand_Cntrl_R_036_frames_position.push(
 {
-frame: 5,
+frame: 10,
 value:new BABYLON.Vector3(-0.156,0.141,-0.129)
 });
 IK_Hand_Cntrl_R_036_frames_position.push(
 {
-frame: 7,
+frame: 14,
 value:new BABYLON.Vector3(-0.155,0.15,-0.07)
 });
 
@@ -92,13 +92,13 @@ value:new BABYLON.Vector3(0,0.171,-0.019)
 });
 Bolt_059_frames_position.push(
 {
-frame: 4,
+frame: 7,
 value:new BABYLON.Vector3(0,0.171,-0.019)
 });
 
 Bolt_059_frames_position.push(
 {
-frame: 7,
+frame: 14,
 value:new BABYLON.Vector3(0,0.171,-0.019)
 });
 
@@ -110,17 +110,17 @@ value:new BABYLON.Vector3(0.015,0.032,0.26)
 });
 IK_Hand_Cntrl_L_014_frames_position.push(
 {
-frame: 3,
+frame: 6,
 value:new BABYLON.Vector3(0.015,0.03,0.231)
 });
 IK_Hand_Cntrl_L_014_frames_position.push(
 {
-frame: 5,
+frame: 10,
 value:new BABYLON.Vector3(0.015,0.028,0.203)
 });
 IK_Hand_Cntrl_L_014_frames_position.push(
 {
-frame: 7,
+frame: 14,
 value:new BABYLON.Vector3(0.015,0.032,0.26)
 });
 
@@ -133,18 +133,18 @@ value:new BABYLON.Vector3(-0.075,0.065,-0.014)
 });
 Body_057_frames_position.push(
 {
-frame: 3,
+frame: 6,
 value:new BABYLON.Vector3(-0.076,0.062,-0.043)
 });
 Body_057_frames_position.push(
 {
-frame: 5,
+frame: 10,
 value:new BABYLON.Vector3(-0.076,0.058,-0.071)
 });
 
 Body_057_frames_position.push(
 {
-frame: 7,
+frame: 14,
 value:new BABYLON.Vector3(-0.075,0.065,-0.014)
 });
 
@@ -156,16 +156,16 @@ value:new BABYLON.Vector3(-0.068,0.079,0.259)
 });
 Mag_060_frames_position.push(
 {
-frame: 3,
+frame: 6,
 value:new BABYLON.Vector3(-0.069,0.077,0.23)
 });
 Mag_060_frames_position.push(
 {
-frame: 5,
+frame: 10,
 value:new BABYLON.Vector3(-0.069,0.075,0.201)
 });
 Mag_060_frames_position.push(
 {
-frame: 7,
+frame: 14,
 value:new BABYLON.Vector3(-0.068,0.079,0.259)
 });

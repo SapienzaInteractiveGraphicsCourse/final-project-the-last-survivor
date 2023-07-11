@@ -98,21 +98,19 @@ export class LuckyBox {
 
     open() {
         this.interactable = false
-        if(this.opened) return
         this.opened = true
         this.openAnim.play(  this.openAnim.loopAnimation)
         this.openAnim.onAnimationEndObservable.addOnce(()  => this.onOpen());
     }
 
     close() {
-        if(!this.opened) return
         this.closeAnim.play(  this.openAnim.loopAnimation)
+        this.interactable = true
         this.openAnim.onAnimationEndObservable.addOnce(()  => this.onClose());
     }
     onClose() {
+        console.log("closed")
         this.opened = false
-        this.interactable = false
-        
     }
     async onOpen() {
         await this.GetRandomWeapon();

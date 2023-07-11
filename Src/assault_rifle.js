@@ -10,7 +10,7 @@ export class Assault extends Weapon {
 
   damage = 20;
   ammoLevel = 30;
-  stockedAmmo = 30;
+  stockedAmmo = 60;
   currentAmmo = 30;
 
   async init() {
