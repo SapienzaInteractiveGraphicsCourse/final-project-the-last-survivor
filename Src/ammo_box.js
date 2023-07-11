@@ -35,11 +35,6 @@ export class AmmoBox {
                     console.log(player.source)
                     AmmoBox.playerInside = true;
                     box.dispose();
-                    AMMO.textContent = "Obtained 10 ammo"
-                    AMMO.style.display ="block";
-
-                    // Wait for 5 seconds and hide the AMMO element
-                    setTimeout(function() { AMMO.style.display = "none"; }, 3000);
                 }));
 
         collider.actionManager.registerAction(

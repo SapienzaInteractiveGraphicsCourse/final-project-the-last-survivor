@@ -5,6 +5,7 @@ import { UnitManager } from "./unitManager";
 import { Pistol } from "./pistol";
 import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 import { AmmoBox, AmmoBoxInstance } from "./ammo_box";
+import { AMMO } from "./domItems";
 
 
 //Class that contains all the player info
@@ -22,7 +23,7 @@ export class Player {
     //TIME LOCKS
     lockedFor = 0;
     lockTime;
-    money = 500;
+    money = 5000;
     scene;
     
     constructor(scene) {
@@ -98,6 +99,11 @@ export class Player {
             this.weapon.stockedAmmo += this.weapon.ammoLevel; // Increase ammo by 10
             // Reset the playerInside flag
             AmmoBox.playerInside = false;
+            AMMO.textContent = "Obtained " + this.weapon.ammoLevel + " ammo"
+            AMMO.style.display ="block";
+
+            // Wait for 5 seconds and hide the AMMO element
+            setTimeout(function() { AMMO.style.display = "none"; }, 3000);
         }
             
         ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.stockedAmmo + "<br>" + "money: " + this.money + "$";
