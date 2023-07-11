@@ -10,19 +10,21 @@ export class Weapon {
     _draw;
     _reload;
     _fire;
-    
-
+    fireRate;//numer of round per min
+    res;
     damage;
-    ammoLevel;
+    ammoLevel; //inteso con capienza del caricatore!!!
+    stockedAmmo;
     currentAmmo;
 
     mesh;
     constructor() {
-        this.instance = this;
+        //this.instance = this;
     }
 
     reset() {
         this.currentAmmo = this.ammoLevel
+        this.stockedAmmo = this.ammoLevel
     }
     
     async loadMesh(name, pos) {
@@ -50,18 +52,26 @@ export class Weapon {
         //debug per i cheat
         console.log(res.animationGroups); 
         this.mesh = weapon;
+        
 
-        //usare qui i cheat
-        //printAnimations(res, group, component)
+        this.reloadShootAnimations();
     }
 
+    reloadShootAnimations() {
+        var group = new BABYLON.AnimationGroup("fire");
+        var _anim = new BABYLON.Animation("Pmag_Pos", "rotation", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim.setKeys(reloadKeyFrames);
+        group.addTargetedAnimation(_anim,this.mesh);
+    
+        this._reload = group;
+    }
 
     printAnimations(res, group, component) {
         var keys = "";
         var property;
         keys = keys.concat("var " + component + "_frames_position = []\n" + "var " + component +  "_frames_position= []\n");
         res.animationGroups.forEach(gr => {
-      
+            
             gr.targetedAnimations.forEach(anim => {       
                 if(gr.name == group){
                     if(anim.target.name == component) {
@@ -72,7 +82,7 @@ export class Weapon {
 
                         anim.animation.getKeys().forEach(key => {
                             var frame =  Math.round(key.frame.toString())
-                            if(frame%4 == 0) {
+                            if(frame <= 2) {
                                 var string = "\n";
                                
                                 var value = "(" + Math.round(key.value.x*1000)/1000 + "," + Math.round(key.value.y*1000)/1000 + "," + Math.round(key.value.z*1000)/1000 ;
@@ -87,6 +97,31 @@ export class Weapon {
         })
         console.log(keys);
     }
-
-    
+   
 }
+
+var reloadKeyFrames= []
+
+reloadKeyFrames.push(
+{
+frame: 0,
+value:  new BABYLON.Vector3(0,Math.PI,0)
+});
+
+reloadKeyFrames.push(
+{
+frame: 60,
+value:  new BABYLON.Vector3(Math.PI/8,Math.PI,)
+});
+
+reloadKeyFrames.push(
+{
+frame: 120,
+value:  new BABYLON.Vector3(Math.PI/8,Math.PI,)
+});
+
+reloadKeyFrames.push(
+{
+frame: 180,
+value: new BABYLON.Vector3(0,Math.PI,0)
+});

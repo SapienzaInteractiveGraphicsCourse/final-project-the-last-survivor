@@ -16,6 +16,7 @@ import { Pistol } from "./Src/pistol.js";
 import { Assault } from "./Src/assault_rifle.js";
 import { LuckyBox } from "./Src/luckyBox.js";
 import { AmmoBox } from "./Src/ammo_box.js"
+import { Sniper } from "./Src/sniper_rifle.js";
 
 
 export var TimeScale;
@@ -99,11 +100,11 @@ async function main()  {
             // hide/show the Inspector
             var p = new Player(scene);
             
+
             var pistol = new Pistol();
+            await pistol.init()
             var box = new LuckyBox(p);
             var ammoBox = new AmmoBox(p);
-
-            await pistol.init()
 
             p.LoadWeapon(pistol)
             await box.LoadMesh(p.collider);

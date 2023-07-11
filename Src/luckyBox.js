@@ -5,10 +5,12 @@ import { Pistol } from "./pistol";
 import { Assault } from "./assault_rifle";
 import { p, scene } from "../main";
 import { luckyBox } from "./domItems";
+import { Sniper } from "./sniper_rifle";
 
 export let LuckyBoxInstance
 
 export class LuckyBox {
+    interactable = true
     opened = false;
     static playerInside = false;
     openAnim;
@@ -27,7 +29,7 @@ export class LuckyBox {
 
         var collider = BABYLON.MeshBuilder.CreateBox("box", {width:3, depth: 3, height: 5}, scene); 
         collider.visibility = 0.2
-        
+        collider.isPickable = false
         collider.actionManager = new BABYLON.ActionManager(scene)
 
         console.log(this.player)
@@ -95,6 +97,7 @@ export class LuckyBox {
 
 
     open() {
+        this.interactable = false
         if(this.opened) return
         this.opened = true
         this.openAnim.play(  this.openAnim.loopAnimation)
@@ -108,9 +111,11 @@ export class LuckyBox {
     }
     onClose() {
         this.opened = false
+        this.interactable = false
+        
     }
-    onOpen() {
-        this.GetRandomWeapon();
+    async onOpen() {
+        await this.GetRandomWeapon();
         this.close();
     }
 
@@ -126,7 +131,9 @@ export class LuckyBox {
             break;
           case 1:
             luckyBox.textContent = "You obtained a sniper";
-            // Change the weapon to a sniper (provide the appropriate sniper class)
+            const sniper = await new Sniper()
+            await sniper.init()
+            this.player.changeWeapon(sniper);
             break;
           case 2:
             luckyBox.textContent = "You obtained an AK 74";

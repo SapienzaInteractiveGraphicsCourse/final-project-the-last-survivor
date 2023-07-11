@@ -77,9 +77,9 @@ export class Player {
     }
 
     buy() {
-        
-        if(this.money <= 950)
+        if(this.money <= 950 && !LuckyBoxInstance.interactable)
             return
+
         LuckyBoxInstance.open();
         this.money -= 950
     }
@@ -96,12 +96,12 @@ export class Player {
        }
        if (AmmoBox.playerInside) {
             // Update ammo
-            this.weapon.ammoLevel += 10; // Increase ammo by 10
+            this.weapon.stockedAmmo += this.weapon.ammoLevel; // Increase ammo by 10
             // Reset the playerInside flag
             AmmoBox.playerInside = false;
         }
             
-        ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.ammoLevel + "<br>" + "money: " + this.money + "$";
+        ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.stockedAmmo + "<br>" + "money: " + this.money + "$";
     }
     ///=====================================================================================///
     ///===================================ACTION METHODS====================================///
@@ -143,20 +143,18 @@ export class Player {
     legal(newState) {
         switch (newState) {
             case status.RELOADING:
+                if(this.weapon.currentAmmo  == this.weapon.ammoLevel)
+                    return false
+                if(this.weapon.stockedAmmo == 0)
+                    return false
                 break;
 
-            case status.SHOOTING:
-                console.log("INSIDE LEGAL STATUS STATUS.SHOOTING")
-                if(this.weapon.currentAmmo <= 0 ){
-                    console.log("INSIDE LEGAL STATUS this.weapon.currentAmmo <= 0")
-
+            case status.SHOOTING:           
+                if(this.weapon.currentAmmo <= 0 )  
                     return false;
-                }
-                else if(this.status === status.RELOADING){
-                    console.log("INSIDE LEGAL STATUS this.status == status.RELOADING")
+                else if(this.status === status.RELOADING)
                     return false;
-                }
-                
+        
                 break;
         }
         return true;
@@ -195,25 +193,16 @@ export class Player {
 
     reload() {
         console.log("reload");
-        const maxAmmo = 10;
-        const ammoNeeded = maxAmmo - this.weapon.currentAmmo;
 
-        if (this.weapon.ammoLevel >= ammoNeeded) {
-            this.weapon.currentAmmo = maxAmmo;
-            this.weapon.ammoLevel -= ammoNeeded;
-        } else {
-            this.weapon.currentAmmo += this.weapon.ammoLevel;
-            this.weapon.ammoLevel = 0;
-        }
-        this.locked = false;    
-
-        this.status = 2;
-        // this.weapon._reload.play(this.weapon._reload.loopAnimation)
-        // this.weapon._reload.onAnimationEndObservable.addOnce(()  => this.endReload());
+        this.weapon._reload.play(this.weapon._reload.loopAnimation)
+        this.weapon._reload.onAnimationEndObservable.addOnce(()  => this.endReload());
     }
 
     endReload() {
-        
+        var ammoToLoad = this.weapon.ammoLevel - this.weapon.currentAmmo 
+        this.weapon.currentAmmo += (this.weapon.stockedAmmo>=ammoToLoad? ammoToLoad: this.weapon.stockedAmmo%ammoToLoad)
+        this.weapon.stockedAmmo -= (this.weapon.stockedAmmo>=ammoToLoad? ammoToLoad: this.weapon.stockedAmmo%ammoToLoad)
+        this.toggleState()
     }
 
     toggleState()  {

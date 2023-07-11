@@ -22,6 +22,7 @@ export class AmmoBox {
 
         var collider = await BABYLON.MeshBuilder.CreateBox("box", {width:50, depth: 20, height: 300}, scene); 
         collider.visibility = 0
+        collider.isPickable = false
         
         collider.actionManager = new BABYLON.ActionManager(scene)
 
