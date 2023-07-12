@@ -16,6 +16,7 @@ export class LuckyBox {
     openAnim;
     closeAnim
     player
+    mesh
     constructor(player) {
         this.player = player
         LuckyBoxInstance = this;
@@ -23,7 +24,7 @@ export class LuckyBox {
     
     async LoadMesh(playerCollider) {
         let res = await BABYLON.SceneLoader.ImportMeshAsync(null, "Assets/", "11_mystery_box_-_3december2019.glb", scene)     
-
+        this.mesh = res.meshes[0];
         const box = res.meshes[0];
         
         box.computeWorldMatrix();

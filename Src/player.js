@@ -6,7 +6,7 @@ import { Sniper } from "./sniper_rifle";
 import { Pistol } from "./pistol";
 import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 import { AmmoBox, AmmoBoxInstance } from "./ammo_box";
-import { AMMO, crosshair, sniperScope } from "./domItems";
+import { AMMO, crosshair, luckyBox, sniperScope } from "./domItems";
 import { endGame, finished } from "../main";
 import { enemy} from "../main"
 
@@ -30,7 +30,8 @@ export class Player {
     scene;
     aim = false;
     isaiming = false;
-    
+    particle = false
+    particleSystem
     constructor(scene) {
         this.scene = scene;
         this.InputManager(scene); 
@@ -40,6 +41,8 @@ export class Player {
         this.collider.checkCollisions = false
         this.collider.visibility = 0.2
         this.instance = this
+        this.particleSystem = new BABYLON.ParticleSystem("particles", 5000);
+        
     }
     async initWeapon() {
         
@@ -83,12 +86,49 @@ export class Player {
     }
 
     buy() {
+        
+
         if(this.money >= 950 && LuckyBoxInstance.interactable){
             LuckyBoxInstance.open();
             this.money -= 950
         }   
     }
     update() {
+        
+        if(this.money >=950 )
+        {
+            if(!this.particle){
+                this.particleSystem = new BABYLON.ParticleSystem("particles", 5000);
+                this.particleSystem.particleTexture = new BABYLON.Texture("Assets/flare.png");
+                
+                this.particleSystem.emitter = LuckyBoxInstance.mesh;
+                this.particleSystem.minEmitBox = new BABYLON.Vector3(-0.2, 0.5, -0.2); // Starting all from
+                this.particleSystem.maxEmitBox = new BABYLON.Vector3(0.2, 2, 0.2); // To...
+                this.particleSystem.color1 = new BABYLON.Color4(0.98, 0.94, 0.59);
+                this.particleSystem.color2 = new BABYLON.Color4(0.97, 0.91, 0.03);
+                this.particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+
+                   // Life time of each particle (random between...
+                this.particleSystem.minLifeTime = 2;
+                this.particleSystem.maxLifeTime = 3.5;
+                this.particleSystem.emitRate = 1500;
+                this.particleSystem.minSize = 0.05;
+                this.particleSystem.maxSize = 0.1;
+                this.particleSystem.updateSpeed = 0.01;
+                //this.particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+                this.particleSystem.direction1 = new BABYLON.Vector3(-2, 8, 2);
+                this.particleSystem.direction2 = new BABYLON.Vector3(2, 8, -2);
+                this.particleSystem.start();
+                this.particle =true;
+                                }
+        }
+        else{
+                if(this.particle){
+                this.particleSystem.targetStopDuration = 0.1;
+                this.particle=false
+                }
+                
+            }
         if (this.weapon.ammoLevel===0 || this.weapon.currentAmmo ===10){
             this.status = status.IDLE
         }
