@@ -20,3 +20,7 @@ export const luckyBox = document.getElementById(
 export const AMMO = document.getElementById(
     "ammobox"
 );
+
+export const crosshair = document.getElementById(
+    "el"
+);

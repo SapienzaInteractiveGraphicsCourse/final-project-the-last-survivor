@@ -5,7 +5,7 @@ import { UnitManager } from "./unitManager";
 import { Pistol } from "./pistol";
 import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 import { AmmoBox, AmmoBoxInstance } from "./ammo_box";
-import { AMMO } from "./domItems";
+import { AMMO, crosshair } from "./domItems";
 
 
 //Class that contains all the player info
@@ -25,6 +25,8 @@ export class Player {
     lockTime;
     money = 5000;
     scene;
+    aim = false;
+    isaiming = false;
     
     constructor(scene) {
         this.scene = scene;
@@ -46,14 +48,19 @@ export class Player {
         scene.onPointerDown = (evt) => {
             engine.enterPointerlock();   
             if(evt.button === 0)  {
-                  this.inputShoot = true;
+                this.inputShoot = true;
                 
-            }           
+            }
+                
+            
         }  
+
         scene.onPointerUp = (evt) => { 
             if(evt.button === 0)  {
                 this.inputShoot = false;
-            }              
+            }
+                
+            
         }  
 
         scene.onKeyboardObservable.add((kbInfo) => { 
@@ -87,7 +94,7 @@ export class Player {
         ///CHECK IF CAN SHOOT
        if(this.inputShoot && !this.locked) {
             this.ChangeStatus(status.SHOOTING);
-            
+           
        }
        if (AmmoBox.playerInside) {
             // Update ammo
@@ -171,6 +178,28 @@ export class Player {
         this.pew();
     }
 
+    setAim(boolean) {
+        this.aim = boolean;
+        if (this.aim && !this.isaiming) {
+            crosshair.style.display = "none";
+            this.isaiming = true;
+            this.weapon._aim.speedRatio = 5;
+            this.weapon._aim.play(false);
+            this.weapon._aim.onAnimationEndObservable.addOnce(()  => this.isaiming=false);
+            camera.fov = 0.5;
+        } else if (!this.aim && !this.isaiming) {
+            crosshair.style.dysplay = "flex";
+            this.isaiming = true;
+            this.weapon._aim.speedRatio = -5;
+            this.weapon._aim.play(false);
+            this.weapon._aim.onAnimationEndObservable.addOnce(()  => this.isaiming=false);
+            camera.fov = 1.2;
+        }
+    }
+
+    isAiming(){
+        return this.isaiming;
+    }
     
 
     pew() {
@@ -194,7 +223,14 @@ export class Player {
 
     reload() {
         console.log("reload");
+
+        if (this.aim){
+            this.weapon._aim.speedRatio = -1;
+            this.weapon._aim.play( )
+            camera.fov = 1.2;
+        }
         this.weapon.reloadSound.play()
+
         this.weapon._reload.play(this.weapon._reload.loopAnimation)
         this.weapon._reload.onAnimationEndObservable.addOnce(()  => this.endReload());
     }
@@ -203,6 +239,12 @@ export class Player {
         var ammoToLoad = this.weapon.ammoLevel - this.weapon.currentAmmo 
         this.weapon.currentAmmo += (this.weapon.stockedAmmo>=ammoToLoad? ammoToLoad: this.weapon.stockedAmmo%ammoToLoad)
         this.weapon.stockedAmmo -= (this.weapon.stockedAmmo>=ammoToLoad? ammoToLoad: this.weapon.stockedAmmo%ammoToLoad)
+        if (this.aim){
+            this.weapon._aim.speedRatio = 1;
+            this.weapon._aim.play( )
+            camera.fov = 0.5;
+        }
+
         this.toggleState()
     }
 

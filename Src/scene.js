@@ -10,7 +10,8 @@ export var camera;
 export var navigation;
 import  Navigation from "babylon-navigation-mesh"
 import * as YUKA from '../Modules/yuka.module.js'
-
+import { createCellSpaceHelper } from '../Modules/CellSpacePartitioningHelper.js'
+import { createConvexRegionHelper } from '../Modules/NavMeshHelper.js'
 
 
 export async function createScene() {
@@ -18,10 +19,11 @@ export async function createScene() {
     var scene = new BABYLON.Scene(engine)
     window.CANNON = CANNON;
 
+
     camera = new BABYLON.FreeCamera("FirstViewCamera", new BABYLON.Vector3(-13.615037427611178,  4.03014008407502, 13.469161515024702), scene)
     camera.ellipsoid = new BABYLON.Vector3(0.4, .9, 0.4);
     camera.ellipsoid.isPickable = false;
-    camera.speed =.5;
+    // camera.speed =.5;
     scene.gravity.y = -9.8/144;
     scene.collisionsEnabled = true
 
@@ -37,7 +39,8 @@ export async function createScene() {
     camera.minZ = 0.1;
     camera.minY = 5;
     camera.inertia = 0.6;
-    camera.fov = 1.5;
+    camera.fov = 1.2;
+    camera.speed= 1;
 
     camera.angularSensibility = 2000;
 
@@ -202,7 +205,9 @@ export async function GenerateScene() {
     camera.minZ = 0.1;
     camera.minY = 5;
     camera.inertia = 0.6;
-    camera.fov = 1.5;
+    camera.fov = 1.2;
+    camera.speed= 1;
+
 
     camera.angularSensibility = 2000;
 

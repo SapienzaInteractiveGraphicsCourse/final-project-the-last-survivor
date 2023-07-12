@@ -18,7 +18,9 @@ export class Pistol extends Weapon {
     async init() {
         await this.loadMesh("fps_pistol_animations.glb", new BABYLON.Vector3(0.1, -0.2, 0));
         ///LOAD PISTOL COMPONENTS///
+        
         this.loadSound("Assets/pistol.mp3")
+
         this.PBody = this.mesh.getChildren(((m) => m.name == "PBody_058"), false);
         this.Pmag = this.mesh.getChildren(((m) => m.name == "Pmag_061"), false);
         this.IK_Hand_Cntrl_R = this.mesh.getChildren(((m) => m.name == "IK_Hand_Cntrl_R_037"), false);
@@ -59,10 +61,25 @@ export class Pistol extends Weapon {
         group.addTargetedAnimation(_anim,this.IK_Hand_Cntrl_R);
 
         group.play(group.loopAnimation);
-        // group2.play(group2.loopAnimation);
-
         this._fire = group;
+
+        // AIM ANIMATION
+
+        var group2 = new BABYLON.AnimationGroup("aim");
+
+        var _anim2 = new BABYLON.Animation("Pos", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim2.setKeys(aimKeyFrames);
+        group2.addTargetedAnimation(_anim2,this.mesh);
+
+        _anim2 = new BABYLON.Animation("Pos", "rotation", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim2.setKeys(aimrotKeyFrames);
+        group2.addTargetedAnimation(_anim2,this.mesh);
+    
+        group2.play(group2.loopAnimation);
+
+        this._aim = group2;
     }
+
 }
 
 ///===========================================///
@@ -71,7 +88,7 @@ export class Pistol extends Weapon {
 
 var Pmag_Frames_position =  [{
     frame: 0,
-    value: new BABYLON.Vector3(-0.082851, -0.03127084672451019 , 0.3568672239780426),
+    value:  new BABYLON.Vector3(-0.098,-0.13,0)
 }];
 Pmag_Frames_position.push({
     frame: 3,
@@ -91,7 +108,7 @@ Pmag_Frames_position.push({
 })
 Pmag_Frames_position.push({
     frame: 14,
-    value: new BABYLON.Vector3(-0.082851, -0.03127084672451019 , 0.3568672239780426),
+    value:  new BABYLON.Vector3(-0.098,-0.13,0)
 })
 
 //PISTOL BODY
@@ -223,3 +240,34 @@ IK_Hand_Cntrl_R_rotation .push({
     frame: 14,
     value: new BABYLON.Quaternion( -0.057135988026857376,  0.01055992767214775,  0.5295121073722839,  0.8463101387023926),
 })
+
+
+
+var aimKeyFrames= []
+
+aimKeyFrames.push(
+{
+frame: 0,
+value:  new BABYLON.Vector3(0.1, -0.2, 0)
+});
+
+aimKeyFrames.push(
+{
+frame: 60,
+value:  new BABYLON.Vector3(-0.098,-0.13,0)
+});
+
+var aimrotKeyFrames =[]
+
+
+aimrotKeyFrames.push(
+{
+frame: 0,
+value:  new BABYLON.Vector3(0,Math.PI,0)
+});
+
+aimrotKeyFrames.push(
+{
+frame: 60,
+value:  new BABYLON.Vector3(0,Math.PI-0.1,0.22)
+});

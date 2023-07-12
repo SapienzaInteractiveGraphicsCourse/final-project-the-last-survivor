@@ -10,14 +10,17 @@ export class Weapon {
     _draw;
     _reload;
     _fire;
+    _aim;
     fireRate;//numer of round per min
     res;
     damage;
     ammoLevel; //inteso con capienza del caricatore!!!
     stockedAmmo;
     currentAmmo;
+
     shootSound;
-    reloadSound
+    reloadSound;
+
     mesh;
     constructor() {
         //this.instance = this;

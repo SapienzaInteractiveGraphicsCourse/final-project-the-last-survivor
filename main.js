@@ -26,10 +26,12 @@ export var scene;
 export var enemy;
 let walking = false;
 let startTime;
+let isRightMouseButtonDown = false;
+
 var menuBgs
+
+
 async function main()  {
-
-
         await Engine;        
         
         // create the canvas html element and attach it to the webpage
@@ -83,7 +85,6 @@ async function main()  {
 
         // Function to start the game
         async function startGame() {
-           
             // Hide the menu
             var menu = document.getElementById("menu");
             menu.style.display = "none";
@@ -94,7 +95,9 @@ async function main()  {
 
             // Show the loading screen
             loadingScreen.style.display = "flex";
+            
             menuBgs.stop()
+
             scene = await createScene();
             
             // hide the loading screen when you want to
@@ -104,6 +107,23 @@ async function main()  {
 
             // hide/show the Inspector
             var p = new Player(scene);
+
+            document.addEventListener("mousedown", async (ev) => {
+                if (!p.isAiming() && p.status !== 0){
+                    if (ev.button===2){
+                        if (!isRightMouseButtonDown){
+                            isRightMouseButtonDown=true;
+                            console.log('right clicked')
+                            p.setAim(true);
+                        }
+                        else{
+                            isRightMouseButtonDown=false;
+                            console.log('right clicked')
+                            p.setAim(false);
+                        }
+                    }
+                }
+            });
             
 
             var pistol = new Pistol();
@@ -129,21 +149,19 @@ async function main()  {
 
             
         // YUKA specific
-            
-            menuBgs = new BABYLON.Sound("bgs", "Assets/theme.mp3", scene, null, { autoplay: true, loop: true });
 
-            //bgs.play()
+            menuBgs = new BABYLON.Sound("bgs", "Assets/theme.mp3", scene, null, { autoplay: true, loop: true });
+        
             //run the main render loopss
             var unitManager = null
             
             engine.hideLoadingUI();
 
             engine.runRenderLoop(() => {
-                scene.render();
-                p.update();
-                var t = Date.now();
-                var timeElapsed = startTime - t;
-            
+                // scene.render();
+                // p.update();
+                // var t = Date.now();
+                // var timeElapsed = startTime - t;
                 scene.render();
                 p.update();
                 unitManager?.update()
@@ -184,7 +202,7 @@ async function main()  {
             // Hide the loading screen
             loadingScreen.style.display = "none";
             var elDiv = document.getElementById("el");
-            elDiv.style.display = "block";
+            elDiv.style.display = "flex";
 
             engine.enterPointerlock();            
         }
