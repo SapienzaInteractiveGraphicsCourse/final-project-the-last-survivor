@@ -98,7 +98,8 @@ async function main()  {
 
             // Show the loading screen
             loadingScreen.style.display = "flex";          
-            
+            engine.enterPointerlock();
+
             menuBgs.stop()
 
             scene = await createScene();
@@ -215,8 +216,6 @@ async function main()  {
             loadingScreen.style.display = "none";
             var elDiv = document.getElementById("crosshair");
             elDiv.style.display = "flex";
-
-            engine.enterPointerlock();            
         }
 
         // Function to enable fly mode

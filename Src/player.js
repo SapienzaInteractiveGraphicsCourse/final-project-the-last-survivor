@@ -76,18 +76,30 @@ export class Player {
                         this.ChangeStatus(status.RELOADING);
                     if(kbInfo.event.key == 'l')
                         console.log(this.getUserposition());
-                    if(kbInfo.event.key == 'f' && LuckyBox.playerInside)
-                        this.buy();
-                        
+                    if(kbInfo.event.key == 'f' && LuckyBox.playerInside){
+                        this.weapon._aim.speedRatio = 0; // Set speedRatio to 0 to pause the animation
+                        if (this.aim){
+                            this.aim=false;
+                            this.weapon._aim.speedRatio = -5;
+                            this.animateAimFOV(1.2); // Smoothly transition to FOV 1.2 (default)
+                            this.weapon._aim.play(false);
+                            this.weapon._aim.onAnimationEndObservable.addOnce(() => {
+                                this.buy();
+                            });
+                        } else{
+                            this.buy();
+                        }
+                    }
+                     
             }
 
-          });
+        });
 
     }
 
     buy() {
         
-
+        this.weapon._aim.speedRatio = 0; // Set speedRatio to 0 to pause the animation
         if(this.money >= 950 && LuckyBoxInstance.interactable){
             LuckyBoxInstance.open();
             this.money -= 950
@@ -219,6 +231,7 @@ export class Player {
         this.weapon._fire.play( this.weapon._fire.loopAnimation)
         this.weapon._fire.onAnimationEndObservable.addOnce(()  => this.toggleState());
         this.pew();
+        this.weapon._aim.speedRatio = 0; // Set speedRatio to 0 to pause the animation
     }
 
     setAim(boolean) {
@@ -475,13 +488,15 @@ export class Player {
     }
     changeWeapon(newWeapon) {
         this.weapon.mesh.dispose();
-        this.weapon = undefined
-        this.weapon = newWeapon
-        this.weapon.parent = null;
+        this.weapon = newWeapon;
         this.weapon.mesh.parent = camera;
-        this.weapon.position = new BABYLON.Vector3(0,-10,0)
+        this.weapon.position = new BABYLON.Vector3(0, -10, 0);
         this.weapon.reset();
         this.status = status.IDLE; // Reset the player's status to IDLE after changing the weapon
+    
+        // Reset the shoot and aim animations
+        this.weapon._fire.stop();
+        this.weapon._aim.stop();
     }
 }
 const status = {
