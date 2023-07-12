@@ -28,6 +28,8 @@ export class Enemy extends Vehicle {
     R_leg
     L_arm
     R_arm
+    head
+    R_wrist
 
     _walk
     constructor(scene, player, id) {
@@ -42,6 +44,8 @@ export class Enemy extends Vehicle {
          this.R_leg = this.mesh.getChildren(((m) => m.name == "R_leg"), false);
          this.L_arm = this.mesh.getChildren(((m) => m.name == "L_arm"), false);
          this.R_arm= this.mesh.getChildren(((m) => m.name == "R_arm"), false);
+         this.R_wrist= this.mesh.getChildren(((m) => m.name == "R_wrist"), false);
+         this.head= this.mesh.getChildren(((m) => m.name == "head"), false);
          this.WalkingAnimation();
     }
     async init(clone, position){
@@ -210,272 +214,646 @@ export class Enemy extends Vehicle {
     }
     WalkingAnimation ()
     {
-        var L_leg_frames_position = []
-       
-        
-        L_leg_frames_position.push(
-            {
-            frame: 0,
-            value:new BABYLON.Vector3(-19.507,-4.876,3.058)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 2,
-            value:new BABYLON.Vector3(-19.507,-4.876,3.058)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 4,
-            value:new BABYLON.Vector3(-19.375,-4.59,3.051)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 6,
-            value:new BABYLON.Vector3(-19.022,-3.962,2.988)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 8,
-            value:new BABYLON.Vector3(-18.506,-3.337,2.803)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 10,
-            value:new BABYLON.Vector3(-17.887,-3.061,2.434)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 12,
-            value:new BABYLON.Vector3(-17.236,-5.14,1.887)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 14,
-            value:new BABYLON.Vector3(-16.622,-10.077,1.28)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 16,
-            value:new BABYLON.Vector3(-16.108,-15.965,0.719)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 18,
-            value:new BABYLON.Vector3(-15.755,-20.896,0.306)
-            });
-            L_leg_frames_position.push(
-            {
-            frame: 20,
-            value:new BABYLON.Vector3(-15.623,-22.964,0.145)
-            });
+var L_leg_frames_position = []
+var L_leg_frames_rotation= []
 
-        var R_leg_frames_position = []
+                L_leg_frames_position.push(
+                {
+                frame: 0,
+                value:new BABYLON.Vector3(-19.507,-4.876,3.058)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 2,
+                value:new BABYLON.Vector3(-19.507,-4.876,3.058)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 4,
+                value:new BABYLON.Vector3(-19.338,-0.843,3.136)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 6,
+                value:new BABYLON.Vector3(-19.169,3.189,3.215)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 8,
+                value:new BABYLON.Vector3(-19,7.222,3.293)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 10,
+                value:new BABYLON.Vector3(-18.831,11.255,3.371)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 12,
+                value:new BABYLON.Vector3(-18.762,10.18,3.405)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 14,
+                value:new BABYLON.Vector3(-18.73,7.263,3.467)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 16,
+                value:new BABYLON.Vector3(-18.724,2.965,3.543)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 18,
+                value:new BABYLON.Vector3(-18.734,-2.255,3.616)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 20,
+                value:new BABYLON.Vector3(-18.748,-7.936,3.674)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 22,
+                value:new BABYLON.Vector3(-18.757,-13.618,3.7)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 24,
+                value:new BABYLON.Vector3(-18.751,-18.84,3.681)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 26,
+                value:new BABYLON.Vector3(-18.719,-23.142,3.601)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 28,
+                value:new BABYLON.Vector3(-18.65,-26.064,3.445)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 30,
+                value:new BABYLON.Vector3(-18.534,-27.145,3.2)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 32,
+                value:new BABYLON.Vector3(-17.756,-25.21,2.888)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 34,
+                value:new BABYLON.Vector3(-16.109,-20.588,2.572)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 36,
+                value:new BABYLON.Vector3(-14.191,-15.069,2.294)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 38,
+                value:new BABYLON.Vector3(-12.601,-10.443,2.096)
+                });
+                L_leg_frames_position.push(
+                {
+                frame: 40,
+                value:new BABYLON.Vector3(-11.938,-8.504,2.021)
+                });
+                L_leg_frames_rotation.push(
+                {
+                frame: 0,
+                value:new BABYLON.Quaternion(-0.003,1,-0.02,0.023)
+                });
+                L_leg_frames_rotation.push(
+                {
+                frame: 2,
+                value:new BABYLON.Quaternion(-0.003,1,-0.02,0.023)
+                });
+                L_leg_frames_rotation.push(
+                {
+                frame: 40,
+                value:new BABYLON.Quaternion(-0.003,1,-0.02,0.023)
+                });
+
+var R_leg_frames_position = []
+var R_leg_frames_rotation= []
+
+                R_leg_frames_position.push(
+                {
+                frame: 0,
+                value:new BABYLON.Vector3(8.784,-4.275,5.021)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 2,
+                value:new BABYLON.Vector3(8.784,-4.275,5.021)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 4,
+                value:new BABYLON.Vector3(8.203,-9.529,4.511)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 6,
+                value:new BABYLON.Vector3(7.621,-14.783,4)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 8,
+                value:new BABYLON.Vector3(7.039,-20.037,3.49)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 10,
+                value:new BABYLON.Vector3(6.458,-25.29,2.98)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 12,
+                value:new BABYLON.Vector3(6.365,-24.199,3.024)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 14,
+                value:new BABYLON.Vector3(6.338,-21.239,3.105)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 16,
+                value:new BABYLON.Vector3(6.359,-16.877,3.213)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 18,
+                value:new BABYLON.Vector3(6.413,-11.58,3.341)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 20,
+                value:new BABYLON.Vector3(6.484,-5.817,3.477)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 22,
+                value:new BABYLON.Vector3(6.554,-0.053,3.614)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 24,
+                value:new BABYLON.Vector3(6.608,5.243,3.742)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 26,
+                value:new BABYLON.Vector3(6.629,9.605,3.85)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 28,
+                value:new BABYLON.Vector3(6.602,12.566,3.931)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 30,
+                value:new BABYLON.Vector3(6.509,13.657,3.975)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 32,
+                value:new BABYLON.Vector3(6.132,11.912,3.961)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 34,
+                value:new BABYLON.Vector3(5.42,7.751,3.896)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 36,
+                value:new BABYLON.Vector3(4.614,2.783,3.811)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 38,
+                value:new BABYLON.Vector3(3.955,-1.379,3.737)
+                });
+                R_leg_frames_position.push(
+                {
+                frame: 40,
+                value:new BABYLON.Vector3(3.682,-3.124,3.706)
+                });
+
+var L_arm_frames_position = []
+var L_arm_frames_rotation= []
+
+                L_arm_frames_position.push(
+                {
+                frame: 0,
+                value:new BABYLON.Vector3(0,0,-11.614)
+                });
+                L_arm_frames_position.push(
+                {
+                frame: 2,
+                value:new BABYLON.Vector3(0,0,-11.614)
+                });
+                L_arm_frames_position.push(
+                {
+                frame: 40,
+                value:new BABYLON.Vector3(0,0,-11.614)
+                });
+                L_arm_frames_rotation.push(
+                {
+                frame: 0,
+                value:new BABYLON.Quaternion(-0.095,-0.729,0.045,0.676)
+                });
+                L_arm_frames_rotation.push(
+                {
+                frame: 2,
+                value:new BABYLON.Quaternion(-0.095,-0.729,0.045,0.676)
+                });
+                L_arm_frames_rotation.push(
+                {
+                frame: 40,
+                value:new BABYLON.Quaternion(-0.095,-0.729,0.045,0.676)
+                });
+
+var R_arm_frames_position = []
+var R_arm_frames_rotation= []
+
+                R_arm_frames_position.push(
+                {
+                frame: 0,
+                value:new BABYLON.Vector3(-4.688,-3.952,-30.105)
+                });
+                R_arm_frames_position.push(
+                {
+                frame: 2,
+                value:new BABYLON.Vector3(-4.688,-3.952,-30.105)
+                });
+                R_arm_frames_position.push(
+                {
+                frame: 40,
+                value:new BABYLON.Vector3(-4.688,-3.952,-30.105)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 0,
+                value:new BABYLON.Quaternion(0.023,0.772,-0.055,0.633)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 2,
+                value:new BABYLON.Quaternion(0.023,0.772,-0.055,0.633)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 4,
+                value:new BABYLON.Quaternion(0.092,0.731,-0.108,0.668)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 6,
+                value:new BABYLON.Quaternion(0.162,0.681,-0.161,0.696)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 8,
+                value:new BABYLON.Quaternion(0.23,0.623,-0.213,0.717)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 10,
+                value:new BABYLON.Quaternion(0.294,0.56,-0.261,0.729)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 12,
+                value:new BABYLON.Quaternion(0.287,0.607,-0.2,0.713)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 14,
+                value:new BABYLON.Quaternion(0.258,0.713,-0.035,0.651)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 16,
+                value:new BABYLON.Quaternion(0.206,0.802,0.175,0.532)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 18,
+                value:new BABYLON.Quaternion(0.152,0.836,0.332,0.41)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 20,
+                value:new BABYLON.Quaternion(0.128,0.842,0.385,0.355)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 22,
+                value:new BABYLON.Quaternion(0.123,0.848,0.37,0.36)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 24,
+                value:new BABYLON.Quaternion(0.115,0.853,0.34,0.38)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 26,
+                value:new BABYLON.Quaternion(0.103,0.856,0.297,0.411)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 28,
+                value:new BABYLON.Quaternion(0.089,0.855,0.245,0.449)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 30,
+                value:new BABYLON.Quaternion(0.073,0.848,0.188,0.49)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 32,
+                value:new BABYLON.Quaternion(0.057,0.837,0.129,0.528)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 34,
+                value:new BABYLON.Quaternion(0.043,0.823,0.076,0.562)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 36,
+                value:new BABYLON.Quaternion(0.031,0.808,0.032,0.587)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 38,
+                value:new BABYLON.Quaternion(0.023,0.797,0.003,0.604)
+                });
+                R_arm_frames_rotation.push(
+                {
+                frame: 40,
+                value:new BABYLON.Quaternion(0.02,0.793,-0.008,0.609)
+                });
 
 
-        R_leg_frames_position.push(
-            {
-            frame: 0,
-            value:new BABYLON.Vector3(8.784,-4.275,5.021)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 2,
-            value:new BABYLON.Vector3(8.784,-4.275,5.021)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 4,
-            value:new BABYLON.Vector3(8.452,-7.044,4.644)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 6,
-            value:new BABYLON.Vector3(7.72,-13.137,3.815)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 8,
-            value:new BABYLON.Vector3(6.988,-19.229,2.987)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 10,
-            value:new BABYLON.Vector3(6.656,-21.998,2.61)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 12,
-            value:new BABYLON.Vector3(7.113,-19.027,2.573)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 14,
-            value:new BABYLON.Vector3(8.205,-11.941,2.483)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 16,
-            value:new BABYLON.Vector3(9.507,-3.484,2.376)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 18,
-            value:new BABYLON.Vector3(10.599,3.602,2.287)
-            });
-            R_leg_frames_position.push(
-            {
-            frame: 20,
-            value:new BABYLON.Vector3(11.056,6.573,2.249)
-            });
+var head_frames_position = []
+var head_frames_rotation= []
 
-        var L_arm_frames_position = []
-        var L_arm_frames_rotation= []
+                head_frames_position.push(
+                {
+                frame: 0,
+                value:new BABYLON.Vector3(0,0,-14.207)
+                });
+                head_frames_position.push(
+                {
+                frame: 2,
+                value:new BABYLON.Vector3(0,0,-14.207)
+                });
+                head_frames_position.push(
+                {
+                frame: 40,
+                value:new BABYLON.Vector3(0,0,-14.207)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 0,
+                value:new BABYLON.Quaternion(0.099,0.383,0.038,0.918)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 2,
+                value:new BABYLON.Quaternion(0.099,0.383,0.038,0.918)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 4,
+                value:new BABYLON.Quaternion(0.106,0.299,0.021,0.948)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 6,
+                value:new BABYLON.Quaternion(0.112,0.211,0.004,0.971)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 8,
+                value:new BABYLON.Quaternion(0.118,0.122,-0.014,0.985)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 10,
+                value:new BABYLON.Quaternion(0.122,0.033,-0.031,0.992)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 12,
+                value:new BABYLON.Quaternion(0.125,-0.053,-0.047,0.99)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 14,
+                value:new BABYLON.Quaternion(0.126,-0.112,-0.058,0.984)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 16,
+                value:new BABYLON.Quaternion(0.127,-0.149,-0.065,0.978)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 18,
+                value:new BABYLON.Quaternion(0.127,-0.169,-0.068,0.975)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 20,
+                value:new BABYLON.Quaternion(0.127,-0.175,-0.07,0.974)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 22,
+                value:new BABYLON.Quaternion(0.127,-0.163,-0.067,0.976)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 24,
+                value:new BABYLON.Quaternion(0.127,-0.128,-0.061,0.982)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 26,
+                value:new BABYLON.Quaternion(0.125,-0.074,-0.051,0.988)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 28,
+                value:new BABYLON.Quaternion(0.123,-0.008,-0.039,0.992)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 30,
+                value:new BABYLON.Quaternion(0.12,0.064,-0.025,0.99)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 32,
+                value:new BABYLON.Quaternion(0.117,0.137,-0.011,0.984)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 34,
+                value:new BABYLON.Quaternion(0.113,0.201,0.002,0.973)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 36,
+                value:new BABYLON.Quaternion(0.11,0.253,0.012,0.961)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 38,
+                value:new BABYLON.Quaternion(0.107,0.287,0.019,0.952)
+                });
+                head_frames_rotation.push(
+                {
+                frame: 40,
+                value:new BABYLON.Quaternion(0.106,0.299,0.021,0.948)
+                });
 
-        L_arm_frames_position.push(
-            {
-            frame: 0,
-            value:new BABYLON.Vector3(0,0,-11.614)
-            });
-            L_arm_frames_position.push(
-            {
-            frame: 2,
-            value:new BABYLON.Vector3(0,0,-11.614)
-            });
-            L_arm_frames_position.push(
-            {
-            frame: 20,
-            value:new BABYLON.Vector3(0,0,-11.614)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 0,
-            value:new BABYLON.Quaternion(-0.095,-0.729,0.045,0.676)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 2,
-            value:new BABYLON.Quaternion(-0.095,-0.729,0.045,0.676)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 4,
-            value:new BABYLON.Quaternion(-0.113,-0.726,0.016,0.679)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 6,
-            value:new BABYLON.Quaternion(-0.152,-0.714,-0.047,0.682)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 8,
-            value:new BABYLON.Quaternion(-0.19,-0.698,-0.111,0.681)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 10,
-            value:new BABYLON.Quaternion(-0.207,-0.69,-0.14,0.679)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 12,
-            value:new BABYLON.Quaternion(-0.189,-0.699,-0.109,0.681)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 14,
-            value:new BABYLON.Quaternion(-0.143,-0.717,-0.033,0.681)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 16,
-            value:new BABYLON.Quaternion(-0.086,-0.731,0.059,0.674)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 18,
-            value:new BABYLON.Quaternion(-0.039,-0.736,0.134,0.663)
-            });
-            L_arm_frames_rotation.push(
-            {
-            frame: 20,
-            value:new BABYLON.Quaternion(-0.019,-0.736,0.165,0.656)
-            });
+var R_wrist_frames_position = []
+var R_wrist_frames_rotation= []
 
-        var R_arm_frames_position = []
-        var R_arm_frames_rotation= []
-        
-        R_arm_frames_position.push(
-            {
-            frame: 0,
-            value:new BABYLON.Vector3(-4.688,-3.952,-30.105)
-            });
-            R_arm_frames_position.push(
-            {
-            frame: 2,
-            value:new BABYLON.Vector3(-4.688,-3.952,-30.105)
-            });
-            R_arm_frames_position.push(
-            {
-            frame: 20,
-            value:new BABYLON.Vector3(-4.688,-3.952,-30.105)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 0,
-            value:new BABYLON.Quaternion(0.023,0.772,-0.055,0.633)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 2,
-            value:new BABYLON.Quaternion(0.023,0.772,-0.055,0.633)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 4,
-            value:new BABYLON.Quaternion(0.045,0.771,-0.087,0.629)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 6,
-            value:new BABYLON.Quaternion(0.094,0.765,-0.157,0.618)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 8,
-            value:new BABYLON.Quaternion(0.142,0.752,-0.226,0.602)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 10,
-            value:new BABYLON.Quaternion(0.163,0.745,-0.257,0.594)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 12,
-            value:new BABYLON.Quaternion(0.133,0.755,-0.213,0.606)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 14,
-            value:new BABYLON.Quaternion(0.057,0.77,-0.104,0.627)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 16,
-            value:new BABYLON.Quaternion(-0.037,0.769,0.033,0.637)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 18,
-            value:new BABYLON.Quaternion(-0.113,0.752,0.144,0.633)
-            });
-            R_arm_frames_rotation.push(
-            {
-            frame: 20,
-            value:new BABYLON.Quaternion(-0.144,0.742,0.188,0.628)
-            });
-
+                R_wrist_frames_position.push(
+                {
+                frame: 0,
+                value:new BABYLON.Vector3(0,0,-26.698)
+                });
+                R_wrist_frames_position.push(
+                {
+                frame: 2,
+                value:new BABYLON.Vector3(0,0,-26.698)
+                });
+                R_wrist_frames_position.push(
+                {
+                frame: 40,
+                value:new BABYLON.Vector3(0,0,-26.698)
+                });
+                
+                R_wrist_frames_rotation.push(
+                {
+                frame: 0,
+                value:new BABYLON.Quaternion(0.121,-0.004,0.175,0.977)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 2,
+                value:new BABYLON.Quaternion(0.121,-0.004,0.175,0.977)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 4,
+                value:new BABYLON.Quaternion(0.174,-0.058,0.138,0.973)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 6,
+                value:new BABYLON.Quaternion(0.226,-0.114,0.098,0.962)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 8,
+                value:new BABYLON.Quaternion(0.277,-0.168,0.058,0.944)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 10,
+                value:new BABYLON.Quaternion(0.324,-0.22,0.018,0.92)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 12,
+                value:new BABYLON.Quaternion(0.293,-0.164,-0.041,0.941)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 14,
+                value:new BABYLON.Quaternion(0.204,-0.015,-0.099,0.974)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 16,
+                value:new BABYLON.Quaternion(0.085,0.169,-0.145,0.971)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 18,
+                value:new BABYLON.Quaternion(-0.013,0.311,-0.17,0.935)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 20,
+                value:new BABYLON.Quaternion(-0.052,0.364,-0.176,0.913)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 22,
+                value:new BABYLON.Quaternion(-0.049,0.359,-0.176,0.915)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 24,
+                value:new BABYLON.Quaternion(-0.042,0.343,-0.175,0.922)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 26,
+                value:new BABYLON.Quaternion(-0.031,0.319,-0.174,0.931)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 28,
+                value:new BABYLON.Quaternion(-0.017,0.29,-0.173,0.941)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 30,
+                value:new BABYLON.Quaternion(-0.002,0.258,-0.171,0.951)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 32,
+                value:new BABYLON.Quaternion(0.013,0.225,-0.169,0.959)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 34,
+                value:new BABYLON.Quaternion(0.026,0.195,-0.167,0.966)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 36,
+                value:new BABYLON.Quaternion(0.037,0.171,-0.165,0.971)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 38,
+                value:new BABYLON.Quaternion(0.045,0.154,-0.163,0.973)
+                });
+                R_wrist_frames_rotation.push(
+                {
+                frame: 40,
+                value:new BABYLON.Quaternion(0.048,0.148,-0.163,0.974)
+                });
 
         var group = new BABYLON.AnimationGroup("walking");
 
@@ -504,10 +882,26 @@ export class Enemy extends Vehicle {
         _anim.setKeys(R_arm_frames_rotation);
         group.addTargetedAnimation(_anim, this.R_arm);
         
+        _anim = new BABYLON.Animation("head", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim.setKeys(head_frames_position);
+        group.addTargetedAnimation(_anim, this.head);
+
+        _anim = new BABYLON.Animation("head", "rotationQuaternion", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim.setKeys(head_frames_rotation);
+        group.addTargetedAnimation(_anim, this.head);
+
+        _anim = new BABYLON.Animation("r_wrist", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim.setKeys(R_wrist_frames_position);
+        group.addTargetedAnimation(_anim, this.R_wrist);
+
+        _anim = new BABYLON.Animation("r_wrist", "rotationQuaternion", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim.setKeys(R_wrist_frames_rotation);
+        group.addTargetedAnimation(_anim, this.R_wrist);
         group.play(group.loopAnimation);
 
         this._walk=group;
     }
+
     calling_walk()
     {
         this._walk.play(this._walk.loopAnimation);
