@@ -40,7 +40,7 @@ export async function createScene() {
     camera.minY = 5;
     camera.inertia = 0.6;
     camera.fov = 1.2;
-    camera.speed= 1;
+    camera.speed= 0.8;
 
     camera.angularSensibility = 2000;
 
@@ -206,7 +206,7 @@ export async function GenerateScene() {
     camera.minY = 5;
     camera.inertia = 0.6;
     camera.fov = 1.2;
-    camera.speed= 1;
+    camera.speed= 0.8;
 
 
     camera.angularSensibility = 2000;

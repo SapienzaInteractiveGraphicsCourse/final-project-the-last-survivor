@@ -22,5 +22,9 @@ export const AMMO = document.getElementById(
 );
 
 export const crosshair = document.getElementById(
-    "el"
+    "crosshair"
+);
+
+export const sniperScope = document.getElementById(
+    "sniperScope"
 );

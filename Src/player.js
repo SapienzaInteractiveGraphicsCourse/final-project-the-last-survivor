@@ -2,10 +2,11 @@ import * as BABYLON from "@babylonjs/core";
 import {camera,engine} from './scene';
 import { SceneLoader } from "@babylonjs/core";
 import { UnitManager } from "./unitManager";
+import { Sniper } from "./sniper_rifle";
 import { Pistol } from "./pistol";
 import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 import { AmmoBox, AmmoBoxInstance } from "./ammo_box";
-import { AMMO, crosshair } from "./domItems";
+import { AMMO, crosshair, sniperScope } from "./domItems";
 
 
 //Class that contains all the player info
@@ -181,21 +182,64 @@ export class Player {
     setAim(boolean) {
         this.aim = boolean;
         if (this.aim && !this.isaiming) {
-            crosshair.style.display = "none";
-            this.isaiming = true;
-            this.weapon._aim.speedRatio = 5;
-            this.weapon._aim.play(false);
-            this.weapon._aim.onAnimationEndObservable.addOnce(()  => this.isaiming=false);
-            camera.fov = 0.5;
+          crosshair.style.display = "none";
+          this.isaiming = true;
+          this.animateAimFOV(0.5); // Smoothly transition to FOV 0.5 (zoomed-in)
+          this.weapon._aim.speedRatio = 5;
+          this.weapon._aim.play(false);
+          this.weapon._aim.onAnimationEndObservable.addOnce(() => {
+            this.isaiming = false;
+            if (this.weapon instanceof Sniper) {
+              sniperScope.style.display = "block";
+              this.weapon.mesh.setEnabled(false); // Disable rendering of the weapon mesh for Sniper
+            }
+          });
         } else if (!this.aim && !this.isaiming) {
-            crosshair.style.dysplay = "flex";
-            this.isaiming = true;
-            this.weapon._aim.speedRatio = -5;
-            this.weapon._aim.play(false);
-            this.weapon._aim.onAnimationEndObservable.addOnce(()  => this.isaiming=false);
-            camera.fov = 1.2;
+          if (this.weapon instanceof Sniper) {
+            this.weapon.mesh.setEnabled(true); // Enable rendering of the weapon mesh for Sniper
+            sniperScope.style.display = "none";
+          }
+          crosshair.style.display = "flex";
+          this.isaiming = true;
+          this.animateAimFOV(1.2); // Smoothly transition to FOV 1.2 (default)
+          this.weapon._aim.speedRatio = -5;
+          this.weapon._aim.play(false);
+          this.weapon._aim.onAnimationEndObservable.addOnce(() => {
+            this.isaiming = false;
+          });
         }
-    }
+      }
+      
+      animateAimFOV(targetFOV) {
+        var initialFOV = camera.fov;
+        var currentFrame = 0;
+        var frameCount = 10; // Adjust this value to control the smoothness of the FOV transition
+      
+        var animation = new BABYLON.Animation(
+          "aimFOVAnimation",
+          "fov",
+          60,
+          BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+          BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+        );
+      
+        var keys = [];
+        while (currentFrame <= frameCount) {
+          var frameRatio = currentFrame / frameCount;
+          var fov = BABYLON.Scalar.Lerp(initialFOV, targetFOV, frameRatio);
+          keys.push({
+            frame: currentFrame,
+            value: fov,
+          });
+          currentFrame++;
+        }
+      
+        animation.setKeys(keys);
+        camera.animations = [];
+        camera.animations.push(animation);
+        this.scene.beginAnimation(camera, 0, frameCount, false);
+      }
+      
 
     isAiming(){
         return this.isaiming;
@@ -218,8 +262,82 @@ export class Player {
                
         }
 
-            
+        if (this.weapon instanceof Sniper){
+            this.rotateCameraSniper(-0.1, 20); // Rotate camera smoothly by -0.05 radians over 10 frames
+        }
+        else{
+            this.rotateCamera(-0.05, 10); // Rotate camera smoothly by -0.05 radians over 10 frames
+        }
     }
+
+    
+    rotateCamera(deltaRotation, frameCount) {
+        var initialRotationX = camera.rotation.x;
+        var targetRotationX = initialRotationX + deltaRotation;
+        var currentFrame = 0;
+    
+        var animation = new BABYLON.Animation(
+        "cameraRotationAnimation",
+        "rotation.x",
+        60,
+        BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+        BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+        );
+    
+        var keys = [];
+    
+        while (currentFrame <= frameCount) {
+        var frameRatio = currentFrame / frameCount;
+        var rotationX = BABYLON.Scalar.Lerp(initialRotationX, targetRotationX, frameRatio);
+        keys.push({
+            frame: currentFrame,
+            value: rotationX,
+        });
+        currentFrame++;
+        }
+    
+        animation.setKeys(keys);
+        camera.animations = [];
+        camera.animations.push(animation);
+        this.scene.beginAnimation(camera, 0, frameCount, false);
+    }
+
+    rotateCameraSniper(deltaRotation, frameCount) {
+        var initialRotationX = camera.rotation.x;
+        var targetRotationX = initialRotationX + deltaRotation;
+        var currentFrame = 0;
+      
+        var animation = new BABYLON.Animation(
+          "cameraRotationAnimation",
+          "rotation.x",
+          60,
+          BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+          BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT
+        );
+      
+        var keys = [];
+      
+        while (currentFrame <= frameCount) {
+          var frameRatio = currentFrame / frameCount;
+          var rotationX = BABYLON.Scalar.Lerp(initialRotationX, targetRotationX, frameRatio);
+          keys.push({
+            frame: currentFrame,
+            value: rotationX,
+          });
+          currentFrame++;
+        }
+      
+        // Add a keyframe at the end to return the rotation to the original position
+        keys.push({
+          frame: frameCount *2,
+          value: initialRotationX,
+        });
+      
+        animation.setKeys(keys);
+        camera.animations = [];
+        camera.animations.push(animation);
+        this.scene.beginAnimation(camera, 0, frameCount *2, false);
+      }
 
     reload() {
         console.log("reload");

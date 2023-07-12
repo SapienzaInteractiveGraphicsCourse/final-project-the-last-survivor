@@ -51,10 +51,24 @@ export class Assault extends Weapon {
     // group2.play(group2.loopAnimation);
 
     this._fire = group;
+
+    // AIM ANIMATION
+
+    var group2 = new BABYLON.AnimationGroup("aim");
+
+    var _anim2 = new BABYLON.Animation("Pos", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+    _anim2.setKeys(aimKeyFrames);
+    group2.addTargetedAnimation(_anim2,this.mesh);
+
+    _anim2 = new BABYLON.Animation("Pos", "rotation", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+    _anim2.setKeys(aimrotKeyFrames);
+    group2.addTargetedAnimation(_anim2,this.mesh);
+
+    group2.play(group2.loopAnimation);
+
+    this._aim = group2;
   }
 }
-
-  
 
 var PBody_058_frames_position= []
 var Pmag_062_frames_position = []
@@ -224,4 +238,34 @@ IK_Hand_Cntrl_L_015_frames_position.push(
 {
 frame: 11,
 value:new BABYLON.Vector3(0.025,0.053,0.343)
+});
+
+
+var aimKeyFrames= []
+
+aimKeyFrames.push(
+{
+frame: 0,
+value:  new BABYLON.Vector3(0.2, -0.45, 0.3)
+});
+
+aimKeyFrames.push(
+{
+frame: 60,
+value:  new BABYLON.Vector3(-0.125, -0.39, -0.2)
+});
+
+var aimrotKeyFrames =[]
+
+
+aimrotKeyFrames.push(
+{
+frame: 0,
+value:  new BABYLON.Vector3(0,Math.PI,0)
+});
+
+aimrotKeyFrames.push(
+{
+frame: 60,
+value:  new BABYLON.Vector3(-0.03,Math.PI-0.03,0.1)
 });

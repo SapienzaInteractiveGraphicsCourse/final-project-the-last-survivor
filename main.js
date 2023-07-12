@@ -3,6 +3,7 @@ import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 import * as BABYLON from "@babylonjs/core";
+import { MotionBlurPostProcess } from "@babylonjs/core";
 
 import { Enemy } from "./Src/enemy.js";
 import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, CreateScreenshot, RecastJSPlugin, CombineAction } from "@babylonjs/core";
@@ -94,12 +95,21 @@ async function main()  {
             document.getElementById("runData").style.display = "block";
 
             // Show the loading screen
-            loadingScreen.style.display = "flex";
+            loadingScreen.style.display = "flex";          
             
             menuBgs.stop()
 
             scene = await createScene();
+
+            var motionBlur = new MotionBlurPostProcess(
+                "motionBlur", 
+                scene, 
+                0.5, // Motion strength 
+                camera 
+              );    
             
+            motionBlur.motionBlurSamples = 16; // divide quality by 2
+
             // hide the loading screen when you want to
             
         
@@ -147,7 +157,6 @@ async function main()  {
             await ammoBox6.LoadMesh(p.collider, new BABYLON.Vector3(14.300432953120715, 1.650643229484568, -44.73937281514947), new BABYLON.Vector3(0, Math.PI, 0));
             await ammoBox7.LoadMesh(p.collider, new BABYLON.Vector3(3.115622796911797, 1.394717674685353e-15, -6.284799825043635), new BABYLON.Vector3(0, Math.PI, 0));
 
-            
         // YUKA specific
 
             menuBgs = new BABYLON.Sound("bgs", "Assets/theme.mp3", scene, null, { autoplay: true, loop: true });
@@ -201,7 +210,7 @@ async function main()  {
 
             // Hide the loading screen
             loadingScreen.style.display = "none";
-            var elDiv = document.getElementById("el");
+            var elDiv = document.getElementById("crosshair");
             elDiv.style.display = "flex";
 
             engine.enterPointerlock();            
@@ -369,13 +378,22 @@ function handleKeyDown(event) {
         startTime = Date.now();
         //console.log(startTime);
     } 
+    if (event.shiftKey && event.code === "ShiftLeft") {
+        // Increase camera speed
+        camera.speed = 1.5;
+    }
 }
 
 function handleKeyUp(event) {
+    if (event.code === "ShiftLeft") {
+        // Reset camera speed to default
+        camera.speed = 0.8;
+    }
     
         // Stop vertical movement
         walking = false;
         var elapsedTime = Date.now() - startTime;
+        if (event.shiftKey && event.code === "ShiftLeft") camera.speed = 1;
         //console.log(elapsedTime);
     
 }

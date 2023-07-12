@@ -55,6 +55,23 @@ export class Sniper extends Weapon {
 
 
     this._fire = group;
+
+    
+    // AIM ANIMATION
+
+    var group2 = new BABYLON.AnimationGroup("aim");
+
+    var _anim2 = new BABYLON.Animation("Pos", "position", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+    _anim2.setKeys(aimKeyFrames);
+    group2.addTargetedAnimation(_anim2,this.mesh);
+
+    _anim2 = new BABYLON.Animation("Pos", "rotation", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+    _anim2.setKeys(aimrotKeyFrames);
+    group2.addTargetedAnimation(_anim2,this.mesh);
+
+    group2.play(group2.loopAnimation);
+
+    this._aim = group2;
   }
 }
 
@@ -168,4 +185,34 @@ Mag_060_frames_position.push(
 {
 frame: 14,
 value:new BABYLON.Vector3(-0.068,0.079,0.259)
+});
+
+
+var aimKeyFrames= []
+
+aimKeyFrames.push(
+{
+frame: 0,
+value:  new BABYLON.Vector3(0.1, -0.3, -0.05)
+});
+
+aimKeyFrames.push(
+{
+frame: 60,
+value:  new BABYLON.Vector3(-0.08, -0.24, 0.05)
+});
+
+var aimrotKeyFrames =[]
+
+
+aimrotKeyFrames.push(
+{
+frame: 0,
+value:  new BABYLON.Vector3(0,Math.PI,0)
+});
+
+aimrotKeyFrames.push(
+{
+frame: 60,
+value:  new BABYLON.Vector3(0,Math.PI,0.1)
 });
