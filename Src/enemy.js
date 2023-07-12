@@ -165,7 +165,7 @@ export class Enemy extends Vehicle {
     
         var moveCamera = new BABYLON.Animation("CameraMove", "position", 180/length+10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         moveCamera.setKeys(direction);
-        this.mesh.animations.push(moveCamera);
+       // this.mesh.animations.push(moveCamera);
         this.calling_walk();
         scene.beginAnimation(this.mesh, 0, 100);
         }

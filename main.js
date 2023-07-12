@@ -106,7 +106,7 @@ async function main()  {
             var motionBlur = new MotionBlurPostProcess(
                 "motionBlur", 
                 scene, 
-                0.5, // Motion strength 
+                2, // Motion strength 
                 camera 
               );    
             

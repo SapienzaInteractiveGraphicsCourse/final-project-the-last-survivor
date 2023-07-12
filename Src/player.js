@@ -8,7 +8,7 @@ import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 import { AmmoBox, AmmoBoxInstance } from "./ammo_box";
 import { AMMO, crosshair, sniperScope } from "./domItems";
 import { endGame, finished } from "../main";
-
+import { enemy} from "../main"
 
 //Class that contains all the player info
 
@@ -252,6 +252,8 @@ export class Player {
         var ray = camera.getForwardRay(999);
         var hit = this.scene.pickWithRay(ray);
 
+        const particleSystem = new BABYLON.ParticleSystem("particles", 2000);
+        particleSystem.particleTexture = new BABYLON.Texture("Assets/flare.png");
 
         if(hit.pickedMesh){
             var name = hit.pickedMesh.id.split(".")
@@ -260,8 +262,20 @@ export class Player {
                 console.log("hit an enemy");
                console.log(name[name.length - 1]);
                UnitManager.instance.onEnemyHit(name[name.length - 1]);
+               particleSystem.emitter = hit.pickedPoint
+               particleSystem.minEmitBox = new BABYLON.Vector3(-0.2, -0.2, -0.2); // Starting all from
+               particleSystem.maxEmitBox = new BABYLON.Vector3(0.2, 0.2, 0.2); // To...
+               particleSystem.color1 = new BABYLON.Color4(0.5, 0, 0);
+                particleSystem.color2 = new BABYLON.Color4(0.3, 0, 0);
+                particleSystem.colorDead = new BABYLON.Color4(0,0,0);
+                particleSystem.emitRate = 500;
+               particleSystem.minSize = 0.1;
+               particleSystem.maxSize = 0.5;
+               particleSystem.updateSpeed = 0.01;
+               particleSystem.gravity = new BABYLON.Vector3(0, -9.81, 0);
+               particleSystem.start();
+               particleSystem.targetStopDuration = 0.3;
             }
-               
         }
 
         if (this.weapon instanceof Sniper){
