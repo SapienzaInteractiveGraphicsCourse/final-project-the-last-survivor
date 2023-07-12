@@ -15,6 +15,7 @@ export class LuckyBox {
     static playerInside = false;
     openAnim;
     closeAnim
+    player
     constructor(player) {
         this.player = player
         LuckyBoxInstance = this;
@@ -103,7 +104,7 @@ export class LuckyBox {
         this.openAnim.onAnimationEndObservable.addOnce(()  => this.onOpen());
     }
 
-    close() {
+    close() { 
         this.closeAnim.play(  this.openAnim.loopAnimation)
         this.interactable = true
         this.openAnim.onAnimationEndObservable.addOnce(()  => this.onClose());

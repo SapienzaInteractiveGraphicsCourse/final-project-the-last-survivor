@@ -25,6 +25,8 @@ export var p;
 //render variables
 export var scene;
 export var enemy;
+var finished = false;
+var paused = false;
 let walking = false;
 let startTime;
 let isRightMouseButtonDown = false;
@@ -171,10 +173,11 @@ async function main()  {
                 // p.update();
                 // var t = Date.now();
                 // var timeElapsed = startTime - t;
-                scene.render();
-                p.update();
-                unitManager?.update()
-                divFps.innerHTML = engine.getFps().toFixed() + " fps";
+                if (finished || paused) return;
+                    scene.render();
+                    p.update();
+                    unitManager?.update()
+                    divFps.innerHTML = engine.getFps().toFixed() + " fps";
             });
 
             let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "zombie1.gltf", scene)    
@@ -183,10 +186,10 @@ async function main()  {
             enemy.scaling = new BABYLON.Vector3(1, 1, 1);
             enemy.rotation = new BABYLON.Vector3(0,0,0);
             enemy.checkCollisions = true;
-
-            
+   
 
             res.meshes.forEach((m) => {
+                
                 if(m.name = "Object_2")
                     m.name = 'enemy.head'
                 else
@@ -365,10 +368,13 @@ async function main()  {
 }
 
 
-
-
-
-
+export function endGame() {
+    finished = true
+    endMenu.style.display = "flex";
+    engine.exitPointerlock()
+    rounds.textContent = "You survived for " + UnitManager.instance.roundCounter + " rounds"
+    
+}
 
 // Event handler for keydown event
 function handleKeyDown(event) {

@@ -13,7 +13,7 @@ import * as YUKA from '../Modules/yuka.module.js'
 import { createCellSpaceHelper } from '../Modules/CellSpacePartitioningHelper.js'
 import { createConvexRegionHelper } from '../Modules/NavMeshHelper.js'
 
-
+export var vignette
 export async function createScene() {
 
     var scene = new BABYLON.Scene(engine)
@@ -54,6 +54,12 @@ export async function createScene() {
 
 
 
+    vignette = new BABYLON.ImageProcessingPostProcess("processing", 1.0, camera);
+    vignette.vignetteWeight = 10;
+    vignette.vignetteStretch = 2;
+    vignette.vignetteColor = new BABYLON.Color4(1, 0, 0, 1);
+    vignette.vignetteEnabled = false;
+    
 
     var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
     light1.intensity =1;

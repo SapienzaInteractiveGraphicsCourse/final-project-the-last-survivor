@@ -144,7 +144,7 @@
             display: inline-block;
         }
 
-        #pauseGame {
+        .columnMenu {
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -160,7 +160,7 @@
             font-size: 24px;
         }
 
-        #pauseGame span {
+        .columnMenu span {
             margin-bottom: 20px;
         }
 
@@ -491,12 +491,7 @@
             <button id="exitBtn">Exit</button>
         </div>
     </div>
-    <div id="pauseGame">
-        <span>PAUSE</span>
-        <span>Click to continue</span>
-        <a href="./" id="gameBackMenu">Back to the Menu</a>
-        </div>
-    </div>
+    
     <div id="fps" style="display: none; font-family: Arial, Helvetica, sans-serif;">0</div>
     <div id="ammo" style="display: none; font-family: Arial, Helvetica, sans-serif;"">ammo</div>
     <div id="runData" style="display: none; font-family: Arial, Helvetica, sans-serif;"">Round<br> Zombie Count</div>
@@ -519,6 +514,17 @@
         <h2>Loading</h2>
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       </div>
+    <div class="columnMenu" id="pauseGame">
+        <span>PAUSE</span>
+        <span>Click to continue</span>
+        <a href="./" id="gameBackMenu">Back to the Menu</a>
+    </div>
+    <div class="columnMenu" id="endMenu">
+        <span style="color: red;">!!! YOU DIED !!!</span>
+        <span id="rounds"></span>
+        <a href="./" id="gameBackMenu">Back to the Menu</a>
+    </div>
+        
     <script src="main.js" type="module"></script>
     
 </body>

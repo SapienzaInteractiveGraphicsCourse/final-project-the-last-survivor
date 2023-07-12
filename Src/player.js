@@ -1,5 +1,5 @@
 import * as BABYLON from "@babylonjs/core";
-import {camera,engine} from './scene';
+import {camera,engine, vignette} from './scene';
 import { SceneLoader } from "@babylonjs/core";
 import { UnitManager } from "./unitManager";
 import { Sniper } from "./sniper_rifle";
@@ -7,6 +7,7 @@ import { Pistol } from "./pistol";
 import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 import { AmmoBox, AmmoBoxInstance } from "./ammo_box";
 import { AMMO, crosshair, sniperScope } from "./domItems";
+import { endGame, finished } from "../main";
 
 
 //Class that contains all the player info
@@ -23,6 +24,7 @@ export class Player {
     inputShoot = false;
     //TIME LOCKS
     lockedFor = 0;
+    hp = 4
     lockTime;
     money = 5000;
     scene;
@@ -409,7 +411,14 @@ export class Player {
     addMoney(money) {
         this.money += money
     }
-
+    takeDamage() {
+        this.hp--
+        if(this.hp <=2)
+            vignette.vignetteEnabled = true
+        
+        if(this.hp <= 0)
+            endGame()
+    }
     changeWeapon(newWeapon) {
         this.weapon.mesh.dispose();
         this.weapon = undefined
@@ -421,12 +430,6 @@ export class Player {
         this.status = status.IDLE; // Reset the player's status to IDLE after changing the weapon
     }
 }
-
-const weaponStats = {
-    fireRate : 11, //shoot frequency
-    ammo: 30
-}
-
 const status = {
     RELOADING : 0,
     SHOOTING: 1,

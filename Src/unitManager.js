@@ -4,6 +4,7 @@ import {camera,engine} from './scene';
 import { Enemy } from "./enemy";
 import { scene } from "../main";
 import { runData } from "./domItems";
+import { LuckyBoxInstance } from "./luckyBox";
 
 export class UnitManager {
     static instance = null;
@@ -39,13 +40,33 @@ export class UnitManager {
 
         this.currentSpawnNumber--
 
+        var collider = BABYLON.MeshBuilder.CreateBox("box", {width:.8, depth: 0.8, height: 3}, scene); 
+        collider.visibility = 0
+        collider.isPickable = false
+        collider.checkCollisions = false
+        collider.actionManager = new BABYLON.ActionManager(scene)
+
+        collider.actionManager.registerAction(
+            new BABYLON.ExecuteCodeAction({ 
+                    trigger: BABYLON.ActionManager.OnIntersectionEnterTrigger, 
+                    parameter:this.player.collider
+                },function(player){
+                    //funziona
+                    console.log("player hit")
+                    var sound = new BABYLON.Sound("bgs", "Assets/move.wav", scene);
+                    sound.play()
+                    UnitManager.instance.player.takeDamage()
+                }));
+
         this.enemyMesh.meshes.forEach((m) => {
             m.checkCollisions = true;
             m.name = 'enemy'
             m.id = this.currentId
         });
-        var clone = await  this.enemyMesh.meshes[0].clone("enemy", false);
 
+
+        var clone = await  this.enemyMesh.meshes[0].clone("enemy", false);
+        collider.parent = clone
         clone.id = this.currentId; 
 
         
@@ -72,8 +93,7 @@ export class UnitManager {
                         this.spawnedEnemy.splice(index, 1);
                         this.player.addMoney(150)
                     } 
-                }
-                    
+                }     
         })
 
         if(this.spawnedEnemy.length == 0)

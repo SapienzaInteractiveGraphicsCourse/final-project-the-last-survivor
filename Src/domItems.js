@@ -28,3 +28,10 @@ export const crosshair = document.getElementById(
 export const sniperScope = document.getElementById(
     "sniperScope"
 );
+export const endGame = document.querySelector(
+    "#endMenu"
+);
+
+export const rounds =  document.querySelector(
+    "#rounds"
+);
