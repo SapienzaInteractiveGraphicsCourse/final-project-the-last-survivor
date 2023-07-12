@@ -16,7 +16,7 @@ export class Assault extends Weapon {
   async init() {
     await this.loadMesh("fps_ak-74m_animations.glb", new BABYLON.Vector3(0.2, -0.45, 0.3));
     // Load AK47 components
-
+    this.loadSound("Assets/ak.mp3")
     this.AKBody = this.mesh.getChildren((m) => m.name === "PBody_058", false);
     this.AKMag = this.mesh.getChildren((m) => m.name === "Pmag_062", false);
     this.IK_Hand_Cntrl_R = this.mesh.getChildren((m) => m.name === "IK_Hand_Cntrl_R_036", false);

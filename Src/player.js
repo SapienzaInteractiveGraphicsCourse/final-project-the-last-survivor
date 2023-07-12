@@ -46,19 +46,14 @@ export class Player {
         scene.onPointerDown = (evt) => {
             engine.enterPointerlock();   
             if(evt.button === 0)  {
-                this.inputShoot = true;
+                  this.inputShoot = true;
                 
-            }
-                
-            
+            }           
         }  
-
         scene.onPointerUp = (evt) => { 
             if(evt.button === 0)  {
                 this.inputShoot = false;
-            }
-                
-            
+            }              
         }  
 
         scene.onKeyboardObservable.add((kbInfo) => { 
@@ -92,7 +87,7 @@ export class Player {
         ///CHECK IF CAN SHOOT
        if(this.inputShoot && !this.locked) {
             this.ChangeStatus(status.SHOOTING);
-           
+            
        }
        if (AmmoBox.playerInside) {
             // Update ammo
@@ -168,6 +163,7 @@ export class Player {
     shoot() {
         
         if(this.weapon.currentAmmo <= 0 ) return
+        this.weapon.shootSound.play()
         console.log("shot");
         this.weapon.currentAmmo--;
         this.weapon._fire.play( this.weapon._fire.loopAnimation)
@@ -198,7 +194,7 @@ export class Player {
 
     reload() {
         console.log("reload");
-
+        this.weapon.reloadSound.play()
         this.weapon._reload.play(this.weapon._reload.loopAnimation)
         this.weapon._reload.onAnimationEndObservable.addOnce(()  => this.endReload());
     }

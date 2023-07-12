@@ -18,7 +18,7 @@ export class Pistol extends Weapon {
     async init() {
         await this.loadMesh("fps_pistol_animations.glb", new BABYLON.Vector3(0.1, -0.2, 0));
         ///LOAD PISTOL COMPONENTS///
-        
+        this.loadSound("Assets/pistol.mp3")
         this.PBody = this.mesh.getChildren(((m) => m.name == "PBody_058"), false);
         this.Pmag = this.mesh.getChildren(((m) => m.name == "Pmag_061"), false);
         this.IK_Hand_Cntrl_R = this.mesh.getChildren(((m) => m.name == "IK_Hand_Cntrl_R_037"), false);

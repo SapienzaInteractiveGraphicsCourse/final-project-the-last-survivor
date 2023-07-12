@@ -16,7 +16,7 @@ export class Sniper extends Weapon {
   async init() {
     await this.loadMesh("fps_animations_sniper_rifle.glb", new BABYLON.Vector3(0.1, -0.3, -0.05));
     // Load AK47 components
-
+    this.loadSound("Assets/sniper.mp3")
     this.sBody = this.mesh.getChildren((m) => m.name === "Body_057", false);
     this.sMag = this.mesh.getChildren((m) => m.name === "Mag_060", false);
     this.IK_Hand_Cntrl_R = this.mesh.getChildren((m) => m.name === "IK_Hand_Cntrl_R_036", false);

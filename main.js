@@ -26,13 +26,17 @@ export var scene;
 export var enemy;
 let walking = false;
 let startTime;
-
+var menuBgs
 async function main()  {
+
+
         await Engine;        
         
         // create the canvas html element and attach it to the webpage
         var canvas = document.getElementById("renderCanvas");
 
+        var tempScene = new BABYLON.Scene
+        menuBgs = new BABYLON.Sound("bgs", "Assets/menu.mp3", tempScene, null, { autoplay: true, loop: true });
         // Get the size of the window
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
@@ -79,6 +83,7 @@ async function main()  {
 
         // Function to start the game
         async function startGame() {
+           
             // Hide the menu
             var menu = document.getElementById("menu");
             menu.style.display = "none";
@@ -89,7 +94,7 @@ async function main()  {
 
             // Show the loading screen
             loadingScreen.style.display = "flex";
-            
+            menuBgs.stop()
             scene = await createScene();
             
             // hide the loading screen when you want to
@@ -124,7 +129,10 @@ async function main()  {
 
             
         // YUKA specific
-        
+            
+            menuBgs = new BABYLON.Sound("bgs", "Assets/theme.mp3", scene, null, { autoplay: true, loop: true });
+
+            //bgs.play()
             //run the main render loopss
             var unitManager = null
             

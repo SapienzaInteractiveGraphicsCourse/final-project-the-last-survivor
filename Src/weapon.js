@@ -16,7 +16,8 @@ export class Weapon {
     ammoLevel; //inteso con capienza del caricatore!!!
     stockedAmmo;
     currentAmmo;
-
+    shootSound;
+    reloadSound
     mesh;
     constructor() {
         //this.instance = this;
@@ -25,6 +26,11 @@ export class Weapon {
     reset() {
         this.currentAmmo = this.ammoLevel
         this.stockedAmmo = this.ammoLevel
+    }
+
+    loadSound(name) {
+        this.shootSound = new BABYLON.Sound("Music", name, scene)
+        this.reloadSound = new BABYLON.Sound("Music", "Assets/reload.mp3", scene)
     }
     
     async loadMesh(name, pos) {
