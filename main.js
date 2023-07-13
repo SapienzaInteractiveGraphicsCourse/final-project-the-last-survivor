@@ -380,6 +380,7 @@ async function main()  {
                     camera.keysRight.push(68);
                     camera.keysLeft.push(65);
                     camera.keysUpward.push(32);
+                    paused = false;
                 }
               // Pointer lock is active, hide the pause menu
                 menu.style.display = "none";
@@ -392,6 +393,7 @@ async function main()  {
                 removeKeyCodeFromArray(32, camera.keysUpward);
                 if (!finished){
                     menu.style.display = "flex";
+                    paused = true
                 }
             }
         }
