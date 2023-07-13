@@ -9,7 +9,7 @@ import { Enemy } from "./Src/enemy.js";
 import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, CreateScreenshot, RecastJSPlugin, CombineAction } from "@babylonjs/core";
 import {camera, createScene,engine, GenerateScene} from './Src/scene.js';
 import {Player} from './Src/player.js';
-import { ammo, divFps } from "./Src/domItems.js";
+import { ammo, divFps, lifeProgress } from "./Src/domItems.js";
 import * as YUKA from '/Modules/yuka.module.js'
 
 import { UnitManager } from "./Src/unitManager.js";
@@ -85,7 +85,7 @@ async function main()  {
         // Event listeners for keydown and keyup events
         document.addEventListener("keydown", handleKeyDown);
         document.addEventListener("keyup", handleKeyUp);
-
+        
         // Function to start the game
         async function startGame() {
             // Hide the menu
@@ -166,6 +166,8 @@ async function main()  {
         
             //run the main render loopss
             var unitManager = null
+
+            lifeProgress.style.display = "flex";
             
             engine.hideLoadingUI();
 

@@ -35,3 +35,8 @@ export const endGame = document.querySelector(
 export const rounds =  document.querySelector(
     "#rounds"
 );
+
+export const lifeProgress = document.getElementById(
+    'lifeProgress'
+);
+

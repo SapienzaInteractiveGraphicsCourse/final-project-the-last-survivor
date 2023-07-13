@@ -6,7 +6,7 @@ import { Sniper } from "./sniper_rifle";
 import { Pistol } from "./pistol";
 import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 import { AmmoBox, AmmoBoxInstance } from "./ammo_box";
-import { AMMO, crosshair, luckyBox, sniperScope } from "./domItems";
+import { AMMO, crosshair, luckyBox, sniperScope, lifeProgress } from "./domItems";
 import { endGame, finished } from "../main";
 import { enemy} from "../main"
 
@@ -32,6 +32,7 @@ export class Player {
     isaiming = false;
     particle = false
     particleSystem
+    almostdead = 0;
     constructor(scene) {
         this.scene = scene;
         this.InputManager(scene); 
@@ -106,6 +107,14 @@ export class Player {
         }   
     }
     update() {
+        
+        this.updateLifeBar(this.hp, 4);
+
+        if (this.hp <= 2){
+            setTimeout(() => {
+                this.hp++;
+            }, 10000);            
+        }
         
         if(this.money >=950 )
         {
@@ -239,7 +248,12 @@ export class Player {
         if (this.aim && !this.isaiming) {
           crosshair.style.display = "none";
           this.isaiming = true;
-          this.animateAimFOV(0.5); // Smoothly transition to FOV 0.5 (zoomed-in)
+          if (this.weapon instanceof Sniper) {
+            this.animateAimFOV(0.3); // Smoothly transition to FOV 0.5 (zoomed-in)
+        }
+          else{
+            this.animateAimFOV(0.5); // Smoothly transition to FOV 0.5 (zoomed-in)
+          }
           this.weapon._aim.speedRatio = 5;
           this.weapon._aim.play(false);
           this.weapon._aim.onAnimationEndObservable.addOnce(() => {
@@ -310,10 +324,10 @@ export class Player {
 
         if(hit.pickedMesh){
             var name = hit.pickedMesh.id.split(".")
-            console.log(name)
+            console.log(hit)
             if(name[0] === "enemy") {
                 console.log("hit an enemy");
-               console.log(name[name.length - 1]);
+               console.log(name);
                UnitManager.instance.onEnemyHit(name[name.length - 1]);
                particleSystem.emitter = hit.pickedPoint
                particleSystem.minEmitBox = new BABYLON.Vector3(-0.2, -0.2, -0.2); // Starting all from
@@ -482,6 +496,7 @@ export class Player {
         this.hp--
         if(this.hp <=2)
             vignette.vignetteEnabled = true
+            this.almostdead = Date.now();
         
         if(this.hp <= 0)
             endGame()
@@ -497,6 +512,14 @@ export class Player {
         // Reset the shoot and aim animations
         this.weapon._fire.stop();
         this.weapon._aim.stop();
+    }
+    // Function to update the life progress
+    updateLifeBar(value, maxValue) {
+        // Calculate the width of the progress bar based on the value and maxValue
+        const progressWidth = (value / maxValue) * 100;
+    
+        // Set the width of the life progress element
+        lifeProgress.style.width = `${progressWidth}%`;
     }
 }
 const status = {
