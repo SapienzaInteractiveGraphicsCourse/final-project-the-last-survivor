@@ -71,6 +71,13 @@ export class Player {
         }  
 
         scene.onKeyboardObservable.add((kbInfo) => { 
+            if (this.isaiming) {
+                return;
+              }
+    
+            if (this.status === status.RELOADING){
+                return
+            }
             switch (kbInfo.type) {
                 case BABYLON.KeyboardEventTypes.KEYDOWN:
                     if(kbInfo.event.key == 'r')
@@ -110,10 +117,8 @@ export class Player {
         
         this.updateLifeBar(this.hp, 4);
 
-        if (this.hp <= 2){
-            setTimeout(() => {
-                this.hp++;
-            }, 10000);            
+        if (this.hp > 2){
+            vignette.vignetteEnabled = false
         }
         
         if(this.money >=950 )
@@ -495,9 +500,13 @@ export class Player {
     }
     takeDamage() {
         this.hp--
-        if(this.hp <=2)
-            vignette.vignetteEnabled = true
-            this.almostdead = Date.now();
+        if(this.hp <=3)
+            setTimeout(() => {
+                this.hp++;
+            }, 10000); 
+            if (this.hp<=2){
+                vignette.vignetteEnabled = true
+            }
         
         if(this.hp <= 0)
             endGame()

@@ -45,8 +45,13 @@ async function main()  {
 
         lifeProgress.style.display = "none";
 
+        BABYLON.Engine.audioEngine.setGlobalVolume(0.5);
+
+        var volume = 0.5;
+
         var tempScene = new BABYLON.Scene
-        menuBgs = new BABYLON.Sound("bgs", "Assets/menu.mp3", tempScene, null, { autoplay: true, loop: true });
+        menuBgs = new BABYLON.Sound("bgs", "Assets/menu.mp3", tempScene, null, { autoplay: true, loop: true ,  volume: volume});
+        
         // Get the size of the window
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
@@ -301,12 +306,23 @@ async function main()  {
                 showDescription("Night time description");
             });
 
+            dayBtn.addEventListener("mouseout", function() {
+                var descriptionElement = document.getElementById("timeDescription");
+                descriptionElement.style.display = "none";
+            });  
+
+            nightBtn.addEventListener("mouseout", function() {
+                var descriptionElement = document.getElementById("timeDescription");
+                descriptionElement.style.display = "none";
+            });  
+
             // Volume range slider
             var volumeRange = document.getElementById("volumeRange");
             var volumeValue = document.getElementById("volumeValue");
 
             volumeRange.addEventListener("input", function () {
                 volumeValue.textContent = volumeRange.value;
+                BABYLON.Engine.audioEngine.setGlobalVolume(volumeValue.textContent/100);
             });
 
             // Save Changes button
@@ -343,8 +359,9 @@ async function main()  {
         function showDescription(description) {
             var descriptionElement = document.getElementById("difficultyDescription");
             descriptionElement.textContent = description;
+            descriptionElement.style.display = "flex";
         }
-
+        
         function hideDescription() {
             var descriptionElement = document.getElementById("difficultyDescription");
             descriptionElement.style.display = "none";
