@@ -82,21 +82,13 @@
         }
 
         #menu #logo {
-            color: rgb(221, 105, 13);
+            color: rgb(221,105,13) ;
             display: flex;
             justify-content: flex-start;
             width: 100%;
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
-            position: relative;
-        }
-
-        #menu #logo .settingsHeading {
-            position: absolute;
-            top: 0;
-            left: 0;
-            margin: 0;
         }
 
         #menu #center {
@@ -114,32 +106,19 @@
             flex-direction: row;
             
         }
-        #MainButtons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            width: 500px; /* Adjust the width as per your requirements */
-        }
 
-        #MainButtons .MSButton {
+        #menu .MSButton {
             width: 150px;
-            background-color: #e4590e;
+            background-color: #ccc;
             border: none;
             color: #333;
             padding: 10px 20px;
-            font-size: 10px;
-            font-weight: bold;
-            font-family: 'black_ops_2regular';
+            font-size: 16px;
             cursor: pointer;
-            transition: width 0.5s ease-in-out, color 3s linear, background-color 0.5s ease-in-out, margin-right 0.5s ease-in-out;
-            border-radius: 10px;
         }
 
-        #MainButtons .MSButton:hover {
-            width: 180px;
-            background-color: #ffffff;
-            margin-right: 30px;
+        #menu .MSButton:hover {
+            background-color: #ddd;
         }
 
         #menu .titleCommand {
@@ -154,7 +133,6 @@
             font-size: x-small;
             width: fit-content;
         }
-        
         #commandsStart {
             flex-direction: column;
             display: flex;
@@ -166,7 +144,7 @@
             display: inline-block;
         }
 
-        .columnMenu {
+        #pauseGame {
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -182,7 +160,7 @@
             font-size: 24px;
         }
 
-        .columnMenu span {
+        #pauseGame span {
             margin-bottom: 20px;
         }
 
@@ -255,6 +233,7 @@
         }
 
         #settings {
+            display: none;
             position: absolute;
             top: 0;
             left: 0;
@@ -263,7 +242,7 @@
             background-color: #333;
             padding: 20px;
             color: #fff;
-            font-family: 'black_ops_2regular';
+            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -275,24 +254,19 @@
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
-            color: rgb(221, 105, 13);
         }
 
         #settings .spacer {
             margin-bottom: 10px;
-            display: flex;
-            flex-direction: row;
         }
 
         #settings .MSButton {
-            width: 150px;
             background-color: #ccc;
             border: none;
             color: #333;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            font-family: 'black_ops_2regular';
         }
 
         #settings .MSButton:hover {
@@ -308,21 +282,15 @@
         #settings .keys {
             display: inline-block;
             width: 70px;
-            font-size: x-small;
-            width: fit-content;
-            font-family: 'black_ops_2regular';
         }
 
         #settings .Key {
-            font-size: xx-small;
             display: inline-block;
-            font-family: 'black_ops_2regular';
         }
 
         #settings select {
             padding: 5px;
             font-size: 16px;
-            font-family: 'black_ops_2regular';
         }
 
         #settings input[type="range"] {
@@ -331,14 +299,12 @@
 
         #settings label {
             margin-right: 5px;
-            font-family: 'black_ops_2regular';
         }
 
         #settings #description {
             margin-top: 10px;
             font-style: italic;
             color: #999;
-            font-family: 'black_ops_2regular';
         }
 
         .lds-spinner {
@@ -442,8 +408,7 @@
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">   
-    <title>The Last survivor</title>
-    <link rel="shortcut icon" href="zombie_icon.ico">
+    <title>Last survivor</title>
 <script defer src="bundle.js"></script></head>
 <body style="width: 100%;height: 100%">
     
@@ -467,22 +432,17 @@
             <div id="commandsStart" >
                 <h4 class="titleCommand" style="color: rgb(221,105,13);">Commands:</h4>
                 <div><span class="keys">W A S D    -</span><span class="Key">   directional movements</span></div>
-                <div><span class="keys">SHIFT    -</span><span class="Key">   run</span></div>
                 <div><span class="keys">R   -</span><span class="Key">   Reload</span></div>
                 <div><span class="keys">F   -</span><span class="Key">   Interact</span></div>
                 <div><span class="keys">MOUSE    -</span><span class="Key">   move camera</span></div>
-                <div><span class="keys">LEFT CLICK    -</span><span class="Key">   shoot</span></div>
-                <div><span class="keys">RIGHT CLICK    -</span><span class="Key">   aim</span></div>
+                <div><span class="keys">CLICK    -</span><span class="Key">   shoot</span></div>
                 <div><span class="keys">ESC     -</span><span class="Key">   pause</span></div>
             </div>
         </div>
     </div>
     <div id="settings" style="display: none;">
         <!-- Settings page content -->
-        <div id="logo" class="spacer">
-            The Last Survivor
-            <h2 class="settingsHeading">Settings</h2>
-        </div>
+        <h2>Settings</h2>
         <div>
             <h3>Difficulty</h3>
             <div>
@@ -490,16 +450,16 @@
                 <button id="normalBtn">Normal</button>
                 <button id="hardBtn">Hard</button>
             </div>
+            <div id="difficultyDescription"></div>
         </div>
-        <div id="difficultyDescription"></div>
         <div>
             <h3>Time of Day</h3>
             <div>
                 <button id="dayBtn">Day</button>
                 <button id="nightBtn">Night</button>
             </div>
+            <div id="timeDescription"></div>
         </div>
-        <div id="timeDescription"></div>
         <div>
             <h3>Map</h3>
             <select id="mapSelect">
@@ -509,8 +469,16 @@
             </select>
         </div>
         <div>
-            <h3>Sensibility</h3>
-            <input type="range" id="sensitivityRange" min="100" max="8000" step="1">
+            <h3>Field of View (FOV)</h3>
+            <input type="range" id="fovRange" min="40" max="120" step="1">
+            <span id="fovValue">60</span>
+        </div>
+        <div>
+            <h3>Clip Planes (znear and zfar)</h3>
+            <label for="znearInput">znear:</label>
+            <input type="number" id="znearInput">
+            <label for="zfarInput">zfar:</label>
+            <input type="number" id="zfarInput">
         </div>
         <div>
             <h3>Volume</h3>
@@ -523,7 +491,12 @@
             <button id="exitBtn">Exit</button>
         </div>
     </div>
-    
+    <div id="pauseGame">
+        <span>PAUSE</span>
+        <span>Click to continue</span>
+        <a href="./" id="gameBackMenu">Back to the Menu</a>
+        </div>
+    </div>
     <div id="fps" style="display: none; font-family: Arial, Helvetica, sans-serif;">0</div>
     <div id="ammo" style="display: none; font-family: Arial, Helvetica, sans-serif;"">ammo</div>
     <div id="runData" style="display: none; font-family: Arial, Helvetica, sans-serif;"">Round<br> Zombie Count</div>
@@ -531,10 +504,6 @@
     <div id="sniperScope" style="display: none;"></div>
     <div id="luckyBox" style="display: none; font-family: Arial, Helvetica, sans-serif;"">Press F to open the crate</div>
     <div id="ammobox" style="display: none; font-family: Arial, Helvetica, sans-serif;"">Obtained 10 ammo</div>
-    <div id="lifeBar" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 200px; height: 20px; background-color: #ccc;">
-        <div id="lifeProgress" style="height: 100%; width: 100%; background-color: green;"></div>
-      </div>
-      
      <!-- <div class="slider">
         <input type="range" id="rotationSlider" min="-5.14" max="5.14" value="1.57" step="0.01">
      </div >
@@ -550,17 +519,6 @@
         <h2>Loading</h2>
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       </div>
-    <div class="columnMenu" id="pauseGame">
-        <span>PAUSE</span>
-        <span>Click to continue</span>
-        <a href="./" id="gameBackMenu">Back to the Menu</a>
-    </div>
-    <div class="columnMenu" id="endMenu">
-        <span style="color: red;">!!! YOU DIED !!!</span>
-        <span id="rounds"></span>
-        <a href="./" id="gameBackMenu">Back to the Menu</a>
-    </div>
-        
     <script src="main.js" type="module"></script>
     
 </body>
