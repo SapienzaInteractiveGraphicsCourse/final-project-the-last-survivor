@@ -191,6 +191,7 @@ async function main()  {
                     scene.render();
                     p.update();
                     unitManager?.update()
+                    scene.gravity.y = -9.8/engine.getFps().toFixed();
                     divFps.innerHTML = engine.getFps().toFixed() + " fps";
             });
 

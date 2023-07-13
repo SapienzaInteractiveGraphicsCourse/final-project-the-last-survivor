@@ -25,7 +25,7 @@ export async function createScene() {
     camera.ellipsoid = new BABYLON.Vector3(0.4, .9, 0.4);
     camera.ellipsoid.isPickable = false;
     // camera.speed =.5;
-    scene.gravity.y = -9.8/144;
+    scene.gravity.y = -9.8/60;
     scene.collisionsEnabled = true
 
     camera.checkCollisions = true
@@ -51,7 +51,7 @@ export async function createScene() {
     camera.attachControl(canvas, true)
     scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
     scene.fogColor = new BABYLON.Color3(0, 0, 0);
-    scene.fogDensity = 0.005;
+    scene.fogDensity = 0.05;
 
 
 
@@ -62,34 +62,23 @@ export async function createScene() {
     vignette.vignetteEnabled = false;
     
 
-    var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
-    light1.intensity =1;
+    // var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
+    // light1.intensity =.05;
 
     
 
-    var light0 = new BABYLON.PointLight("Omni0", new BABYLON.Vector3(0, 0, 0), scene);
-    light0.diffuse = new BABYLON.Color3(1, 0.5, 0);
-    light0.specular = new BABYLON.Color3(1, 0.5, 0);
-    light0.intensity = 0;
-    light0.range=10
-    light0.angle = 0;
-    light0.exponent =0;
-    light0.parent=camera;
-    light0.position.z=1.5
-
-
-    var light2 = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(-0.1, 0, 1), Math.PI / 3, 2, scene);
+    var light2 = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0 , -.5, 2), new BABYLON.Vector3(0 , 0, -1), Math.PI /4, 2, scene);
 
     light2.parent=camera;
 
     light2.diffuse = new BABYLON.Color3(1, 1, 1);
     light2.specular = new BABYLON.Color3(1, 1, 1);
 
-    light2.position.x=0.3
-    light2.position.y=0
+    
     light2.exponent=45
-    light2.intensity = 2;
-    light2.range=20
+    light2.intensity = 300;
+    light2.range=50
+    
 
 
     scene.useRightHandedSystem = true
@@ -106,7 +95,7 @@ export async function createScene() {
     let navmesh = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "dustYuka.glb", scene)
     navmesh.meshes.forEach((m) => {
         m.visibility = 0;
-        m.checkCollisions = true;
+        m.checkCollisions = false;
         m.isPickable = true;
     })
     

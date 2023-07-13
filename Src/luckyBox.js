@@ -30,7 +30,7 @@ export class LuckyBox {
         box.computeWorldMatrix();
 
         var collider = BABYLON.MeshBuilder.CreateBox("box", {width:3, depth: 3, height: 5}, scene); 
-        collider.visibility = 0.2
+        collider.visibility = 0
         collider.isPickable = false
         collider.actionManager = new BABYLON.ActionManager(scene)
 
