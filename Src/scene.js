@@ -12,7 +12,7 @@ import  Navigation from "babylon-navigation-mesh"
 import * as YUKA from '../Modules/yuka.module.js'
 import { createCellSpaceHelper } from '../Modules/CellSpacePartitioningHelper.js'
 import { createConvexRegionHelper } from '../Modules/NavMeshHelper.js'
-import { sensitivity } from '../main'
+import { sensitivity,time } from '../main'
 
 export var vignette
 export async function createScene() {
@@ -62,22 +62,29 @@ export async function createScene() {
     vignette.vignetteEnabled = false;
     
 
-    // var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
-    // light1.intensity =.05;
+    if (time ==="DAY")
+    {
+     var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
+     light1.intensity =.05;
+    }
+    else
+    {
+        var light2 = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0 , -.5, 2), new BABYLON.Vector3(0 , 0, -1), Math.PI /4, 2, scene);
+
+        light2.parent=camera;
+    
+        light2.diffuse = new BABYLON.Color3(1, 1, 1);
+        light2.specular = new BABYLON.Color3(1, 1, 1);
+    
+        
+        light2.exponent=45
+        light2.intensity = 300;
+        light2.range=50
+    }
 
     
 
-    var light2 = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0 , -.5, 2), new BABYLON.Vector3(0 , 0, -1), Math.PI /4, 2, scene);
-
-    light2.parent=camera;
-
-    light2.diffuse = new BABYLON.Color3(1, 1, 1);
-    light2.specular = new BABYLON.Color3(1, 1, 1);
-
     
-    light2.exponent=45
-    light2.intensity = 300;
-    light2.range=50
     
 
 

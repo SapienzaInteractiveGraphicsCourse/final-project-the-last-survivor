@@ -55,7 +55,12 @@ export class Player {
         scene.onPointerDown = (evt) => {
             engine.enterPointerlock();   
             if(evt.button === 0)  {
-                this.inputShoot = true;
+                if(this.isaiming){
+                    return false;
+                }
+                else{
+                    this.inputShoot = true;
+                }
                 
             }
                 
@@ -81,7 +86,9 @@ export class Player {
             switch (kbInfo.type) {
                 case BABYLON.KeyboardEventTypes.KEYDOWN:
                     if(kbInfo.event.key == 'r')
-                        this.ChangeStatus(status.RELOADING);
+                        if (this.status !== status.RELOADING){
+                            this.ChangeStatus(status.RELOADING);
+                        }
                     if(kbInfo.event.key == 'l')
                         console.log(this.getUserposition());
                     if(kbInfo.event.key == 'f' && LuckyBox.playerInside){
@@ -114,7 +121,7 @@ export class Player {
         }   
     }
     update() {
-        
+        console.log(this.isaiming)
         this.updateLifeBar(this.hp, 4);
 
         if (this.hp > 2){
@@ -194,8 +201,12 @@ export class Player {
         
         switch (newState) {
             case status.RELOADING:
+                if (!this.isaiming){
+                    
+                
                 this.locked = true;
                 this.reload()
+                }
                 break;
 
             case status.IDLE:
@@ -220,6 +231,7 @@ export class Player {
     legal(newState) {
         switch (newState) {
             case status.RELOADING:
+                if (this.isaiming) return;
                 if(this.weapon.currentAmmo  == this.weapon.ammoLevel)
                     return false
                 if(this.weapon.stockedAmmo == 0)
@@ -434,8 +446,10 @@ export class Player {
 
         if (this.aim){
             this.weapon._aim.speedRatio = -1;
+            this.isaiming=true;
             this.weapon._aim.play( )
-            camera.fov = 1.2;
+            this.weapon._aim.onAnimationEndObservable.addOnce(()  => this.isaiming=false);
+            this.animateAimFOV(1.2)        
         }
         this.weapon.reloadSound.play()
 
@@ -449,8 +463,16 @@ export class Player {
         this.weapon.stockedAmmo -= (this.weapon.stockedAmmo>=ammoToLoad? ammoToLoad: this.weapon.stockedAmmo%ammoToLoad)
         if (this.aim){
             this.weapon._aim.speedRatio = 1;
+            this.isaiming=true;
             this.weapon._aim.play( )
-            camera.fov = 0.5;
+            this.weapon._aim.onAnimationEndObservable.addOnce(()  => this.isaiming=false);
+
+            if (this.weapon instanceof Sniper) {
+                this.animateAimFOV(0.3); // Smoothly transition to FOV 0.5 (zoomed-in)
+            }
+            else{
+                this.animateAimFOV(0.5); // Smoothly transition to FOV 0.5 (zoomed-in)
+            }
         }
 
         this.toggleState()
