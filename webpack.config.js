@@ -60,6 +60,7 @@ module.exports = {
                 { from: path.resolve(appDirectory, "textures"), to: "textures" },
                 { from: path.resolve(appDirectory, "Assets"), to: "Assets" },
                 { from: path.resolve(appDirectory, "Modules"), to: "Modules" },
+                { from: path.resolve(appDirectory, "favicon.ico"), to: "favicon.ico" },
             ],
         }),
     ],
