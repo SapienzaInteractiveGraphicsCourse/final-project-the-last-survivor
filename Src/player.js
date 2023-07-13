@@ -521,6 +521,15 @@ export class Player {
     
         // Set the width of the life progress element
         lifeProgress.style.width = `${progressWidth}%`;
+
+        // Change the color if hp <= 2
+        if (value == 3 || value === 2) {
+            lifeProgress.style.backgroundColor = 'yellow';
+        } else if (value === 1) {
+            lifeProgress.style.backgroundColor = 'red';
+        } else{
+            lifeProgress.style.backgroundColor = 'green';
+        }
     }
 }
 const status = {
