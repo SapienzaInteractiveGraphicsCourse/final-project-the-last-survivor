@@ -335,9 +335,9 @@
 
         .tooltiptext {
             visibility: hidden;
-            width: 120px;
+            width: 150px;
             background-color: black;
-            color: #fff;
+            color: #f44506;
             text-align: center;
             border-radius: 6px;
             padding: 5px 0;
@@ -362,6 +362,7 @@
             display:inline-block;
             text-align:left;
             padding: 4%;
+            border-radius: 10px;
         }
 
         .tooltip h3 {margin:12px 0;}
@@ -373,7 +374,7 @@
             transform:translate(-50%, 0%);
             padding:1%;
             color:#000000;
-            background-color:rgb(221, 105, 13);
+            background-color:#dd690d;
             font-weight:normal;
             font-size:10%;
             border-radius:8px;
@@ -539,9 +540,6 @@
                 <div class="spacer" style="padding: 4%;">
                     <input id="startBTN" class="MSButton" type="button" value="START">
                 </div>
-                <div class="spacer" style="padding: 4%;">
-                    <input id="flyBTN" class="MSButton" type="button" value="FLY MODE">
-                </div>
                 <div class="spacer" style="padding: 4%;"> 
                     <input id="settingsBTN" class="MSButton" type="button" value="SETTINGS">
                 </div>
@@ -552,6 +550,7 @@
                 <div><span class="keys">SHIFT    -</span><span class="Key">   run</span></div>
                 <div><span class="keys">R   -</span><span class="Key">   Reload</span></div>
                 <div><span class="keys">F   -</span><span class="Key">   Interact</span></div>
+                <div><span class="keys">T   -</span><span class="Key">   Toggle Light (Only night mode - settings)</span></div>
                 <div><span class="keys">MOUSE    -</span><span class="Key">   move camera</span></div>
                 <div><span class="keys">LEFT CLICK    -</span><span class="Key">   shoot</span></div>
                 <div><span class="keys">RIGHT CLICK    -</span><span class="Key">   aim</span></div>
@@ -570,21 +569,21 @@
                 <div class="topEntry">Difficulty</div>
                 <div class="bottomEntry">
                     <div class="tooltip">
-                        <input id="startBTN" class="MSButton" type="button" value="easy">
+                        <input id="easyBtn" class="MSButton" type="button" value="EASY">
                         <div class="bottom">
-                            <p>No weapon recoil.</p>
+                            <p>Almost no weapon recoil, weak enemies.</p>
                         </div>
                     </div>
                     <div class="tooltip">
-                        <input id="startBTN" class="MSButton" type="button" value="medium">
+                        <input id="normalBtn" class="MSButton" type="button" value="MEDIUM">
                         <div class="bottom">
-                            <p>Recoil slightly increase, stronger enemies.</p>
+                            <p>Recoil slightly increased, stronger enemies.</p>
                         </div>
                     </div>
                     <div class="tooltip">
-                        <input id="startBTN" class="MSButton" type="button" value="insane">
+                        <input id="hardBtn" class="MSButton" type="button" value="INSANE">
                         <div class="bottom">
-                            <p>Watch your back</p>
+                            <p>Watch your back!</p>
                         </div>
                     </div>
                 </div>
@@ -592,36 +591,38 @@
             <div class="menuEntry">
                 <div class="topEntry">Time</div>
                 <div class="bottomEntry">
-                    <input id="startBTN" class="MSButton" type="button" value="day">
-                    <input id="startBTN" class="MSButton" type="button" value="night">
+                    <input id="dayBtn" class="MSButton" type="button" value="DAY">
+                    <input id="nightBtn" class="MSButton" type="button" value="NIGHT">
                 </div>
             </div>
             <div class="menuEntry">
-                <div class="topEntry">Motion Blur</div>
+                <div class="topEntry">Motion</div>
+                <div class="topEntry">Blur</div>
                 <div class="bottomEntry"> 
-                    <input id="startBTN" class="MSButton" type="button" value="On">
-                    <input id="startBTN" class="MSButton" type="button" value="Off">
+                    <input id="motionblurBtn" class="MSButton" type="button" value="DISABLE MOTION BLUR">
                 </div>
             </div>
             <div class="menuEntry">
                 <div class="topEntry">Sensitivity</div>
                 <div class="bottomEntry"> 
-                    1<input id="startBTN" class="MSButton" type="range">10
+                    0%<input type="range" id="sensitivityRange" min="800" max="10000" step="1">100%
                 </div>
             </div>
             <div class="menuEntry">
                 <div class="topEntry">Volume</div>
-                <div class="bottomEntry"> </div>
+                <div class="bottomEntry"> 
+                    0%<input type="range" id="volumeRange" min="0" max="100" step="1">100%
+                </div>
             </div>
             <div id="menuFooter">
                 <div class="topEntry">
-                    <input id="startBTN" class="MSButton" type="button" value="save">
+                    <input id="saveBtn" class="MSButton" type="button" value="SAVE">
                 </div>
                 <div class="topEntry">
-                    <input id="startBTN" class="MSButton" type="button" value="reset">
+                    <input id="resetBtn" class="MSButton" type="button" value="RESET">
                 </div>
                 <div class="topEntry">
-                    <input id="startBTN" class="MSButton" type="button" value="revert">
+                    <input id="exitBtn" class="MSButton" type="button" value="EXIT">
                 </div>     
             </div>
         </div>

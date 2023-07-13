@@ -12,9 +12,10 @@ import  Navigation from "babylon-navigation-mesh"
 import * as YUKA from '../Modules/yuka.module.js'
 import { createCellSpaceHelper } from '../Modules/CellSpacePartitioningHelper.js'
 import { createConvexRegionHelper } from '../Modules/NavMeshHelper.js'
-import { sensitivity,time } from '../main'
+import { sensitivity,daytime } from '../main'
 
 export var vignette
+export var light2;
 export async function createScene() {
 
     var scene = new BABYLON.Scene(engine)
@@ -36,7 +37,7 @@ export async function createScene() {
     camera.keysDown.push(83);
     camera.keysRight.push(68);
     camera.keysLeft.push(65);
-    camera.keysUpward.push(32);
+    // camera.keysUpward.push(32);
     camera.minZ = 0.1;
     camera.minY = 5;
     camera.inertia = 0.6;
@@ -62,14 +63,22 @@ export async function createScene() {
     vignette.vignetteEnabled = false;
     
 
-    if (time ==="DAY")
-    {
-     var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
-     light1.intensity =.05;
+    if (daytime ==="DAY"){
+        var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
+        light1.intensity =1;
     }
-    else
-    {
-        var light2 = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0 , -.5, 2), new BABYLON.Vector3(0 , 0, -1), Math.PI /4, 2, scene);
+    else {
+        var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
+        light1.intensity =.1;
+
+        // Set the color of the ground light
+        light1.groundColor = new BABYLON.Color3(0.396, 0.332, 1);
+
+        // Set the color of the diffuse light
+        light1.diffuseColor = new BABYLON.Color3(0.396, 0.332, 1);
+
+
+        light2 = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0 , -.5, 2), new BABYLON.Vector3(0 , 0, -1), Math.PI /4, 2, scene);
 
         light2.parent=camera;
     
@@ -81,12 +90,6 @@ export async function createScene() {
         light2.intensity = 300;
         light2.range=50
     }
-
-    
-
-    
-    
-
 
     scene.useRightHandedSystem = true
 

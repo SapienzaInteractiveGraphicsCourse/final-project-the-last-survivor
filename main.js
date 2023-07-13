@@ -26,6 +26,8 @@ export var p;
 export var scene;
 export var enemy;
 export var sensitivity = 2000;
+export var daytime;
+export var difficulty;
 var finished = false;
 var paused = false;
 let walking = false;
@@ -33,11 +35,17 @@ let startTime;
 let isRightMouseButtonDown = false;
 
 var menuBgs
-
+var blurr
+var mot
 
 async function main()  {
         await Engine;        
         
+        daytime = "DAY"
+        difficulty ="NORMAL"
+        blurr = true;
+
+
         // create the canvas html element and attach it to the webpage
         var canvas = document.getElementById("renderCanvas");
 
@@ -78,12 +86,10 @@ async function main()  {
 
         // Get the buttons from the menu
         var startButton = document.getElementById("startBTN");
-        var flyButton = document.getElementById("flyBTN");
         var settingsButton = document.getElementById("settingsBTN");
 
         // Event listeners to the buttons
         startButton.addEventListener("click", startGame);
-        flyButton.addEventListener("click", enableFlyMode);
         settingsButton.addEventListener("click", openSettings);
 
         //Event listener for the pause
@@ -113,16 +119,17 @@ async function main()  {
             menuBgs.stop()
 
             scene = await createScene();
-
-            var motionBlur = new MotionBlurPostProcess(
-                "motionBlur", 
-                scene, 
-                2, // Motion strength 
-                camera 
-              );    
             
-            motionBlur.motionBlurSamples = 16; // divide quality by 2
-
+            if (blurr){
+                var motionBlur = new MotionBlurPostProcess(
+                                    "motionBlur", 
+                                    scene, 
+                                    2, // Motion strength 
+                                    camera 
+                );    
+            
+                motionBlur.motionBlurSamples = 16; // divide quality by 2
+            }
             // hide the loading screen when you want to
             
         
@@ -232,13 +239,6 @@ async function main()  {
             var elDiv = document.getElementById("crosshair");
             elDiv.style.display = "flex";
         }
-
-        // Function to enable fly mode
-        function enableFlyMode() {
-            // Add code here to enable fly mode in your game
-            console.log("Fly mode enabled");
-        }
-
                 
         // Function to open settings
         function openSettings() {
@@ -255,20 +255,17 @@ async function main()  {
 
             // Get the sensitivity range input element and sensitivity value element
             var sensitivityRange = document.getElementById('sensitivityRange');
-            var sensitivityValue = document.getElementById('sensitivityValue');
 
             var initialSensitivity = 2000;
-
-            // Set the initial value of the sensitivity range input
-            sensitivityRange.value = initialSensitivity;
 
             // Add an event listener to the sensitivity range input
             sensitivityRange.addEventListener('input', function(event) {
                 // Get the current sensitivity value from the range input
-                var currentSensitivity = parseInt(event.target.value);
+                sensitivity = parseInt(event.target.value);
 
                 // Set the camera's angularSensibility to the current sensitivity value
-                sensitivity = currentSensitivity;
+                sensitivityRange.value = sensitivity;
+                
             });
 
             // Difficulty buttons
@@ -276,54 +273,53 @@ async function main()  {
             var normalBtn = document.getElementById("normalBtn");
             var hardBtn = document.getElementById("hardBtn");
 
-            easyBtn.addEventListener("mouseover", function() {
-                showDescription("Easy difficulty description");
-            });            
-            easyBtn.addEventListener("mouseout", function() {
-                hideDescription();
-            });            
-            normalBtn.addEventListener("mouseover", function() {
-                showDescription("Normal difficulty description");
-            });            
-            normalBtn.addEventListener("mouseout", function() {
-                hideDescription();
-            });            
-            hardBtn.addEventListener("mouseover", function() {
-                showDescription("Hard difficulty description");
-            });            
-            hardBtn.addEventListener("mouseover", function() {
-                hideDescription();
-            });            
-            
+            easyBtn.addEventListener("click", function () {
+                difficulty = "EASY";
+                updateButtonColors();
+            });
 
-            // Time of Day buttons
+            normalBtn.addEventListener("click", function () {
+                difficulty = "NORMAL";
+                updateButtonColors();
+            });
+
+            hardBtn.addEventListener("click", function () {
+                difficulty = "INSANE";
+                updateButtonColors();
+            });
+
+           // Time of Day buttons
             var dayBtn = document.getElementById("dayBtn");
             var nightBtn = document.getElementById("nightBtn");
 
-            dayBtn.addEventListener("mouseover", function () {
-                showDescription("Day time description");
-            });
-            nightBtn.addEventListener("mouseover", function () {
-                showDescription("Night time description");
+            dayBtn.addEventListener("click", function () {
+                daytime = "DAY";
+                updateButtonColors();
             });
 
-            dayBtn.addEventListener("mouseout", function() {
-                var descriptionElement = document.getElementById("timeDescription");
-                descriptionElement.style.display = "none";
-            });  
+            nightBtn.addEventListener("click", function () {
+                daytime = "NIGHT";
+                updateButtonColors();
+            });
 
-            nightBtn.addEventListener("mouseout", function() {
-                var descriptionElement = document.getElementById("timeDescription");
-                descriptionElement.style.display = "none";
-            });  
+            mot = document.getElementById("motionblurBtn");
+
+            mot.addEventListener("click", function () {
+                blurr = !blurr;
+                updateButtonColors();
+            });
+
+            updateButtonColors()            
 
             // Volume range slider
             var volumeRange = document.getElementById("volumeRange");
             var volumeValue = document.getElementById("volumeValue");
 
             volumeRange.addEventListener("input", function () {
-                volumeValue.textContent = volumeRange.value;
-                BABYLON.Engine.audioEngine.setGlobalVolume(volumeValue.textContent/100);
+                volume = volumeRange.value / 100;
+                volumeRange.value = volume * 100;
+
+                BABYLON.Engine.audioEngine.setGlobalVolume(volumeRange.value/100);
             });
 
             // Save Changes button
@@ -341,7 +337,15 @@ async function main()  {
             var resetBtn = document.getElementById("resetBtn");
 
             resetBtn.addEventListener("click", function () {
-                // Code to reset the settings changes
+                difficulty = "NORMAL";
+                daytime = "DAY";
+                blurr = true;
+                volume = 0.5;
+                sensitivity = 2000;
+                volume = 0.5;
+                sensitivityRange.value = sensitivity;
+                volumeRange.value = volume * 100;
+                updateButtonColors();
             });
 
             // Exit button
@@ -354,18 +358,6 @@ async function main()  {
                 // Show the menu
                 menu.style.display = "flex";
             });
-        }
-
-        // Function to show description for settings elements
-        function showDescription(description) {
-            var descriptionElement = document.getElementById("difficultyDescription");
-            descriptionElement.textContent = description;
-            descriptionElement.style.display = "flex";
-        }
-        
-        function hideDescription() {
-            var descriptionElement = document.getElementById("difficultyDescription");
-            descriptionElement.style.display = "none";
         }
 
         function handlePointerLockChange() {
@@ -452,6 +444,38 @@ function removeKeyCodeFromArray(keyCode, array) {
     const index = array.indexOf(keyCode);
     if (index !== -1) {
         array.splice(index, 1);
+    }
+}
+
+
+function updateButtonColors() {
+    if (daytime === "DAY") {
+        dayBtn.style.backgroundColor = "orange";
+        nightBtn.style.backgroundColor = "white";
+    } else if (daytime === "NIGHT") {
+        dayBtn.style.backgroundColor = "white";
+        nightBtn.style.backgroundColor = "orange";
+    }
+
+    if (difficulty === "EASY") {
+        easyBtn.style.backgroundColor = "orange";
+        normalBtn.style.backgroundColor = "white";
+        hardBtn.style.backgroundColor = "white";
+    } else if (difficulty === "NORMAL") {
+        easyBtn.style.backgroundColor = "white";
+        normalBtn.style.backgroundColor = "orange";
+        hardBtn.style.backgroundColor = "white";
+    } else {
+        easyBtn.style.backgroundColor = "white";
+        normalBtn.style.backgroundColor = "white";
+        hardBtn.style.backgroundColor = "orange";
+    }
+
+    if (blurr){
+        mot.value = "DISABLE MOTION BLUR"
+    }
+    else{
+        mot.value = "ENABLE MOTION BLUR"
     }
 }
 

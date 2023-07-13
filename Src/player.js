@@ -1,5 +1,5 @@
 import * as BABYLON from "@babylonjs/core";
-import {camera,engine, vignette} from './scene';
+import {camera,engine, vignette, light2} from './scene';
 import { SceneLoader } from "@babylonjs/core";
 import { UnitManager } from "./unitManager";
 import { Sniper } from "./sniper_rifle";
@@ -7,7 +7,7 @@ import { Pistol } from "./pistol";
 import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 import { AmmoBox, AmmoBoxInstance } from "./ammo_box";
 import { AMMO, crosshair, luckyBox, sniperScope, lifeProgress } from "./domItems";
-import { endGame, finished } from "../main";
+import { endGame, finished, difficulty, daytime } from "../main";
 import { enemy} from "../main"
 
 //Class that contains all the player info
@@ -33,6 +33,7 @@ export class Player {
     particle = false
     particleSystem
     almostdead = 0;
+    spot;
     constructor(scene) {
         this.scene = scene;
         this.InputManager(scene); 
@@ -40,9 +41,12 @@ export class Player {
         this.collider.parent = camera;
         this.collider.isPickable = false;
         this.collider.checkCollisions = false
-        this.collider.visibility = 0.2
+        this.collider.visibility = 0
         this.instance = this
         this.particleSystem = new BABYLON.ParticleSystem("particles", 5000);
+        if(daytime === "NIGHT"){
+            this.spot = true;
+        }
         
     }
     async initWeapon() {
@@ -85,10 +89,23 @@ export class Player {
             }
             switch (kbInfo.type) {
                 case BABYLON.KeyboardEventTypes.KEYDOWN:
-                    if(kbInfo.event.key == 'r')
+                    if(kbInfo.event.key == 'r'){
                         if (this.status !== status.RELOADING){
                             this.ChangeStatus(status.RELOADING);
                         }
+                    }
+                    if(kbInfo.event.key == 't'){
+                        if (daytime === "NIGHT"){
+                            if (this.spot===true){
+                                light2.diffuse = new BABYLON.Color3(0,0,0);                    
+                                this.spot = false;
+                            }
+                            else if (this.spot===false){
+                                light2.diffuse = new BABYLON.Color3(1,1,1);                    
+                                this.spot = true;
+                            }
+                        }
+                    }
                     if(kbInfo.event.key == 'l')
                         console.log(this.getUserposition());
                     if(kbInfo.event.key == 'f' && LuckyBox.playerInside){
@@ -368,7 +385,15 @@ export class Player {
             this.rotateCameraSniper(-0.1, 20); // Rotate camera smoothly by -0.05 radians over 10 frames
         }
         else{
-            this.rotateCamera(-0.05, 10); // Rotate camera smoothly by -0.05 radians over 10 frames
+            if (difficulty === "EASY"){
+                // this.rotateCamera(-0.01, 10); // Rotate camera smoothly by -0.05 radians over 10 frames
+            }
+            else if(difficulty === "NORMAL"){
+                this.rotateCamera(-0.02, 10); // Rotate camera smoothly by -0.05 radians over 10 frames
+            }
+            else if(difficulty === "INSANE"){
+                this.rotateCamera(-0.05, 10); // Rotate camera smoothly by -0.05 radians over 10 frames
+            }
         }
     }
 

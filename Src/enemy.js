@@ -2,7 +2,7 @@
 import * as BABYLON from "@babylonjs/core";
 import { scene } from "../main";
 import * as YUKA from '../Modules/yuka.module.js'
-import {enemy} from "../main"
+import {enemy, difficulty} from "../main"
 import { engine, navigation } from "./scene";
 import { Vehicle } from "../Modules/yuka.module";
 
@@ -34,6 +34,13 @@ export class Enemy extends Vehicle {
     _walk
     constructor(scene, player, id) {
         super()
+
+        if (difficulty=== "EASY"){
+            this.hp = 50;
+        }
+        else if (difficulty === "INSANE"){
+            this.hp = 150;
+        }
         
         this.id = id;
         this.scene = scene;
