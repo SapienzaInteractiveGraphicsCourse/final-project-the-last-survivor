@@ -328,6 +328,7 @@ export class Player {
             if(name[0] === "enemy") {
                 console.log("hit an enemy");
                console.log(name);
+               console.log(hit)
                UnitManager.instance.onEnemyHit(name[name.length - 1]);
                particleSystem.emitter = hit.pickedPoint
                particleSystem.minEmitBox = new BABYLON.Vector3(-0.2, -0.2, -0.2); // Starting all from

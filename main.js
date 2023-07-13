@@ -9,7 +9,7 @@ import { Enemy } from "./Src/enemy.js";
 import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBuilder, CreateScreenshot, RecastJSPlugin, CombineAction } from "@babylonjs/core";
 import {camera, createScene,engine, GenerateScene} from './Src/scene.js';
 import {Player} from './Src/player.js';
-import { ammo, divFps, lifeProgress } from "./Src/domItems.js";
+import { ammo, divFps, lifeProgress, lifeBar } from "./Src/domItems.js";
 import * as YUKA from '/Modules/yuka.module.js'
 
 import { UnitManager } from "./Src/unitManager.js";
@@ -25,6 +25,7 @@ export var p;
 //render variables
 export var scene;
 export var enemy;
+export var sensitivity = 2000;
 var finished = false;
 var paused = false;
 let walking = false;
@@ -39,6 +40,10 @@ async function main()  {
         
         // create the canvas html element and attach it to the webpage
         var canvas = document.getElementById("renderCanvas");
+
+        lifeBar.style.display = "none"
+
+        lifeProgress.style.display = "none";
 
         var tempScene = new BABYLON.Scene
         menuBgs = new BABYLON.Sound("bgs", "Assets/menu.mp3", tempScene, null, { autoplay: true, loop: true });
@@ -85,7 +90,7 @@ async function main()  {
         // Event listeners for keydown and keyup events
         document.addEventListener("keydown", handleKeyDown);
         document.addEventListener("keyup", handleKeyUp);
-        
+
         // Function to start the game
         async function startGame() {
             // Hide the menu
@@ -168,6 +173,7 @@ async function main()  {
             var unitManager = null
 
             lifeProgress.style.display = "flex";
+            lifeBar.style.display = "flex";
             
             engine.hideLoadingUI();
 
@@ -198,6 +204,7 @@ async function main()  {
                 else
                     m.name = 'enemy'
                 console.log(m.name)
+                console.log(m);
                 m.checkCollisions = true;
                 
                 enemy.visibility = 1;
@@ -240,6 +247,24 @@ async function main()  {
 
             // Set up event listeners for the settings elements
 
+            // Get the sensitivity range input element and sensitivity value element
+            var sensitivityRange = document.getElementById('sensitivityRange');
+            var sensitivityValue = document.getElementById('sensitivityValue');
+
+            var initialSensitivity = 2000;
+
+            // Set the initial value of the sensitivity range input
+            sensitivityRange.value = initialSensitivity;
+
+            // Add an event listener to the sensitivity range input
+            sensitivityRange.addEventListener('input', function(event) {
+                // Get the current sensitivity value from the range input
+                var currentSensitivity = parseInt(event.target.value);
+
+                // Set the camera's angularSensibility to the current sensitivity value
+                sensitivity = currentSensitivity;
+            });
+
             // Difficulty buttons
             var easyBtn = document.getElementById("easyBtn");
             var normalBtn = document.getElementById("normalBtn");
@@ -276,14 +301,6 @@ async function main()  {
                 showDescription("Night time description");
             });
 
-            // Field of View (FOV) range slider
-            var fovRange = document.getElementById("fovRange");
-            var fovValue = document.getElementById("fovValue");
-
-            fovRange.addEventListener("input", function () {
-                fovValue.textContent = fovRange.value;
-            });
-
             // Volume range slider
             var volumeRange = document.getElementById("volumeRange");
             var volumeValue = document.getElementById("volumeValue");
@@ -296,7 +313,11 @@ async function main()  {
             var saveBtn = document.getElementById("saveBtn");
 
             saveBtn.addEventListener("click", function () {
-                // Code to save the settings changes
+                // Hide the settings page
+                settings.style.display = "none";
+
+                // Show the menu
+                menu.style.display = "flex"; 
             });
 
             // Reset Changes button
@@ -351,7 +372,9 @@ async function main()  {
                 removeKeyCodeFromArray(68, camera.keysRight);
                 removeKeyCodeFromArray(65, camera.keysLeft);
                 removeKeyCodeFromArray(32, camera.keysUpward);
-                menu.style.display = "flex";
+                if (!finished){
+                    menu.style.display = "flex";
+                }
             }
         }
         // Function to handle click to resume game

@@ -233,7 +233,6 @@
         }
 
         #settings {
-            display: none;
             position: absolute;
             top: 0;
             left: 0;
@@ -242,7 +241,7 @@
             background-color: #333;
             padding: 20px;
             color: #fff;
-            font-family: Arial, sans-serif;
+            font-family: 'black_ops_2regular';
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -254,19 +253,24 @@
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
+            color: rgb(221, 105, 13);
         }
 
         #settings .spacer {
             margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
         }
 
         #settings .MSButton {
+            width: 150px;
             background-color: #ccc;
             border: none;
             color: #333;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+            font-family: 'black_ops_2regular';
         }
 
         #settings .MSButton:hover {
@@ -282,15 +286,21 @@
         #settings .keys {
             display: inline-block;
             width: 70px;
+            font-size: x-small;
+            width: fit-content;
+            font-family: 'black_ops_2regular';
         }
 
         #settings .Key {
+            font-size: xx-small;
             display: inline-block;
+            font-family: 'black_ops_2regular';
         }
 
         #settings select {
             padding: 5px;
             font-size: 16px;
+            font-family: 'black_ops_2regular';
         }
 
         #settings input[type="range"] {
@@ -299,12 +309,14 @@
 
         #settings label {
             margin-right: 5px;
+            font-family: 'black_ops_2regular';
         }
 
         #settings #description {
             margin-top: 10px;
             font-style: italic;
             color: #999;
+            font-family: 'black_ops_2regular';
         }
 
         .lds-spinner {
@@ -469,16 +481,8 @@
             </select>
         </div>
         <div>
-            <h3>Field of View (FOV)</h3>
-            <input type="range" id="fovRange" min="40" max="120" step="1">
-            <span id="fovValue">60</span>
-        </div>
-        <div>
-            <h3>Clip Planes (znear and zfar)</h3>
-            <label for="znearInput">znear:</label>
-            <input type="number" id="znearInput">
-            <label for="zfarInput">zfar:</label>
-            <input type="number" id="zfarInput">
+            <h3>Sensibility</h3>
+            <input type="range" id="sensitivityRange" min="100" max="8000" step="1">
         </div>
         <div>
             <h3>Volume</h3>

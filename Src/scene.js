@@ -12,6 +12,7 @@ import  Navigation from "babylon-navigation-mesh"
 import * as YUKA from '../Modules/yuka.module.js'
 import { createCellSpaceHelper } from '../Modules/CellSpacePartitioningHelper.js'
 import { createConvexRegionHelper } from '../Modules/NavMeshHelper.js'
+import { sensitivity } from '../main'
 
 export var vignette
 export async function createScene() {
@@ -42,7 +43,7 @@ export async function createScene() {
     camera.fov = 1.2;
     camera.speed= 0.8;
 
-    camera.angularSensibility = 2000;
+    camera.angularSensibility = sensitivity;
 
 
     const canvas = scene.getEngine().getRenderingCanvas()

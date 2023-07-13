@@ -40,3 +40,7 @@ export const lifeProgress = document.getElementById(
     'lifeProgress'
 );
 
+export const lifeBar = document.getElementById(
+    'lifeBar'
+);
+
