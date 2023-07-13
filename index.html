@@ -256,8 +256,6 @@
 
         #settings {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             background-color: #333;
@@ -265,82 +263,168 @@
             color: #fff;
             font-family: 'black_ops_2regular';
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+           
         }
 
-        #settings h2 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
+        .columnsSettings {
+            position: relative;
+            display: flex;
+            width: 33%;
+            height: 100%;
+            align-items: center;
+            flex-direction: column;
+            padding: 3%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #settingsTitle {
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 10%;
+            width: 100%;
+            display: flex;
+            font-size:130%;
             color: rgb(221, 105, 13);
         }
 
-        #settings .spacer {
-            margin-bottom: 10px;
+        .menuEntry {
+
+            display: flex;
+            width: 100%;
+            height: fit-content;
+            flex-direction: column;
+            align-items: center;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+
+        .topEntry {
+            justify-content: center;
+
+            display: flex;
+            width: 100%;
+            height: 50%;
+            font-size: auto;
+            padding: 2%;
+            align-items: center;
+        }
+
+
+        .bottomEntry>input {
+            margin: 3%;
+        }
+        .bottomEntry {
+            justify-content: center;
+
             display: flex;
             flex-direction: row;
+            width: 100%;
+            height: 50%;
+            font-size: auto;
+            padding: 2%;
+            align-items: center;
         }
 
-        #settings .MSButton {
-            width: 150px;
-            background-color: #ccc;
-            border: none;
-            color: #333;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            font-family: 'black_ops_2regular';
+        .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+            top: 100%;
+            left: 50%;
+            margin-left: -60px;
         }
 
-        #settings .MSButton:hover {
-            background-color: #ddd;
+        #menuFooter {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: fit-content;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        .tooltip {
+            display:inline-block;
+            text-align:left;
+            padding: 4%;
         }
 
-        #settings .titleCommand {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .tooltip h3 {margin:12px 0;}
+
+        .tooltip .bottom {
+            min-width:200px;
+            /*max-width:400px;*/
+            left:50%;
+            transform:translate(-50%, 0%);
+            padding:1%;
+            color:#000000;
+            background-color:rgb(221, 105, 13);
+            font-weight:normal;
+            font-size:10%;
+            border-radius:8px;
+            position:absolute;
+            z-index:99999999;
+            box-sizing:border-box;
+            box-shadow:0 1px 8px rgba(0,0,0,0.5);
+            display:none;
         }
 
-        #settings .keys {
-            display: inline-block;
-            width: 70px;
-            font-size: x-small;
-            width: fit-content;
-            font-family: 'black_ops_2regular';
+        .tooltip:hover .bottom {
+            display:block;
         }
 
-        #settings .Key {
-            font-size: xx-small;
-            display: inline-block;
-            font-family: 'black_ops_2regular';
+
+        .tooltip .bottom img {
+            width:400px;
         }
 
-        #settings select {
-            padding: 5px;
-            font-size: 16px;
-            font-family: 'black_ops_2regular';
+        .tooltip .bottom i {
+            position:absolute;
+            bottom:100%;
+            left:50%;
+            margin-left:-12px;
+            width:24px;
+            height:12px;
+            overflow:hidden;
         }
 
-        #settings input[type="range"] {
-            width: 200px;
+        .tooltip .bottom i::after {
+            content:'';
+            position:absolute;
+            width:12px;
+            height:12px;
+            left:50%;
+            transform:translate(-50%,50%) rotate(45deg);
+            background-color:#EEEEEE;
+            box-shadow:0 1px 8px rgba(0,0,0,0.5);
+        }   
+
+
+        .footerEntry {
+            width: 33%;
+            display: flex;
+            padding: 5%;
+            align-items: center;
         }
 
-        #settings label {
-            margin-right: 5px;
-            font-family: 'black_ops_2regular';
+        .hoverTooltip:hover .tooltiptext {
+            visibility: visible;
         }
-
-        #settings #description {
-            margin-top: 10px;
-            font-style: italic;
-            color: #999;
-            font-family: 'black_ops_2regular';
-        }
-
         .lds-spinner {
         color: official;
         display: inline-block;
@@ -446,9 +530,7 @@
     <link rel="shortcut icon" href="zombie_icon.ico">
 </head>
 <body style="width: 100%;height: 100%">
-    
     <div id="menu">
-        
         <div id="logo" class="spacer">
             The Last Survivor
         </div>
@@ -478,49 +560,73 @@
         </div>
     </div>
     <div id="settings" style="display: none;">
-        <!-- Settings page content -->
-        <div id="logo" class="spacer">
-            The Last Survivor
-            <h2 class="settingsHeading">Settings</h2>
+        <div class="columnsSettings">
         </div>
-        <div>
-            <h3>Difficulty</h3>
-            <div>
-                <button id="easyBtn">Easy</button>
-                <button id="normalBtn">Normal</button>
-                <button id="hardBtn">Hard</button>
+        <div class="columnsSettings">       
+            <div id="settingsTitle">
+                Settings
+            </div>
+            <div class="menuEntry">
+                <div class="topEntry">Difficulty</div>
+                <div class="bottomEntry">
+                    <div class="tooltip">
+                        <input id="startBTN" class="MSButton" type="button" value="easy">
+                        <div class="bottom">
+                            <p>No weapon recoil.</p>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <input id="startBTN" class="MSButton" type="button" value="medium">
+                        <div class="bottom">
+                            <p>Recoil slightly increase, stronger enemies.</p>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <input id="startBTN" class="MSButton" type="button" value="insane">
+                        <div class="bottom">
+                            <p>Watch your back</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="menuEntry">
+                <div class="topEntry">Time</div>
+                <div class="bottomEntry">
+                    <input id="startBTN" class="MSButton" type="button" value="day">
+                    <input id="startBTN" class="MSButton" type="button" value="night">
+                </div>
+            </div>
+            <div class="menuEntry">
+                <div class="topEntry">Motion Blur</div>
+                <div class="bottomEntry"> 
+                    <input id="startBTN" class="MSButton" type="button" value="On">
+                    <input id="startBTN" class="MSButton" type="button" value="Off">
+                </div>
+            </div>
+            <div class="menuEntry">
+                <div class="topEntry">Sensitivity</div>
+                <div class="bottomEntry"> 
+                    1<input id="startBTN" class="MSButton" type="range">10
+                </div>
+            </div>
+            <div class="menuEntry">
+                <div class="topEntry">Volume</div>
+                <div class="bottomEntry"> </div>
+            </div>
+            <div id="menuFooter">
+                <div class="topEntry">
+                    <input id="startBTN" class="MSButton" type="button" value="save">
+                </div>
+                <div class="topEntry">
+                    <input id="startBTN" class="MSButton" type="button" value="reset">
+                </div>
+                <div class="topEntry">
+                    <input id="startBTN" class="MSButton" type="button" value="revert">
+                </div>     
             </div>
         </div>
-        <div id="difficultyDescription"></div>
-        <div>
-            <h3>Time of Day</h3>
-            <div>
-                <button id="dayBtn">Day</button>
-                <button id="nightBtn">Night</button>
-            </div>
-        </div>
-        <div id="timeDescription"></div>
-        <div>
-            <h3>Map</h3>
-            <select id="mapSelect">
-                <option value="map1">Map 1</option>
-                <option value="map2">Map 2</option>
-                <option value="map3">Map 3</option>
-            </select>
-        </div>
-        <div>
-            <h3>Sensibility</h3>
-            <input type="range" id="sensitivityRange" min="100" max="8000" step="1">
-        </div>
-        <div>
-            <h3>Volume</h3>
-            <input type="range" id="volumeRange" min="0" max="100" step="1">
-            <span id="volumeValue">50</span>
-        </div>
-        <div>
-            <button id="saveBtn">Save Changes</button>
-            <button id="resetBtn">Reset Changes</button>
-            <button id="exitBtn">Exit</button>
+        <div class="columnsSettings">
+
         </div>
     </div>
     
