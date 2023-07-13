@@ -205,6 +205,7 @@ export class Player {
 
             case status.SHOOTING:
                 console.log("INSIDE CHANGE STATUS STATUS.SHOOTING")
+                if (this.isaiming) return;
                 this.locked = true;
                 this.shoot();
                 break;
