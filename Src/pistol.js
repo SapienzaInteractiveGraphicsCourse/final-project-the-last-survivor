@@ -166,33 +166,34 @@ IK_Hand_Cntrl_L_position.push({
 //LEFT HAND-rotation
 var IK_Hand_Cntrl_L_rotation = [{
     frame: 0,
-    value: new BABYLON.Vector3(-0.048,-0.101,-2.811),
+    value: new BABYLON.Vector3(-0.048, -0.1017, -2.8167 ),
 }]
 IK_Hand_Cntrl_L_rotation .push({
     frame: 3,
-    value: new BABYLON.Vector3(-0.452,-0.118,-2.758),
+    value: new BABYLON.Vector3(-0.4548, -0.1067, -2.810),
 })
 IK_Hand_Cntrl_L_rotation .push({
     frame: 6,
-    value: new BABYLON.Vector3(-0.0330,-0.090,-2.808),
+    value: new BABYLON.Vector3(-0.0331911, -0.0905213, -2.8113),
 })
 IK_Hand_Cntrl_L_rotation .push({
     frame: 9,
-    value: new BABYLON.Vector3(-0.088,-0.101,-2.800),
+    value: new BABYLON.Vector3(-0.0888, -0.10141, -2.8097),
 })
 IK_Hand_Cntrl_L_rotation .push({
     frame: 12,
-    value: new BABYLON.Vector3(-0.062,-0.101,-2.807),
+    value: new BABYLON.Vector3(-0.0627, -0.1016, -2.814),
 })
 IK_Hand_Cntrl_L_rotation .push({
     frame: 14,
-    value: new BABYLON.Vector3(-0.0482,-0.101,-2.811),
+    value: new BABYLON.Vector3(-0.04853, -0.10176, -2.81676),
 })
+
 
 //right hand-position
 var IK_Hand_Cntrl_R_position = [{
     frame: 0,
-    value: new BABYLON.Vector3( -0.082,  0.0290,  0.218),
+    value: new BABYLON.Vector3( -0.082,  0.030,  0.218),
 }]
 IK_Hand_Cntrl_R_position.push({
     frame: 3,
@@ -212,35 +213,35 @@ IK_Hand_Cntrl_R_position.push({
 })
 IK_Hand_Cntrl_R_position.push({
     frame: 14,
-    value: new BABYLON.Vector3( -0.082,  0.029,  0.218),
+    value: new BABYLON.Vector3( -0.082,  0.03,  0.218),
 })
 
 //right hand-rotation
+//right hand-rotation
 var IK_Hand_Cntrl_R_rotation = [{
     frame: 0,
-    value: new BABYLON.Vector3(-0.108,-0.042,1.120),
+    value: new BABYLON.Vector3(-0.108202, -0.0426, 1.1158),
 }]
-IK_Hand_Cntrl_R_rotation .push({
+IK_Hand_Cntrl_R_rotation.push({
     frame: 3,
-    value: new BABYLON.Vector3(-0.514,-0.053,1.145),
+    value: new BABYLON.Vector3(-0.515006, -0.0465, 1.1193),
 })
-IK_Hand_Cntrl_R_rotation .push({
+IK_Hand_Cntrl_R_rotation.push({
     frame: 6,
-    value: new BABYLON.Vector3(-0.093,-0.031,1.12),
+    value: new BABYLON.Vector3(-0.0931508, -0.03173, 1.1219),
 })
-IK_Hand_Cntrl_R_rotation .push({
+IK_Hand_Cntrl_R_rotation.push({
     frame: 9,
-    value: new BABYLON.Vector3(-0.148,-0.043,1.128),
+    value: new BABYLON.Vector3(-0.148972, -0.0422, 1.1221),
 })
-IK_Hand_Cntrl_R_rotation .push({
+IK_Hand_Cntrl_R_rotation.push({
     frame: 12,
-    value: new BABYLON.Vector3(-0.122,-0.042,1.123),
+    value: new BABYLON.Vector3(-0.1225, -0.04262, 1.1184),
 })
-IK_Hand_Cntrl_R_rotation .push({
+IK_Hand_Cntrl_R_rotation.push({
     frame: 14,
-    value: new BABYLON.Vector3(-0.108,-0.042,1.120),
+    value: new BABYLON.Vector3(-0.1082, -0.04264, 1.11585),
 })
-
 
 
 var aimKeyFrames= []

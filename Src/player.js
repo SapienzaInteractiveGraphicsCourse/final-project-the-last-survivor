@@ -1,5 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
 import {camera,engine, vignette, light2} from './scene';
+import { Sound } from "@babylonjs/core";
 import { SceneLoader } from "@babylonjs/core";
 import { UnitManager } from "./unitManager";
 import { Sniper } from "./sniper_rifle";
@@ -34,6 +35,7 @@ export class Player {
     particleSystem
     almostdead = 0;
     spot;
+    toggleSound;
     constructor(scene) {
         this.scene = scene;
         this.InputManager(scene); 
@@ -47,6 +49,7 @@ export class Player {
         if(daytime === "NIGHT"){
             this.spot = true;
         }
+        this.toggleSound = new Sound("Music", "Assets/switch_toarch.mp3", scene);
         
     }
     async initWeapon() {
@@ -96,6 +99,8 @@ export class Player {
                     }
                     if(kbInfo.event.key == 't'){
                         if (daytime === "NIGHT"){
+                            if (this.hp>0){
+                            this.toggleSound.play()}
                             if (this.spot===true){
                                 light2.diffuse = new BABYLON.Color3(0,0,0);                    
                                 this.spot = false;
@@ -200,8 +205,7 @@ export class Player {
             // Wait for 5 seconds and hide the AMMO element
             setTimeout(function() { AMMO.style.display = "none"; }, 3000);
         }
-        if (this.weapon.currentAmmo){
-        ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.stockedAmmo + "<br>" + "money: " + this.money + "$";}
+        ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.stockedAmmo + "<br>" + "money: " + this.money + "$";
     }
     ///=====================================================================================///
     ///===================================ACTION METHODS====================================///
@@ -269,7 +273,8 @@ export class Player {
     shoot() {
         
         if(this.weapon.currentAmmo <= 0 ) return
-        this.weapon.shootSound.play()
+        if (this.hp>0){
+            this.weapon.shootSound.play()}
         console.log("shot");
         this.weapon.currentAmmo--;
         this.weapon._fire.play( this.weapon._fire.loopAnimation)
@@ -364,7 +369,7 @@ export class Player {
                 console.log("hit an enemy");
                console.log(name);
                console.log(hit)
-               
+
                UnitManager.instance.onEnemyHit(name[name.length - 1]);
                particleSystem.emitter = hit.pickedPoint
                particleSystem.minEmitBox = new BABYLON.Vector3(-0.2, -0.2, -0.2); // Starting all from
@@ -471,13 +476,13 @@ export class Player {
         console.log("reload");
 
         if (this.aim){
-            this.weapon._aim.speedRatio = -1;
+            this.weapon._aim.speedRatio = -5;
             this.isaiming=true;
             this.weapon._aim.play( )
             this.weapon._aim.onAnimationEndObservable.addOnce(()  => this.isaiming=false);
             this.animateAimFOV(1.2)        
         }
-        this.weapon.reloadSound.play()
+        if (this.hp>0) this.weapon.reloadSound.play()
 
         this.weapon._reload.play(this.weapon._reload.loopAnimation)
         this.weapon._reload.onAnimationEndObservable.addOnce(()  => this.endReload());
@@ -488,7 +493,7 @@ export class Player {
         this.weapon.currentAmmo += (this.weapon.stockedAmmo>=ammoToLoad? ammoToLoad: this.weapon.stockedAmmo%ammoToLoad)
         this.weapon.stockedAmmo -= (this.weapon.stockedAmmo>=ammoToLoad? ammoToLoad: this.weapon.stockedAmmo%ammoToLoad)
         if (this.aim){
-            this.weapon._aim.speedRatio = 1;
+            this.weapon._aim.speedRatio = 5;
             this.isaiming=true;
             this.weapon._aim.play( )
             this.weapon._aim.onAnimationEndObservable.addOnce(()  => this.isaiming=false);
