@@ -161,6 +161,14 @@
             width: 100%;
             align-items: flex-start;
         }
+        #commandsSettings {
+                flex-direction: column;
+    display: flex;
+    width: 100%;
+    align-items: start;
+    align-content: end;
+    flex-wrap: wrap-reverse;
+        }
         #menu .Key {
             font-size: xx-small;
             display: inline-block;
@@ -523,6 +531,42 @@
         }
         }
 
+        /* Styling for the sensitivity slider */
+#sensitivityRange::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #e4590e calc((var(--sensitivity-value) - 800) / 9200 * 100%), #837168 calc((var(--sensitivity-value) - 800) / 9200 * 100%), #17100d 100%);
+    height: 8px;
+    border-radius: 4px;
+}
+#sensitivityRange::-webkit-slider-thumb {
+    background-color: grey;
+    width: 16px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    -webkit-appearance: none;
+    transform: translateY(-4px); /* Move the thumb 4 pixels up */
+}
+
+/* Styling for the volume slider */
+#volumeRange::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #e4590e calc((var(--sensitivity-value))), #837168 calc((var(--sensitivity-value) - 800) / 9200 * 100%), #17100d 100%);
+    height: 8px;
+    border-radius: 4px;
+}
+#volumeRange::-webkit-slider-thumb {
+    background-color: grey;
+    width: 16px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    -webkit-appearance: none;
+    transform: translateY(-4px); /* Move the thumb 4 pixels up */
+
+}
+
+
+
+
 
     </style>
     <meta charset="UTF-8">
@@ -550,11 +594,11 @@
                 <div><span class="keys">SHIFT    -</span><span class="Key">   run</span></div>
                 <div><span class="keys">R   -</span><span class="Key">   Reload</span></div>
                 <div><span class="keys">F   -</span><span class="Key">   Interact</span></div>
-                <div><span class="keys">T   -</span><span class="Key">   Toggle Light (Only night mode - settings)</span></div>
+                <div><span class="keys">T   -</span><span class="Key">   Toggle Light (Only in night mode)</span></div>
                 <div><span class="keys">MOUSE    -</span><span class="Key">   move camera</span></div>
                 <div><span class="keys">LEFT CLICK    -</span><span class="Key">   shoot</span></div>
                 <div><span class="keys">RIGHT CLICK    -</span><span class="Key">   aim</span></div>
-                <div><span class="keys">ESC     -</span><span class="Key">   pause</span></div>
+                <div><span class="keys">ESC     -</span><span class="Key">   pause</span></div> 
             </div>
         </div>
     </div>
@@ -605,7 +649,7 @@
             <div class="menuEntry">
                 <div class="topEntry">Sensitivity</div>
                 <div class="bottomEntry"> 
-                    0%<input type="range" id="sensitivityRange" min="800" max="10000" step="1">100%
+                    HIGH<input type="range" id="sensitivityRange" min="800" max="10000" step="1" value="2000">LOW
                 </div>
             </div>
             <div class="menuEntry">
