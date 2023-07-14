@@ -69,7 +69,7 @@ export async function createScene() {
     }
     else {
         var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
-        light1.intensity =.1;
+        light1.intensity =.01;
 
         // Set the color of the ground light
         light1.groundColor = new BABYLON.Color3(0.396, 0.332, 1);
