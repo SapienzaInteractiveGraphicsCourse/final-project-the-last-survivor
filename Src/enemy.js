@@ -254,26 +254,7 @@ var L_leg_frames_rotation= []
                 frame: 10,
                 value:new BABYLON.Vector3(-18.831,11.255,3.371)
                 });
-                L_leg_frames_position.push(
-                {
-                frame: 12,
-                value:new BABYLON.Vector3(-18.762,10.18,3.405)
-                });
-                L_leg_frames_position.push(
-                {
-                frame: 14,
-                value:new BABYLON.Vector3(-18.73,7.263,3.467)
-                });
-                L_leg_frames_position.push(
-                {
-                frame: 16,
-                value:new BABYLON.Vector3(-18.724,2.965,3.543)
-                });
-                L_leg_frames_position.push(
-                {
-                frame: 18,
-                value:new BABYLON.Vector3(-18.734,-2.255,3.616)
-                });
+              
                 L_leg_frames_position.push(
                 {
                 frame: 20,
@@ -303,27 +284,7 @@ var L_leg_frames_rotation= []
                 {
                 frame: 30,
                 value:new BABYLON.Vector3(-18.534,-27.145,3.2)
-                });
-                L_leg_frames_position.push(
-                {
-                frame: 32,
-                value:new BABYLON.Vector3(-17.756,-25.21,2.888)
-                });
-                L_leg_frames_position.push(
-                {
-                frame: 34,
-                value:new BABYLON.Vector3(-16.109,-20.588,2.572)
-                });
-                L_leg_frames_position.push(
-                {
-                frame: 36,
-                value:new BABYLON.Vector3(-14.191,-15.069,2.294)
-                });
-                L_leg_frames_position.push(
-                {
-                frame: 38,
-                value:new BABYLON.Vector3(-12.601,-10.443,2.096)
-                });
+                }); 
                 L_leg_frames_position.push(
                 {
                 frame: 40,
@@ -378,26 +339,7 @@ var R_leg_frames_rotation= []
                 frame: 10,
                 value:new BABYLON.Vector3(6.458,-25.29,2.98)
                 });
-                R_leg_frames_position.push(
-                {
-                frame: 12,
-                value:new BABYLON.Vector3(6.365,-24.199,3.024)
-                });
-                R_leg_frames_position.push(
-                {
-                frame: 14,
-                value:new BABYLON.Vector3(6.338,-21.239,3.105)
-                });
-                R_leg_frames_position.push(
-                {
-                frame: 16,
-                value:new BABYLON.Vector3(6.359,-16.877,3.213)
-                });
-                R_leg_frames_position.push(
-                {
-                frame: 18,
-                value:new BABYLON.Vector3(6.413,-11.58,3.341)
-                });
+                
                 R_leg_frames_position.push(
                 {
                 frame: 20,
@@ -428,26 +370,7 @@ var R_leg_frames_rotation= []
                 frame: 30,
                 value:new BABYLON.Vector3(6.509,13.657,3.975)
                 });
-                R_leg_frames_position.push(
-                {
-                frame: 32,
-                value:new BABYLON.Vector3(6.132,11.912,3.961)
-                });
-                R_leg_frames_position.push(
-                {
-                frame: 34,
-                value:new BABYLON.Vector3(5.42,7.751,3.896)
-                });
-                R_leg_frames_position.push(
-                {
-                frame: 36,
-                value:new BABYLON.Vector3(4.614,2.783,3.811)
-                });
-                R_leg_frames_position.push(
-                {
-                frame: 38,
-                value:new BABYLON.Vector3(3.955,-1.379,3.737)
-                });
+               
                 R_leg_frames_position.push(
                 {
                 frame: 40,
@@ -538,26 +461,6 @@ var R_arm_frames_rotation= []
                 });
                 R_arm_frames_rotation.push(
                 {
-                frame: 12,
-                value:new BABYLON.Quaternion(0.287,0.607,-0.2,0.713)
-                });
-                R_arm_frames_rotation.push(
-                {
-                frame: 14,
-                value:new BABYLON.Quaternion(0.258,0.713,-0.035,0.651)
-                });
-                R_arm_frames_rotation.push(
-                {
-                frame: 16,
-                value:new BABYLON.Quaternion(0.206,0.802,0.175,0.532)
-                });
-                R_arm_frames_rotation.push(
-                {
-                frame: 18,
-                value:new BABYLON.Quaternion(0.152,0.836,0.332,0.41)
-                });
-                R_arm_frames_rotation.push(
-                {
                 frame: 20,
                 value:new BABYLON.Quaternion(0.128,0.842,0.385,0.355)
                 });
@@ -585,26 +488,6 @@ var R_arm_frames_rotation= []
                 {
                 frame: 30,
                 value:new BABYLON.Quaternion(0.073,0.848,0.188,0.49)
-                });
-                R_arm_frames_rotation.push(
-                {
-                frame: 32,
-                value:new BABYLON.Quaternion(0.057,0.837,0.129,0.528)
-                });
-                R_arm_frames_rotation.push(
-                {
-                frame: 34,
-                value:new BABYLON.Quaternion(0.043,0.823,0.076,0.562)
-                });
-                R_arm_frames_rotation.push(
-                {
-                frame: 36,
-                value:new BABYLON.Quaternion(0.031,0.808,0.032,0.587)
-                });
-                R_arm_frames_rotation.push(
-                {
-                frame: 38,
-                value:new BABYLON.Quaternion(0.023,0.797,0.003,0.604)
                 });
                 R_arm_frames_rotation.push(
                 {
@@ -663,26 +546,6 @@ var head_frames_rotation= []
                 });
                 head_frames_rotation.push(
                 {
-                frame: 12,
-                value:new BABYLON.Quaternion(0.125,-0.053,-0.047,0.99)
-                });
-                head_frames_rotation.push(
-                {
-                frame: 14,
-                value:new BABYLON.Quaternion(0.126,-0.112,-0.058,0.984)
-                });
-                head_frames_rotation.push(
-                {
-                frame: 16,
-                value:new BABYLON.Quaternion(0.127,-0.149,-0.065,0.978)
-                });
-                head_frames_rotation.push(
-                {
-                frame: 18,
-                value:new BABYLON.Quaternion(0.127,-0.169,-0.068,0.975)
-                });
-                head_frames_rotation.push(
-                {
                 frame: 20,
                 value:new BABYLON.Quaternion(0.127,-0.175,-0.07,0.974)
                 });
@@ -710,26 +573,6 @@ var head_frames_rotation= []
                 {
                 frame: 30,
                 value:new BABYLON.Quaternion(0.12,0.064,-0.025,0.99)
-                });
-                head_frames_rotation.push(
-                {
-                frame: 32,
-                value:new BABYLON.Quaternion(0.117,0.137,-0.011,0.984)
-                });
-                head_frames_rotation.push(
-                {
-                frame: 34,
-                value:new BABYLON.Quaternion(0.113,0.201,0.002,0.973)
-                });
-                head_frames_rotation.push(
-                {
-                frame: 36,
-                value:new BABYLON.Quaternion(0.11,0.253,0.012,0.961)
-                });
-                head_frames_rotation.push(
-                {
-                frame: 38,
-                value:new BABYLON.Quaternion(0.107,0.287,0.019,0.952)
                 });
                 head_frames_rotation.push(
                 {
@@ -788,26 +631,6 @@ var R_wrist_frames_rotation= []
                 });
                 R_wrist_frames_rotation.push(
                 {
-                frame: 12,
-                value:new BABYLON.Quaternion(0.293,-0.164,-0.041,0.941)
-                });
-                R_wrist_frames_rotation.push(
-                {
-                frame: 14,
-                value:new BABYLON.Quaternion(0.204,-0.015,-0.099,0.974)
-                });
-                R_wrist_frames_rotation.push(
-                {
-                frame: 16,
-                value:new BABYLON.Quaternion(0.085,0.169,-0.145,0.971)
-                });
-                R_wrist_frames_rotation.push(
-                {
-                frame: 18,
-                value:new BABYLON.Quaternion(-0.013,0.311,-0.17,0.935)
-                });
-                R_wrist_frames_rotation.push(
-                {
                 frame: 20,
                 value:new BABYLON.Quaternion(-0.052,0.364,-0.176,0.913)
                 });
@@ -835,26 +658,6 @@ var R_wrist_frames_rotation= []
                 {
                 frame: 30,
                 value:new BABYLON.Quaternion(-0.002,0.258,-0.171,0.951)
-                });
-                R_wrist_frames_rotation.push(
-                {
-                frame: 32,
-                value:new BABYLON.Quaternion(0.013,0.225,-0.169,0.959)
-                });
-                R_wrist_frames_rotation.push(
-                {
-                frame: 34,
-                value:new BABYLON.Quaternion(0.026,0.195,-0.167,0.966)
-                });
-                R_wrist_frames_rotation.push(
-                {
-                frame: 36,
-                value:new BABYLON.Quaternion(0.037,0.171,-0.165,0.971)
-                });
-                R_wrist_frames_rotation.push(
-                {
-                frame: 38,
-                value:new BABYLON.Quaternion(0.045,0.154,-0.163,0.973)
                 });
                 R_wrist_frames_rotation.push(
                 {
