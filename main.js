@@ -157,7 +157,7 @@ async function main()  {
             });
             
 
-            var pistol = new Assault();
+            var pistol = new Pistol();
             await pistol.init()
             var box = new LuckyBox(p);
             ammoBox1 = new AmmoBox(p);
@@ -203,8 +203,10 @@ async function main()  {
                     divFps.innerHTML = engine.getFps().toFixed() + " fps";
             });
 
-            let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "zombie1.gltf", scene)    
+            let res = await BABYLON.SceneLoader.ImportMeshAsync("", "Assets/", "zombie2.glb", scene)    
 
+            
+            printEuler();
             enemy = res.meshes[0];
             enemy.scaling = new BABYLON.Vector3(1, 1, 1);
             enemy.rotation = new BABYLON.Vector3(0,0,0);
@@ -481,5 +483,40 @@ function updateButtonColors() {
 }
 
 
+
+function printEuler()
+{
+    var IK_Hand_Cntrl_R_rotation = [{
+        frame: 0,
+        value: new BABYLON.Quaternion(-0.057135988026857376,  0.01055992767214775,  0.5295121073722839,  0.8463101387023926),
+    }]
+    IK_Hand_Cntrl_R_rotation .push({
+        frame: 3,
+        value: new BABYLON.Quaternion(-0.22769106924533844, 0.11611448973417282,  0.5182999968528748,  0.8161123394966125),
+    })
+    IK_Hand_Cntrl_R_rotation .push({
+        frame: 6,
+        value: new BABYLON.Quaternion(-0.047852471470832825,  0.011341879144310951,  0.5319801568984985,  0.8453274965286255),
+    })
+    IK_Hand_Cntrl_R_rotation .push({
+        frame: 9,
+        value: new BABYLON.Quaternion(-0.07430554181337357,  0.02158804051578045,  0.5318422913551331, 0.8433008790016174),
+    })
+    IK_Hand_Cntrl_R_rotation .push({
+        frame: 12,
+        value: new BABYLON.Quaternion(-0.06318460404872894,  0.014429227448999882,  0.530504584312439,0.845200777053833),
+    })
+    IK_Hand_Cntrl_R_rotation .push({
+        frame: 14,
+        value: new BABYLON.Quaternion( -0.057135988026857376,  0.01055992767214775,  0.5295121073722839,  0.8463101387023926),
+    })
+    
+
+for(var i=0; i<=5; i++)
+        {
+            var stampa= IK_Hand_Cntrl_R_rotation[i].value.toEulerAngles()
+            console.log("new BABYLON.Vector3("+stampa.x.toFixed(3)+","+stampa.y.toFixed(3)+","+stampa.z.toFixed(3)+"),\n");
+        }
+}
 
 main();

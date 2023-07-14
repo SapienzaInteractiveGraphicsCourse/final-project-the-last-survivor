@@ -121,37 +121,6 @@ export class Weapon {
         this._reload = group;
     }
 
-    printAnimations(res, group, component) {
-        var keys = "";
-        var property;
-        keys = keys.concat("var " + component + "_frames_position = []\n" + "var " + component +  "_frames_position= []\n");
-        res.animationGroups.forEach(gr => {
-            
-            gr.targetedAnimations.forEach(anim => {       
-                if(gr.name == group){
-                    if(anim.target.name == component) {
-                        if(anim.animation.targetProperty == "position")
-                            property = "new BABYLON.Vector3";
-                        else
-                            property = "new BABYLON.Quaternion";
-
-                        anim.animation.getKeys().forEach(key => {
-                            var frame =  Math.round(key.frame.toString())
-                            if(frame <= 2) {
-                                var string = "\n";
-                               
-                                var value = "(" + Math.round(key.value.x*1000)/1000 + "," + Math.round(key.value.y*1000)/1000 + "," + Math.round(key.value.z*1000)/1000 ;
-                                var functionName = component + "_frames_" + (property == "new BABYLON.Vector3"? "position" : "rotation");
-                                string = string.concat( functionName +  ".push(\n" + "{\nframe: " + frame + ",\nvalue:" +  property+ value+ (property == "new BABYLON.Vector3"?"" : ","+Math.round(key.value.w*1000)/1000) + ")\n});")
-                                keys = keys.concat( string);
-                            }  
-                        })
-                    }
-                }
-            })
-        })
-        console.log(keys);
-    }
    
 }
 

@@ -47,11 +47,11 @@ export class Pistol extends Weapon {
         _anim.setKeys(IK_Hand_Cntrl_L_position);
         group.addTargetedAnimation(_anim,this.IK_Hand_Cntrl_L);
 
-        _anim = new BABYLON.Animation("LeftHand_Pos", "rotationQuaternion", 60, BABYLON.Animation.ANIMATIONTYPE_QUATERNION,  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim = new BABYLON.Animation("LeftHand_Pos", "rotation", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3,  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(IK_Hand_Cntrl_L_rotation);
         group.addTargetedAnimation(_anim,this.IK_Hand_Cntrl_L);
 
-        _anim = new BABYLON.Animation("LeftHand_Pos", "rotationQuaternion", 60, BABYLON.Animation.ANIMATIONTYPE_QUATERNION, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        _anim = new BABYLON.Animation("LeftHand_Pos", "rotation", 60, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         _anim.setKeys(IK_Hand_Cntrl_R_rotation);
         group.addTargetedAnimation(_anim,this.IK_Hand_Cntrl_R);
 
@@ -92,19 +92,19 @@ var Pmag_Frames_position =  [{
 }];
 Pmag_Frames_position.push({
     frame: 3,
-    value: new BABYLON.Vector3(-0.082851, -0.02038504183292389, 0.3155350983142853),
+    value: new BABYLON.Vector3(-0.082, -0.020, 0.315),
 })
 Pmag_Frames_position.push({
     frame: 6,
-    value: new BABYLON.Vector3(-0.082851, -0.013306991197168827, 0.3171645998954773),
+    value: new BABYLON.Vector3(-0.082, -0.013, 0.317),
 })
 Pmag_Frames_position.push({
     frame: 9,
-    value: new BABYLON.Vector3(-0.082851, -0.02356041967868805, 0.3383954167366028),
+    value: new BABYLON.Vector3(-0.082, -0.023, 0.338),
 })
 Pmag_Frames_position.push({
     frame: 12,
-    value: new BABYLON.Vector3(-0.082851, -0.030087940394878387, 0.3536340594291687 ),
+    value: new BABYLON.Vector3(-0.082, -0.030, 0.353),
 })
 Pmag_Frames_position.push({
     frame: 14,
@@ -114,131 +114,131 @@ Pmag_Frames_position.push({
 //PISTOL BODY
 var PBody_Frames_position = [{
     frame: 0,
-    value: new BABYLON.Vector3(-0.078944, -0.027720719575881958,  0.35021501779556274),
+    value: new BABYLON.Vector3(-0.078, -0.0277,  0.350),
 }]
 PBody_Frames_position.push({
     frame: 3,
-    value: new BABYLON.Vector3(-0.078944,  -0.01973850280046463,  0.30802738666534424),
+    value: new BABYLON.Vector3(-0.078,  -0.0197,  0.308),
 })
 PBody_Frames_position.push({
     
     frame: 6,
-    value: new BABYLON.Vector3(-0.078944, -0.009639278054237366,  0.3105216920375824),
+    value: new BABYLON.Vector3(-0.078, -0.009,  0.310),
 })
 PBody_Frames_position.push({
     frame: 9,
-    value: new BABYLON.Vector3(-0.078944, -0.020259343087673187, 0.33159953355789185),
+    value: new BABYLON.Vector3(-0.078, -0.020, 0.331),
 })
 PBody_Frames_position.push({
     frame: 12,
-    value: new BABYLON.Vector3(-0.078944, -0.026624761521816254, 0.3469301462173462),
+    value: new BABYLON.Vector3(-0.078, -0.026, 0.346),
 })
 PBody_Frames_position.push({
     frame: 14,
-    value: new BABYLON.Vector3(-0.078944, -0.027720719575881958, 0.35021501779556274),
+    value: new BABYLON.Vector3(-0.078, -0.027, 0.350),
 })
 
 //LEFT HAND-postion
 var IK_Hand_Cntrl_L_position = [{
     frame: 0,
-    value: new BABYLON.Vector3(-0.04560738801956177, -0.03743438050150871, 0.21919746696949005),
+    value: new BABYLON.Vector3(-0.045, -0.037, 0.219),
 }]
 IK_Hand_Cntrl_L_position.push({
     frame: 3,
-    value: new BABYLON.Vector3(-0.045115645974874496, -0.08035119622945786,  0.19160988926887512),
+    value: new BABYLON.Vector3(-0.045, -0.080,  0.191),
 })
 IK_Hand_Cntrl_L_position.push({
     frame: 6,
-    value: new BABYLON.Vector3(-0.0470687672495842,-0.01724591664969921,0.1790021061897277),
+    value: new BABYLON.Vector3(-0.047,-0.017,0.179),
 })
 IK_Hand_Cntrl_L_position.push({
     frame: 9,
-    value: new BABYLON.Vector3(-0.04562688618898392,-0.035110026597976685, 0.20105943083763123),
+    value: new BABYLON.Vector3(-0.0456,-0.035, 0.201),
 })
 IK_Hand_Cntrl_L_position.push({
     frame: 12,
-    value: new BABYLON.Vector3(-0.04561518877744675, -0.03814832866191864,  0.21605655550956726),
+    value: new BABYLON.Vector3(-0.045, -0.038,  0.216),
 })
 IK_Hand_Cntrl_L_position.push({
     frame: 14,
-    value: new BABYLON.Vector3(-0.04560738801956177, -0.03743438050150871, 0.21919746696949005),
+    value: new BABYLON.Vector3(-0.0456, -0.0374, 0.219),
 })
 //LEFT HAND-rotation
 var IK_Hand_Cntrl_L_rotation = [{
     frame: 0,
-    value: new BABYLON.Quaternion(-0.04625927656888962, 0.03213781118392944, 0.9850730299949646,  -0.16266027092933655),
+    value: new BABYLON.Vector3(-0.048,-0.101,-2.811),
 }]
 IK_Hand_Cntrl_L_rotation .push({
     frame: 3,
-    value: new BABYLON.Quaternion(-0.014148877933621407,  0.23062171041965485,  0.9575549960136414, -0.1723421961069107),
+    value: new BABYLON.Vector3(-0.452,-0.118,-2.758),
 })
 IK_Hand_Cntrl_L_rotation .push({
     frame: 6,
-    value: new BABYLON.Quaternion(-0.0418987050652504, 0.023788409307599068, 0.9851288795471191, -0.16492338478565216),
+    value: new BABYLON.Vector3(-0.0330,-0.090,-2.808),
 })
 IK_Hand_Cntrl_L_rotation .push({
     frame: 9,
-    value: new BABYLON.Quaternion(-0.04262944310903549, 0.05211726948618889, 0.9836558699607849, -0.16699601709842682),
+    value: new BABYLON.Vector3(-0.088,-0.101,-2.800),
 })
 IK_Hand_Cntrl_L_rotation .push({
     frame: 12,
-    value: new BABYLON.Quaternion(-0.044984132051467896,  0.03917071968317032,  0.9846229553222656,  -0.1641942262649536),
+    value: new BABYLON.Vector3(-0.062,-0.101,-2.807),
 })
 IK_Hand_Cntrl_L_rotation .push({
     frame: 14,
-    value: new BABYLON.Quaternion(-0.04625927656888962, 0.03213781118392944, 0.9850730299949646,  -0.16266027092933655),
+    value: new BABYLON.Vector3(-0.0482,-0.101,-2.811),
 })
 
 //right hand-position
 var IK_Hand_Cntrl_R_position = [{
     frame: 0,
-    value: new BABYLON.Vector3( -0.0829569399356842,  0.029083557426929474,  0.2184237837791443),
+    value: new BABYLON.Vector3( -0.082,  0.0290,  0.218),
 }]
 IK_Hand_Cntrl_R_position.push({
     frame: 3,
-    value: new BABYLON.Vector3( -0.0827229917049408,  -0.019758615642786026,  0.1645091474056244),
+    value: new BABYLON.Vector3( -0.082,  -0.0197,  0.164),
 })
 IK_Hand_Cntrl_R_position.push({
     frame: 6,
-    value: new BABYLON.Vector3( -0.08474674820899963, 0.04908793419599533,0.17964310944080353),
+    value: new BABYLON.Vector3( -0.084, 0.049,0.179),
 })
 IK_Hand_Cntrl_R_position.push({
     frame: 9,
-    value: new BABYLON.Vector3( -0.08343741297721863, 0.031060736626386642,  0.19759275019168854),
+    value: new BABYLON.Vector3( -0.083, 0.031,  0.197),
 })
 IK_Hand_Cntrl_R_position.push({
     frame: 12,
-    value: new BABYLON.Vector3( -0.08313009142875671,  0.02826041728258133,  0.21433356404304504),
+    value: new BABYLON.Vector3( -0.083,  0.028,  0.214),
 })
 IK_Hand_Cntrl_R_position.push({
     frame: 14,
-    value: new BABYLON.Vector3( -0.0829569399356842,  0.029083557426929474,  0.2184237837791443),
+    value: new BABYLON.Vector3( -0.082,  0.029,  0.218),
 })
 
 //right hand-rotation
 var IK_Hand_Cntrl_R_rotation = [{
     frame: 0,
-    value: new BABYLON.Quaternion(-0.057135988026857376,  0.01055992767214775,  0.5295121073722839,  0.8463101387023926),
+    value: new BABYLON.Vector3(-0.108,-0.042,1.120),
 }]
 IK_Hand_Cntrl_R_rotation .push({
     frame: 3,
-    value: new BABYLON.Quaternion(-0.22769106924533844, 0.11611448973417282,  0.5182999968528748,  0.8161123394966125),
+    value: new BABYLON.Vector3(-0.514,-0.053,1.145),
 })
 IK_Hand_Cntrl_R_rotation .push({
     frame: 6,
-    value: new BABYLON.Quaternion(-0.047852471470832825,  0.011341879144310951,  0.5319801568984985,  0.8453274965286255),
+    value: new BABYLON.Vector3(-0.093,-0.031,1.12),
 })
 IK_Hand_Cntrl_R_rotation .push({
     frame: 9,
-    value: new BABYLON.Quaternion(-0.07430554181337357,  0.02158804051578045,  0.5318422913551331, 0.8433008790016174),
+    value: new BABYLON.Vector3(-0.148,-0.043,1.128),
 })
 IK_Hand_Cntrl_R_rotation .push({
     frame: 12,
-    value: new BABYLON.Quaternion(-0.06318460404872894,  0.014429227448999882,  0.530504584312439,0.845200777053833),
+    value: new BABYLON.Vector3(-0.122,-0.042,1.123),
 })
 IK_Hand_Cntrl_R_rotation .push({
     frame: 14,
-    value: new BABYLON.Quaternion( -0.057135988026857376,  0.01055992767214775,  0.5295121073722839,  0.8463101387023926),
+    value: new BABYLON.Vector3(-0.108,-0.042,1.120),
 })
 
 
