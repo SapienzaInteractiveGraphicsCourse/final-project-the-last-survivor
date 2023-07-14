@@ -69,7 +69,7 @@ export async function createScene() {
     }
     else {
         var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
-        light1.intensity =.01;
+        light1.intensity =.005;
 
         // Set the color of the ground light
         light1.groundColor = new BABYLON.Color3(0.396, 0.332, 1);
@@ -89,6 +89,7 @@ export async function createScene() {
         light2.exponent=45
         light2.intensity = 300;
         light2.range=50
+        light2.angle = Math.PI / 4; // Set the cutoff angle to 45 degrees
     }
 
     scene.useRightHandedSystem = true

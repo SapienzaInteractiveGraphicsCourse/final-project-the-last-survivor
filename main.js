@@ -456,11 +456,11 @@ function updateButtonColors() {
         nightBtn.style.backgroundColor = "white";
     } else if (daytime === "NIGHT") {
         dayBtn.style.backgroundColor = "white";
-        nightBtn.style.backgroundColor = "orange";
+        nightBtn.style.backgroundColor = "blue";
     }
 
     if (difficulty === "EASY") {
-        easyBtn.style.backgroundColor = "orange";
+        easyBtn.style.backgroundColor = "green";
         normalBtn.style.backgroundColor = "white";
         hardBtn.style.backgroundColor = "white";
     } else if (difficulty === "NORMAL") {
@@ -470,7 +470,7 @@ function updateButtonColors() {
     } else {
         easyBtn.style.backgroundColor = "white";
         normalBtn.style.backgroundColor = "white";
-        hardBtn.style.backgroundColor = "orange";
+        hardBtn.style.backgroundColor = "red";
     }
 
     if (blurr){
