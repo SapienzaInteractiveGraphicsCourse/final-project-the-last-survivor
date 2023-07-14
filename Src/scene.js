@@ -50,9 +50,6 @@ export async function createScene() {
     const canvas = scene.getEngine().getRenderingCanvas()
 
     camera.attachControl(canvas, true)
-    scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
-    scene.fogColor = new BABYLON.Color3(0, 0, 0);
-    scene.fogDensity = 0.05;
 
 
 
@@ -68,6 +65,9 @@ export async function createScene() {
         light1.intensity =1;
     }
     else {
+        scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+        scene.fogColor = new BABYLON.Color3(0, 0, 0);
+        scene.fogDensity = 0.005;
         var light1 = new BABYLON.HemisphericLight("Omni", new BABYLON.Vector3(50, 100, 50), scene);
         light1.intensity =.005;
 
