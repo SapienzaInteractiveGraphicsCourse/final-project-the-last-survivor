@@ -157,7 +157,7 @@ async function main()  {
             });
             
 
-            var pistol = new Pistol();
+            var pistol = new Assault();
             await pistol.init()
             var box = new LuckyBox(p);
             ammoBox1 = new AmmoBox(p);
@@ -191,7 +191,6 @@ async function main()  {
             engine.hideLoadingUI();
 
             engine.runRenderLoop(() => {
-                console.log(ammoBox1)
                 // scene.render();
                 // p.update();
                 // var t = Date.now();

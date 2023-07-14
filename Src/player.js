@@ -6,7 +6,7 @@ import { Sniper } from "./sniper_rifle";
 import { Pistol } from "./pistol";
 import { LuckyBox, LuckyBoxInstance } from "./luckyBox";
 import { AmmoBox, AmmoBoxInstance } from "./ammo_box";
-import { AMMO, crosshair, luckyBox, sniperScope, lifeProgress } from "./domItems";
+import { AMMO, crosshair, luckyBox, sniperScope, lifeProgress, ammo } from "./domItems";
 import { endGame, finished, difficulty, daytime } from "../main";
 import { enemy} from "../main"
 
@@ -200,8 +200,8 @@ export class Player {
             // Wait for 5 seconds and hide the AMMO element
             setTimeout(function() { AMMO.style.display = "none"; }, 3000);
         }
-            
-        ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.stockedAmmo + "<br>" + "money: " + this.money + "$";
+        if (this.weapon.currentAmmo){
+        ammo.innerHTML = "ammo: " + this.weapon.currentAmmo + "/"+ this.weapon.stockedAmmo + "<br>" + "money: " + this.money + "$";}
     }
     ///=====================================================================================///
     ///===================================ACTION METHODS====================================///
@@ -364,6 +364,7 @@ export class Player {
                 console.log("hit an enemy");
                console.log(name);
                console.log(hit)
+               
                UnitManager.instance.onEnemyHit(name[name.length - 1]);
                particleSystem.emitter = hit.pickedPoint
                particleSystem.minEmitBox = new BABYLON.Vector3(-0.2, -0.2, -0.2); // Starting all from

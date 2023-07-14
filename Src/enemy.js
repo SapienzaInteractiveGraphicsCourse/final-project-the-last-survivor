@@ -1,10 +1,12 @@
 "use strict";
 import * as BABYLON from "@babylonjs/core";
+import { Sound } from "@babylonjs/core";
 import { scene } from "../main";
 import * as YUKA from '../Modules/yuka.module.js'
 import {enemy, difficulty} from "../main"
 import { engine, navigation } from "./scene";
 import { Vehicle } from "../Modules/yuka.module";
+
 
 export class Enemy extends Vehicle {
 
@@ -32,6 +34,10 @@ export class Enemy extends Vehicle {
     R_wrist
 
     _walk
+
+    hit_sound;
+    attack_sound;
+    died_sound;
     constructor(scene, player, id) {
         super()
 
@@ -53,6 +59,21 @@ export class Enemy extends Vehicle {
          this.R_arm= this.mesh.getChildren(((m) => m.name == "R_arm"), false);
          this.R_wrist= this.mesh.getChildren(((m) => m.name == "R_wrist"), false);
          this.head= this.mesh.getChildren(((m) => m.name == "head"), false);
+
+         this.hit_sound = new Sound("Music", "Assets/zombie_hit_sound.mp3", scene);
+         this.died_sound = new Sound("Music", "Assets/zombie_die_sound.mp3", scene);
+         this.attack_sound = new Sound("Music", "Assets/zombie_sound.mp3", scene);
+         this.attack_sound.refDistance = 0.01; // Adjust the value to your desired reference distance
+         this.died_sound.refDistance = 0.1; // Adjust the value to your desired reference distance
+         this.hit_sound.refDistance = 0.1; // Adjust the value to your desired reference distance
+
+
+         this.hit_sound.attachToMesh(this.mesh);
+         this.died_sound.attachToMesh(this.mesh);
+         this.attack_sound.attachToMesh(this.mesh);
+
+
+
          this.WalkingAnimation();
     }
     async init(clone, position){
@@ -68,23 +89,31 @@ export class Enemy extends Vehicle {
             this.moveTime+= engine.getDeltaTime()/1000
         if(this.moveTime > this.moveTimeout) {
             this.moveTime=0
+            setTimeout(this.playRandomAttackSound.bind(this),  Math.random() * (5 - 2) + 2)
             this.findPathTo()
         }
     }
+    playRandomAttackSound() {
+        // Play the attack sound
+        this.attack_sound.play();
+    }
+    
     
     takeDamage() {
         var dmg = this.playerRef.getDamage()
         
         this.hp -= dmg
         console.log("Hp : " + this.hp)
-
         if(this.hp <= 0) {
+            this.died_sound.play();
             console.log("dead")
             this.mesh.dispose()
             return true
         }
-        else 
+        else {
+            this.hit_sound.play()
             return false
+        }
     }
 
     getId() {
@@ -96,8 +125,13 @@ export class Enemy extends Vehicle {
         var from = this.mesh.position
         var _from =  new YUKA.Vector3(this.mesh.position.x , this.mesh.position.y, this.mesh.position.z) 
         var playerPos = this.playerRef.getUserposition();
-        var to = new YUKA.Vector3(playerPos.x , playerPos.y, playerPos.z) 
-
+        try {
+            var to = new YUKA.Vector3(playerPos.x, playerPos.y, playerPos.z);
+        } catch (error) {
+            console.error("Error occurred while creating YUKA.Vector3:", error);
+            this.moveTime = this.moveTimeout;
+            return;
+        }
         const directionToPlayer = new BABYLON.Vector3(to.x - from.x, to.y - from.y, to.z - from.z);
         // Calculate the rotation angle towards the player
         const rotationAngle = Math.atan2(directionToPlayer.x, directionToPlayer.z);
@@ -137,7 +171,7 @@ export class Enemy extends Vehicle {
         this.mesh.animations.push(rotateAnimation);
 
         const path = navigation.findPath(_from, to);
-        console.log(path)
+        // console.log(path)
         var newPath = [];
         
         if (path===0){

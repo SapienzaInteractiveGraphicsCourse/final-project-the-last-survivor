@@ -99,7 +99,10 @@ export class Weapon {
         
         weapon.renderingGroupId = 1;
 
-        res.meshes.forEach((m) => m.renderingGroupId = 1);
+        res.meshes.forEach((m) => {
+            m.renderingGroupId = 1
+            m.isPickable = false;
+        });
               
         //debug per i cheat
         console.log(res.animationGroups); 
