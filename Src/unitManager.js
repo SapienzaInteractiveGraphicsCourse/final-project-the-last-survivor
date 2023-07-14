@@ -2,9 +2,10 @@
 import * as BABYLON from "@babylonjs/core";
 import {camera,engine} from './scene';
 import { Enemy } from "./enemy";
-import { scene } from "../main";
+import { scene, ammoBox1, ammoBox2, ammoBox3, ammoBox4, ammoBox5, ammoBox6, ammoBox7 } from "../main";
 import { runData } from "./domItems";
 import { LuckyBoxInstance } from "./luckyBox";
+import { AmmoBox } from "./ammo_box"
 
 export class UnitManager {
     static instance = null;
@@ -105,11 +106,12 @@ export class UnitManager {
         console.log("state changed to " + newState)
         switch (newState) {
             case status.ROUND:
+                this.recreateAmmoBox()
                 this.roundCounter++;
                 this.currentId=0
                 this.timeFromLastSpawn = 0
                 this.spawnedEnemy = []
-                this.currentSpawnNumber = 5;
+                this.currentSpawnNumber = this.startingSpawn * this.roundCounter;
                 this.spawnEnemy();
                 break;
             case status.PAUSE:
@@ -141,6 +143,24 @@ export class UnitManager {
         }
         
     }
+
+    async recreateAmmoBox() {
+        // Check if the AmmoBox is disposed
+          // Recreate the AmmoBox
+            await ammoBox1.LoadMesh(this.player.collider, new BABYLON.Vector3(-12.120131858364807, 2.096194466462976, 11.366266535238479), new BABYLON.Vector3(0, Math.PI, 0));
+
+            await ammoBox2.LoadMesh(this.player.collider, new BABYLON.Vector3(-32.434365573719354, 1.2420620087993939e-15, -5.600489765047536), new BABYLON.Vector3(0, Math.PI, 0));
+
+            await ammoBox3.LoadMesh(this.player.collider, new BABYLON.Vector3(-36.020856010272745, 0.5502144098281907, -20.982882899924686), new BABYLON.Vector3(0, Math.PI, 0));
+
+            await ammoBox4.LoadMesh(this.player.collider, new BABYLON.Vector3(-8.48171032805569, -1.9874416330712497, -37.62943200154321), new BABYLON.Vector3(0, Math.PI, 0));
+
+            await ammoBox5.LoadMesh(this.player.collider, new BABYLON.Vector3(21.068521746579986, 0.22930107223850799, -15.635727886442485), new BABYLON.Vector3(0, Math.PI, 0));
+
+            await ammoBox6.LoadMesh(this.player.collider, new BABYLON.Vector3(14.300432953120715, 1.650643229484568, -44.73937281514947), new BABYLON.Vector3(0, Math.PI, 0));
+
+            await ammoBox7.LoadMesh(this.player.collider, new BABYLON.Vector3(3.115622796911797, 1.394717674685353e-15, -6.284799825043635), new BABYLON.Vector3(0, Math.PI, 0));
+      }
 }
 
 const status = {

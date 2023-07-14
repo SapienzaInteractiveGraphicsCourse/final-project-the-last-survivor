@@ -28,6 +28,7 @@ export var enemy;
 export var sensitivity = 2000;
 export var daytime;
 export var difficulty;
+export var ammoBox1, ammoBox2, ammoBox3, ammoBox4, ammoBox5, ammoBox6, ammoBox7;
 var finished = false;
 var paused = false;
 let walking = false;
@@ -159,13 +160,13 @@ async function main()  {
             var pistol = new Pistol();
             await pistol.init()
             var box = new LuckyBox(p);
-            var ammoBox1 = new AmmoBox(p);
-            var ammoBox2 = new AmmoBox(p);
-            var ammoBox3 = new AmmoBox(p);
-            var ammoBox4 = new AmmoBox(p);
-            var ammoBox5 = new AmmoBox(p);
-            var ammoBox6 = new AmmoBox(p);
-            var ammoBox7 = new AmmoBox(p);
+            ammoBox1 = new AmmoBox(p);
+            ammoBox2 = new AmmoBox(p);
+            ammoBox3 = new AmmoBox(p);
+            ammoBox4 = new AmmoBox(p);
+            ammoBox5 = new AmmoBox(p);
+            ammoBox6 = new AmmoBox(p);
+            ammoBox7 = new AmmoBox(p);
 
             p.LoadWeapon(pistol)
             await box.LoadMesh(p.collider);
@@ -190,6 +191,7 @@ async function main()  {
             engine.hideLoadingUI();
 
             engine.runRenderLoop(() => {
+                console.log(ammoBox1)
                 // scene.render();
                 // p.update();
                 // var t = Date.now();

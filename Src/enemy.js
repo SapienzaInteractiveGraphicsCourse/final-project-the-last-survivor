@@ -172,9 +172,9 @@ export class Enemy extends Vehicle {
     
         var moveCamera = new BABYLON.Animation("CameraMove", "position", 180/length+10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         moveCamera.setKeys(direction);
-       this.mesh.animations.push(moveCamera);
-        this.calling_walk();
-        scene.beginAnimation(this.mesh, 0, 100);
+        this.mesh.animations.push(moveCamera);
+        {this.calling_walk();}
+        scene.beginAnimation(this.mesh, 0, 180);
         }
     }
       
@@ -911,7 +911,7 @@ var R_wrist_frames_rotation= []
 
     calling_walk()
     {
-        this._walk.play(this._walk.loopAnimation);
+        this._walk.play(false, 40);
     }
 }
 
