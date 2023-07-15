@@ -25,6 +25,7 @@ Final project for the course of Interactive Graphics 2022/2023.
 ## External tools
 
 -   Blender [Link](https://www.blender.org/)
+
 -   Models downloaded from sketchfab [Link](https://sketchfab.com/)
 
 ## Report
