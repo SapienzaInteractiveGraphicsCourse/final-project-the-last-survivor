@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.31)  15 JUL 2023 14:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.31)  15 JUL 2023 14:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -783,68 +783,68 @@ l.93 \newpage
 
 
 ] [2]
-Underfull \hbox (badness 10000) in paragraph at lines 133--136
+Underfull \hbox (badness 10000) in paragraph at lines 131--134
 
  []
 
 [3] [4] [5]
-<figures/pistol.png, id=136, 1028.34187pt x 578.16pt>
+<figures/pistol.png, id=137, 1028.34187pt x 578.16pt>
 File: figures/pistol.png Graphic file (type png)
 <use figures/pistol.png>
-Package pdftex.def Info: figures/pistol.png  used on input line 224.
+Package pdftex.def Info: figures/pistol.png  used on input line 222.
 (pdftex.def)             Requested size: 139.50433pt x 78.42757pt.
-<figures/assault.png, id=137, 1028.34187pt x 578.16pt>
+<figures/assault.png, id=138, 1028.34187pt x 578.16pt>
 File: figures/assault.png Graphic file (type png)
 <use figures/assault.png>
-Package pdftex.def Info: figures/assault.png  used on input line 225.
+Package pdftex.def Info: figures/assault.png  used on input line 223.
 (pdftex.def)             Requested size: 139.50433pt x 78.42757pt.
-<figures/sniper.png, id=138, 1028.34187pt x 578.16pt>
+<figures/sniper.png, id=139, 1028.34187pt x 578.16pt>
 File: figures/sniper.png Graphic file (type png)
 <use figures/sniper.png>
-Package pdftex.def Info: figures/sniper.png  used on input line 226.
+Package pdftex.def Info: figures/sniper.png  used on input line 224.
 (pdftex.def)             Requested size: 139.50433pt x 78.42757pt.
  [6] [7 <./figures/pistol.png> <./figures/assault.png> <./figures/sniper.png>]
-<figures/pistol_aim.png, id=153, 1028.34187pt x 578.16pt>
+<figures/pistol_aim.png, id=154, 1028.34187pt x 578.16pt>
 File: figures/pistol_aim.png Graphic file (type png)
 <use figures/pistol_aim.png>
-Package pdftex.def Info: figures/pistol_aim.png  used on input line 251.
+Package pdftex.def Info: figures/pistol_aim.png  used on input line 249.
 (pdftex.def)             Requested size: 139.50433pt x 78.42757pt.
-<figures/assault_aim.png, id=154, 1028.34187pt x 578.16pt>
+<figures/assault_aim.png, id=155, 1028.34187pt x 578.16pt>
 File: figures/assault_aim.png Graphic file (type png)
 <use figures/assault_aim.png>
-Package pdftex.def Info: figures/assault_aim.png  used on input line 252.
+Package pdftex.def Info: figures/assault_aim.png  used on input line 250.
 (pdftex.def)             Requested size: 139.50433pt x 78.42757pt.
-<figures/sniper_aim.png, id=155, 1028.34187pt x 578.16pt>
+<figures/sniper_aim.png, id=156, 1028.34187pt x 578.16pt>
 File: figures/sniper_aim.png Graphic file (type png)
 <use figures/sniper_aim.png>
-Package pdftex.def Info: figures/sniper_aim.png  used on input line 253.
+Package pdftex.def Info: figures/sniper_aim.png  used on input line 251.
 (pdftex.def)             Requested size: 139.50433pt x 78.42757pt.
-<figures/zombie.jpg, id=156, 148.30406pt x 307.90031pt>
+<figures/zombie.jpg, id=157, 148.30406pt x 307.90031pt>
 File: figures/zombie.jpg Graphic file (type jpg)
 <use figures/zombie.jpg>
-Package pdftex.def Info: figures/zombie.jpg  used on input line 270.
+Package pdftex.def Info: figures/zombie.jpg  used on input line 268.
 (pdftex.def)             Requested size: 87.70125pt x 182.08713pt.
 
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 270--270
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 268--268
 [][] 
  []
 
 [8 <./figures/pistol_aim.png> <./figures/assault_aim.png> <./figures/sniper_aim
 .png> <./figures/zombie.jpg>]
-<figures/Ammobox.png, id=162, 194.97844pt x 368.87813pt>
+<figures/Ammobox.png, id=163, 194.97844pt x 368.87813pt>
 File: figures/Ammobox.png Graphic file (type png)
 <use figures/Ammobox.png>
-Package pdftex.def Info: figures/Ammobox.png  used on input line 289.
+Package pdftex.def Info: figures/Ammobox.png  used on input line 287.
 (pdftex.def)             Requested size: 113.24821pt x 214.2565pt.
-<figures/Luckybox.png, id=163, 363.60844pt x 322.95656pt>
+<figures/Luckybox.png, id=164, 363.60844pt x 322.95656pt>
 File: figures/Luckybox.png Graphic file (type png)
 <use figures/Luckybox.png>
-Package pdftex.def Info: figures/Luckybox.png  used on input line 290.
+Package pdftex.def Info: figures/Luckybox.png  used on input line 288.
 (pdftex.def)             Requested size: 214.2565pt x 190.30617pt.
-<figures/dust_2.jpg, id=164, 292.0pt x 180.31pt>
+<figures/dust_2.jpg, id=165, 292.0pt x 180.31pt>
 File: figures/dust_2.jpg Graphic file (type jpg)
 <use figures/dust_2.jpg>
-Package pdftex.def Info: figures/dust_2.jpg  used on input line 299.
+Package pdftex.def Info: figures/dust_2.jpg  used on input line 297.
 (pdftex.def)             Requested size: 263.11047pt x 162.48659pt.
  [9] [10 <./figures/Ammobox.png> <./figures/Luckybox.png> <./figures/dust_2.jpg
 >] [11] [12]
@@ -854,8 +854,8 @@ s not changed.
 (rerunfilecheck)             Checksum: C420B122F0CC177B3E1616A8DAE8E06D;2324.
  ) 
 Here is how much of TeX's memory you used:
- 16719 strings out of 477529
- 270093 string characters out of 5829600
+ 16720 strings out of 477529
+ 270104 string characters out of 5829600
  578562 words of memory out of 5000000
  35329 multiletter control sequences out of 15000+600000
  480216 words of font info for 69 fonts, out of 8000000 for 9000
@@ -868,11 +868,11 @@ ist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2022/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publ
 ic/amsfonts/cm/cmti12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-sup
 er/sfrm1200.pfb>
-Output written on Final_Project_Report_TheLastSurvivor.pdf (13 pages, 13421060 
+Output written on Final_Project_Report_TheLastSurvivor.pdf (13 pages, 13421145 
 bytes).
 PDF statistics:
- 231 PDF objects out of 1000 (max. 8388607)
- 191 compressed objects within 2 object streams
- 51 named destinations out of 1000 (max. 500000)
+ 232 PDF objects out of 1000 (max. 8388607)
+ 192 compressed objects within 2 object streams
+ 52 named destinations out of 1000 (max. 500000)
  200 words of extra memory for PDF output out of 10000 (max. 10000000)
 
