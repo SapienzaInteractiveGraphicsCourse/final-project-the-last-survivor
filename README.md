@@ -1,15 +1,63 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/9ItdZzWA)
+# The Last Survivor
 
+Final project for the course of Interactive Graphics 2022/2023.
 
-https://sapienzainteractivegraphicscourse.github.io/final-project-the-last-survivor/
+>Student: Mattia Aquilina, 1921153
+>
+>Student: Francesco Fortunato, 1848527
+>
+>Student: Cristian Santaroni 1800659
 
+## Libraries
 
+-   **Babylon.js** [Link](https://www.babylonjs.com/)
 
+    Is a lightweight, cross-browser, easy to use, general purpose 3D library that use a WebGL renderer.
 
-ISTRUZIONI:
+-   **CANNON.js** [Link](https://schteppe.github.io/cannon.js/)
 
-1. npm ci
+    Is a lightweight and simple 3D physics engine for the web.
+    
+-   **YUKA**  [Link](https://mugen87.github.io/yuka/)
 
-2. npm run start
+    A JavaScript library for developing Game AI like path finding.
 
-3. if you want that the site is available with the last changes, do npm run build, then push
+## External tools
+
+-   Blender [Link](https://www.blender.org/)
+-   Models downloaded from sketchfab [Link](https://sketchfab.com/)
+
+## Report
+
+The report can be reachable through this [link]()
+
+## Browsers
+
+We **recommend** to play the game on Edge or Chrome for better performances. Safari and Firefox are **absolutely not recommended**.
+
+We also suggest to play the game in full screen (press `F11` or `Fn`+`F11`)
+
+## How to play the game
+
+- `W` `A` `S` `D`: directional movement
+- `SHIFT`: run
+- `Mouse`: move the camera
+- `RIGHT CLICK`: shoot
+- `LEFT CLICK`: aim
+- `R`: reload 
+- `F`: interact 
+- `T`: toggle torch (Only in night mode) 
+- `ESC`: pause
+
+</details>
+
+### [Click here to play the game.](https://sapienzainteractivegraphicscourse.github.io/final-project-the-last-survivor/)
+
+## Instructions:
+
+```
+git clone https://github.com/SapienzaInteractiveGraphicsCourse/final-project-the-last-survivor.git
+cd final-project-the-last-survivor/
+npm ci
+npm run start
+```
