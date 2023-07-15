@@ -12,7 +12,7 @@ Final project for the course of Interactive Graphics 2022/2023.
 
 -   **Babylon.js** [Link](https://www.babylonjs.com/)
 
-    Is a lightweight, cross-browser, easy to use, general purpose 3D library that use a WebGL renderer.
+    Is a powerful, beautiful, simple, and open game and rendering engine packed into a friendly JavaScript framework.
 
 -   **CANNON.js** [Link](https://schteppe.github.io/cannon.js/)
 
@@ -48,8 +48,6 @@ We also suggest to play the game in full screen (press `F11` or `Fn`+`F11`)
 - `F`: interact 
 - `T`: toggle torch (Only in night mode) 
 - `ESC`: pause
-
-</details>
 
 ### [Click here to play the game.](https://sapienzainteractivegraphicscourse.github.io/final-project-the-last-survivor/)
 
